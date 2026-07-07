@@ -4,9 +4,10 @@ import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Calendar } from "lucide-react";
 
-export const getStatsFn = createServerFn("GET", async () => {
+export const getStatsFn = createServerFn({ method: "GET" }).handler(async () => {
+  const usersCount = await db.user.count();
   const eventsCount = await db.event.count();
-  return { eventsCount };
+  return JSON.parse(JSON.stringify({ usersCount, eventsCount }));
 });
 
 export const Route = createFileRoute("/admin/")({

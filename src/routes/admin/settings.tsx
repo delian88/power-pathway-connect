@@ -7,59 +7,62 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import fs from "fs";
-import path from "path";
 
-export const getSettingsFn = createServerFn("GET", async () => {
+export const getSettingsFn = createServerFn({ method: "GET" }).handler(async () => {
   const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
-  return settings;
+  return settings ? JSON.parse(JSON.stringify(settings)) : null;
 });
 
-export const updateSettingsFn = createServerFn("POST", async (data: any) => {
-  let finalLogoUrl = data.logoUrl;
+export const updateSettingsFn = createServerFn({ method: "POST" })
+  .validator((data: any) => data)
+  .handler(async ({ data }) => {
+    let finalLogoUrl = data.logoUrl;
 
-  // If a file was uploaded as base64, save it to the public directory
-  if (data.logoBase64 && data.logoFileName) {
-    try {
-      const base64Data = data.logoBase64.replace(/^data:image\/\w+;base64,/, "");
-      const buffer = Buffer.from(base64Data, 'base64');
-      const publicDir = path.join(process.cwd(), 'public');
-      const filePath = path.join(publicDir, data.logoFileName);
-      
-      if (!fs.existsSync(publicDir)) {
-        fs.mkdirSync(publicDir, { recursive: true });
+    // If a file was uploaded as base64, save it to the public directory
+    if (data.logoBase64 && data.logoFileName) {
+      try {
+        const fs = await import("fs");
+        const path = await import("path");
+        
+        const base64Data = data.logoBase64.replace(/^data:image\/\w+;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        const publicDir = path.join(process.cwd(), 'public');
+        const filePath = path.join(publicDir, data.logoFileName);
+        
+        if (!fs.existsSync(publicDir)) {
+          fs.mkdirSync(publicDir, { recursive: true });
+        }
+        
+        fs.writeFileSync(filePath, buffer);
+        finalLogoUrl = `/${data.logoFileName}`;
+      } catch (e) {
+        console.error("Failed to save image locally", e);
       }
-      
-      fs.writeFileSync(filePath, buffer);
-      finalLogoUrl = `/${data.logoFileName}`;
-    } catch (e) {
-      console.error("Failed to save image locally", e);
     }
-  }
 
-  const updated = await db.siteSettings.upsert({
-    where: { id: 1 },
-    update: {
-      heroText: data.heroText,
-      heroSubText: data.heroSubText,
-      logoUrl: finalLogoUrl,
-      contactEmail: data.contactEmail,
-      contactPhone: data.contactPhone,
-      address: data.address,
-    },
-    create: {
-      id: 1,
-      heroText: data.heroText,
-      heroSubText: data.heroSubText,
-      logoUrl: finalLogoUrl,
-      contactEmail: data.contactEmail,
-      contactPhone: data.contactPhone,
-      address: data.address,
-    }
+    const updated = await db.siteSettings.upsert({
+      where: { id: 1 },
+      update: {
+        heroText: data.heroText,
+        heroSubText: data.heroSubText,
+        logoUrl: finalLogoUrl,
+        contactEmail: data.contactEmail,
+        contactPhone: data.contactPhone,
+        address: data.address,
+      },
+      create: {
+        id: 1,
+        heroText: data.heroText,
+        heroSubText: data.heroSubText,
+        logoUrl: finalLogoUrl,
+        contactEmail: data.contactEmail,
+        contactPhone: data.contactPhone,
+        address: data.address,
+      }
+    });
+
+    return JSON.parse(JSON.stringify(updated));
   });
-
-  return updated;
-});
 
 export const Route = createFileRoute("/admin/settings")({
   loader: async () => await getSettingsFn(),
@@ -106,9 +109,11 @@ function SettingsPage() {
       }
 
       await updateSettingsFn({
-        ...formData,
-        logoBase64,
-        logoFileName,
+        data: {
+          ...formData,
+          logoBase64,
+          logoFileName,
+        }
       });
 
       toast.success("Settings updated successfully!");

@@ -7,10 +7,10 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 
-export const getLandingDataFn = createServerFn("GET", async () => {
+export const getLandingDataFn = createServerFn({ method: "GET" }).handler(async () => {
   const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
   const events = await db.event.findMany({ orderBy: { date: 'desc' }, take: 3 });
-  return { settings, events };
+  return JSON.parse(JSON.stringify({ settings, events }));
 });
 
 export const Route = createFileRoute("/")({
@@ -40,6 +40,11 @@ function Index() {
   const { settings, events } = Route.useLoaderData();
   const [heroTextIndex, setHeroTextIndex] = useState(0);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+
+  const heroTexts = [
+    settings?.heroText || "Powering the future together",
+    settings?.heroSubText || "Premier events and workshops for utility leaders, grid engineers, and energy innovators shaping the national electricity landscape."
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {

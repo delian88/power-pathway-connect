@@ -5,12 +5,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 
-export const getSessionFn = createServerFn("GET", async () => {
+export const getSessionFn = createServerFn({ method: "GET" }).handler(async () => {
   const session = await verifySession();
-  return session;
+  return session ? JSON.parse(JSON.stringify(session)) : null;
 });
 
-export const logoutFn = createServerFn("POST", async () => {
+export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
   destroySession();
   return { success: true };
 });

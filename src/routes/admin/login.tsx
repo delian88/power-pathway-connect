@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
 import { createSession } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -33,6 +32,7 @@ export const loginFn = createServerFn("POST", async (data: z.infer<typeof loginS
     throw new Error("Invalid credentials");
   }
 
+  const bcrypt = await import("bcrypt");
   const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
   if (!isPasswordValid) {
     throw new Error("Invalid credentials");

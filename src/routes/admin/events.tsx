@@ -10,11 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Trash2, Plus } from "lucide-react";
 
-export const getEventsFn = createServerFn("GET", async () => {
+export const getEventsFn = createServerFn({ method: "GET" }).handler(async () => {
   const events = await db.event.findMany({
     orderBy: { date: 'desc' }
   });
-  return events;
+  return JSON.parse(JSON.stringify(events));
 });
 
 const eventSchema = z.object({
@@ -25,21 +25,25 @@ const eventSchema = z.object({
   imageUrl: z.string().optional(),
 });
 
-export const createEventFn = createServerFn("POST", async (data: z.infer<typeof eventSchema>) => {
-  const parsed = eventSchema.parse(data);
-  const event = await db.event.create({
-    data: {
-      ...parsed,
-      date: new Date(parsed.date),
-    }
+export const createEventFn = createServerFn({ method: "POST" })
+  .validator((data: unknown) => data as z.infer<typeof eventSchema>)
+  .handler(async ({ data }) => {
+    const parsed = eventSchema.parse(data);
+    const event = await db.event.create({
+      data: {
+        ...parsed,
+        date: new Date(parsed.date),
+      }
+    });
+    return JSON.parse(JSON.stringify(event));
   });
-  return event;
-});
 
-export const deleteEventFn = createServerFn("POST", async (id: string) => {
-  await db.event.delete({ where: { id } });
-  return { success: true };
-});
+export const deleteEventFn = createServerFn({ method: "POST" })
+  .validator((id: unknown) => id as string)
+  .handler(async ({ data: id }) => {
+    await db.event.delete({ where: { id } });
+    return { success: true };
+  });
 
 export const Route = createFileRoute("/admin/events")({
   loader: async () => await getEventsFn(),
@@ -63,7 +67,7 @@ function EventsAdminPage() {
     e.preventDefault();
     setSaving(true);
     try {
-      await createEventFn(form);
+      await createEventFn({ data: form });
       toast.success("Event created successfully");
       setForm({ title: "", description: "", date: "", type: "workshop", imageUrl: "" });
       router.invalidate();
@@ -77,7 +81,7 @@ function EventsAdminPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this event?")) return;
     try {
-      await deleteEventFn(id);
+      await deleteEventFn({ data: id });
       toast.success("Event deleted");
       router.invalidate();
     } catch (error) {
@@ -132,9 +136,9 @@ function EventsAdminPage() {
       </div>
 
       <div className="space-y-4 pt-14">
-        <h2 className="text-xl font-semibold">Posted Events ({events.length})</h2>
+        <h2 className="text-xl font-semibold">Posted Events ({Array.isArray(events) ? events.length : 0})</h2>
         <div className="space-y-3">
-          {events.map((ev) => (
+          {Array.isArray(events) && events.map((ev: any) => (
             <div key={ev.id} className="p-4 bg-white border border-border/60 rounded-xl shadow-sm flex items-start justify-between gap-4">
               <div>
                 <div className="font-semibold flex items-center gap-2">
