@@ -3,7 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { EventCard, type EventRow } from "@/components/event-card";
-import { supabase } from "@/integrations/supabase/client";
+import { db } from "@/lib/db";
+import { createServerFn } from "@tanstack/react-start";
+
+const getEventsFn = createServerFn({ method: "GET" }).handler(async () => {
+  const events = await db.event.findMany({
+    where: { date: { gte: new Date() } },
+    orderBy: { date: 'asc' },
+  });
+  return JSON.parse(JSON.stringify(events));
+});
 
 export const Route = createFileRoute("/events")({
   head: () => ({
@@ -14,22 +23,13 @@ export const Route = createFileRoute("/events")({
       { property: "og:description", content: "Browse upcoming events and reserve your seat." },
     ],
   }),
+  loader: async () => await getEventsFn(),
   component: EventsPage,
 });
 
 function EventsPage() {
-  const { data: events = [], isLoading } = useQuery({
-    queryKey: ["events", "all"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("events")
-        .select("*")
-        .eq("is_published", true)
-        .order("event_date", { ascending: true });
-      if (error) throw error;
-      return (data ?? []) as EventRow[];
-    },
-  });
+  const events = Route.useLoaderData() as EventRow[];
+  const isLoading = false;
 
   return (
     <div className="min-h-screen">

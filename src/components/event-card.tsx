@@ -8,15 +8,15 @@ export type EventRow = {
   id: string;
   title: string;
   description: string;
-  event_date: string;
-  location: string;
-  capacity: number;
-  image_url: string | null;
+  date: Date | string;
+  imageUrl: string | null;
+  type: string;
+  userId: string | null;
 };
 
 export function EventCard({ event, index = 0 }: { event: EventRow; index?: number }) {
   const [open, setOpen] = useState(false);
-  const date = new Date(event.event_date);
+  const date = new Date(event.date);
 
   return (
     <>
@@ -28,9 +28,9 @@ export function EventCard({ event, index = 0 }: { event: EventRow; index?: numbe
         className="group relative rounded-2xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-elegant transition-all duration-500"
       >
         <div className="aspect-[16/10] overflow-hidden bg-gradient-primary relative">
-          {event.image_url ? (
+          {event.imageUrl ? (
             <img
-              src={event.image_url}
+              src={event.imageUrl}
               alt={event.title}
               loading="lazy"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -46,14 +46,17 @@ export function EventCard({ event, index = 0 }: { event: EventRow; index?: numbe
           </div>
         </div>
         <div className="p-6">
+          <div className="mb-3">
+            <span className={`px-3 py-1 text-xs font-semibold rounded-full ${event.type === 'conference' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+              {event.type === 'conference' ? 'Conference' : 'Workshop'}
+            </span>
+          </div>
           <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
             {event.title}
           </h3>
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{event.description}</p>
           <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-5">
             <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{date.toLocaleDateString()}</span>
-            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{event.location}</span>
-            <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{event.capacity} seats</span>
           </div>
           <Button onClick={() => setOpen(true)} className="w-full bg-gradient-primary shadow-elegant">
             Secure your seat

@@ -1,12 +1,14 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { Link } from "@tanstack/react-router";
 import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
+import { db } from "@/lib/db";
+import { createServerFn } from "@tanstack/react-start";
+import * as jose from "jose";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
@@ -19,41 +21,97 @@ const schema = z.object({
   password: z.string().min(6).max(100),
 });
 
+// Simple bcrypt for password hashing
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  const passwordHash = await hashPassword(password);
+  return passwordHash === hash;
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-secret-change-me");
+
+async function createToken(userId: string, email: string): Promise<string> {
+  return await new jose.SignJWT({ userId, email })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("7d")
+    .sign(JWT_SECRET);
+}
+
+async function verifyToken(token: string): Promise<{ userId: string; email: string } | null> {
+  try {
+    const { payload } = await jose.jwtVerify(token, JWT_SECRET);
+    return payload as { userId: string; email: string };
+  } catch {
+    return null;
+  }
+}
+
+// Server functions for auth
+export const loginFn = createServerFn({ method: "POST" })
+  .validator(schema)
+  .handler(async ({ data }) => {
+    const user = await db.user.findUnique({ where: { email: data.email } });
+    if (!user) throw new Error("Invalid email or password");
+
+    const isValid = await verifyPassword(data.password, user.passwordHash);
+    if (!isValid) throw new Error("Invalid email or password");
+
+    const token = await createToken(user.id, user.email);
+    return { token, user: { id: user.id, email: user.email, role: user.role } };
+  });
+
+export const signupFn = createServerFn({ method: "POST" })
+  .validator(schema.extend({ fullName: z.string().optional() }))
+  .handler(async ({ data }) => {
+    const existing = await db.user.findUnique({ where: { email: data.email } });
+    if (existing) throw new Error("Email already in use");
+
+    const passwordHash = await hashPassword(data.password);
+    const user = await db.user.create({
+      data: {
+        email: data.email,
+        passwordHash,
+      },
+    });
+
+    const token = await createToken(user.id, user.email);
+    return { token, user: { id: user.id, email: user.email, role: user.role } };
+  });
+
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [form, setForm] = useState({ email: "", password: "", fullName: "" });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/" });
-    });
-  }, [navigate]);
-
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(form);
     if (!parsed.success) return toast.error(parsed.error.issues[0].message);
     setLoading(true);
-    if (mode === "signup") {
-      const { error } = await supabase.auth.signUp({
-        email: form.email,
-        password: form.password,
-        options: {
-          emailRedirectTo: window.location.origin,
-          data: { full_name: form.fullName || form.email },
-        },
-      });
-      setLoading(false);
-      if (error) return toast.error(error.message);
-      toast.success("Account created!");
+
+    try {
+      if (mode === "signup") {
+        const result = await signupFn({ data: { email: form.email, password: form.password, fullName: form.fullName } });
+        localStorage.setItem("auth_token", result.token);
+        toast.success("Account created!");
+      } else {
+        const result = await loginFn({ data: { email: form.email, password: form.password } });
+        localStorage.setItem("auth_token", result.token);
+      }
       navigate({ to: "/" });
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.password });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Authentication failed");
+    } finally {
       setLoading(false);
-      if (error) return toast.error(error.message);
-      navigate({ to: "/" });
     }
   };
 

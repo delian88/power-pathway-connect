@@ -1,39 +1,46 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import type { Session, User } from "@supabase/supabase-js";
+import * as jose from "jose";
+
+interface AuthUser {
+  id: string;
+  email: string;
+  role: string;
+}
 
 export function useAuth() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
       setLoading(false);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    if (!user) {
-      setIsAdmin(false);
       return;
     }
-    supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", user.id)
-      .eq("role", "admin")
-      .maybeSingle()
-      .then(({ data }) => setIsAdmin(!!data));
-  }, [user]);
 
-  return { session, user, isAdmin, loading };
+    const verifyToken = async () => {
+      try {
+        const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-secret-change-me");
+        const { payload } = await jose.jwtVerify(token, JWT_SECRET);
+        setUser({
+          id: payload.userId as string,
+          email: payload.email as string,
+          role: payload.role as string || "user",
+        });
+      } catch {
+        localStorage.removeItem("auth_token");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    verifyToken();
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("auth_token");
+    setUser(null);
+  };
+
+  return { user, loading, logout };
 }
