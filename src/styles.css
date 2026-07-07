@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -171,4 +170,3 @@
 @utility shadow-glow {
   box-shadow: var(--shadow-glow);
   }
-}
