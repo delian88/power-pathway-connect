@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Plus, X, CreditCard } from "lucide-react";
-import { saveImageLocally } from "@/lib/upload"; // We need to move saveImageLocally to a util or just redefine it.
 
 export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(async () => {
   const session = await verifySession();
