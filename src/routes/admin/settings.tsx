@@ -49,6 +49,7 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
         contactEmail: data.contactEmail,
         contactPhone: data.contactPhone,
         address: data.address,
+        eventFee: Number(data.eventFee),
       },
       create: {
         id: 1,
@@ -58,6 +59,7 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
         contactEmail: data.contactEmail,
         contactPhone: data.contactPhone,
         address: data.address,
+        eventFee: Number(data.eventFee),
       }
     });
 
@@ -80,6 +82,7 @@ function SettingsPage() {
     contactEmail: settings?.contactEmail || "",
     contactPhone: settings?.contactPhone || "",
     address: settings?.address || "",
+    eventFee: settings?.eventFee || 0,
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -197,6 +200,20 @@ function SettingsPage() {
               onChange={e => setFormData({...formData, address: e.target.value})} 
               rows={2}
             />
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Business Settings</h2>
+          <div>
+            <Label>Event Publishing Fee ($)</Label>
+            <Input 
+              type="number"
+              step="0.01"
+              value={formData.eventFee} 
+              onChange={e => setFormData({...formData, eventFee: Number(e.target.value)})} 
+            />
+            <p className="text-xs text-gray-500 mt-1">Users pay this fee after publishing their first free event.</p>
           </div>
         </div>
 

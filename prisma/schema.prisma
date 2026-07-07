@@ -12,6 +12,7 @@ model User {
   email         String   @unique
   passwordHash  String
   role          String   @default("admin")
+  events        Event[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -24,6 +25,7 @@ model SiteSettings {
   contactEmail String?
   contactPhone String?
   address      String?  @db.Text
+  eventFee     Float    @default(0)
   updatedAt    DateTime @updatedAt
 }
 
@@ -34,6 +36,8 @@ model Event {
   date        DateTime
   imageUrl    String?
   type        String   @default("workshop") // e.g., "workshop", "conference"
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

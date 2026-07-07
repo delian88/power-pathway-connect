@@ -23,8 +23,8 @@ export function SiteHeader() {
           <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/admin">
-            <Button variant="outline" size="sm" className="hidden sm:inline-flex">Admin</Button>
+          <Link to="/login">
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex">Login</Button>
           </Link>
           <Link to="/contact">
             <Button size="sm" className="bg-gradient-primary shadow-elegant">Inquire Now</Button>

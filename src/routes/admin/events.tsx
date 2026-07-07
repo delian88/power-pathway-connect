@@ -11,6 +11,7 @@ import { Trash2, Plus, Edit2, X } from "lucide-react";
 
 export const getEventsFn = createServerFn({ method: "GET" }).handler(async () => {
   const events = await db.event.findMany({
+    include: { user: { select: { email: true } } },
     orderBy: { date: 'desc' }
   });
   return JSON.parse(JSON.stringify(events));
@@ -272,7 +273,9 @@ function EventsAdminPage() {
                     </span>
                     {ev.title}
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">{new Date(ev.date).toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground mt-1">
+                    {new Date(ev.date).toLocaleString()} • {ev.user ? `Posted by: ${ev.user.email}` : "Admin"}
+                  </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <Button size="icon" variant="ghost" onClick={() => handleEdit(ev)} className="text-gray-500 hover:text-[#109cde] hover:bg-blue-50">

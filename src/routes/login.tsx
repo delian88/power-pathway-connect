@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
@@ -16,37 +16,34 @@ const loginSchema = z.object({
   password: z.string().min(6),
 });
 
-export const loginFn = createServerFn("POST", async (data: z.infer<typeof loginSchema>) => {
-  const parsed = loginSchema.safeParse(data);
-  if (!parsed.success) {
-    throw new Error("Invalid input");
-  }
+export const loginFn = createServerFn({ method: "POST" })
+  .validator((data: z.infer<typeof loginSchema>) => loginSchema.parse(data))
+  .handler(async ({ data }) => {
+    const { email, password } = data;
 
-  const { email, password } = parsed.data;
+    const user = await db.user.findUnique({
+      where: { email },
+    });
 
-  const user = await db.user.findUnique({
-    where: { email },
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
+
+    const bcrypt = await import("bcrypt");
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isPasswordValid) {
+      throw new Error("Invalid credentials");
+    }
+
+    await createSession(user.id, user.email, user.role);
+    return { success: true, role: user.role };
   });
 
-  if (!user) {
-    throw new Error("Invalid credentials");
-  }
-
-  const bcrypt = await import("bcrypt");
-  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
-  if (!isPasswordValid) {
-    throw new Error("Invalid credentials");
-  }
-
-  await createSession(user.id, user.email, user.role);
-  return { success: true };
+export const Route = createFileRoute("/login")({
+  component: Login,
 });
 
-export const Route = createFileRoute("/admin/login")({
-  component: AdminLogin,
-});
-
-function AdminLogin() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,9 +54,13 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      await loginFn({ email, password });
+      const result = await loginFn({ data: { email, password } });
       toast.success("Login successful");
-      navigate({ to: "/admin" });
+      if (result.role === 'admin') {
+        navigate({ to: "/admin" });
+      } else {
+        navigate({ to: "/dashboard" });
+      }
     } catch (error: any) {
       toast.error(error.message || "Failed to login");
     } finally {
@@ -72,7 +73,8 @@ function AdminLogin() {
       <SiteHeader />
       <div className="flex-1 flex items-center justify-center p-6 pt-24 bg-secondary/30">
         <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-elegant border border-border/60">
-          <h1 className="text-2xl font-bold text-center mb-6 text-[#263566]">Admin Login</h1>
+          <h1 className="text-2xl font-bold text-center mb-2 text-[#263566]">Welcome Back</h1>
+          <p className="text-center text-muted-foreground mb-6">Enter your details to access your account.</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
@@ -83,7 +85,7 @@ function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="mt-1"
-                placeholder="admin@example.com"
+                placeholder="email@example.com"
               />
             </div>
             <div>
@@ -105,6 +107,12 @@ function AdminLogin() {
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
+          <div className="mt-6 text-center text-sm">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-[#109cde] hover:underline font-medium">
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
       <SiteFooter />

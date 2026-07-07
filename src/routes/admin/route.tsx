@@ -18,12 +18,12 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
 export const Route = createFileRoute("/admin")({
   beforeLoad: async ({ location }) => {
     // If we're already on the login page, don't check auth and redirect
-    if (location.pathname === "/admin/login") return;
+    if (location.pathname === "/login") return;
 
     const session = await getSessionFn();
     if (!session) {
       throw redirect({
-        to: "/admin/login",
+        to: "/login",
       });
     }
     return { session };
@@ -37,7 +37,7 @@ function AdminLayout() {
   const handleLogout = async () => {
     await logoutFn();
     router.invalidate();
-    router.navigate({ to: "/admin/login" });
+    router.navigate({ to: "/login" });
   };
 
   return (
