@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("admin")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model SiteSettings {
+  id           Int      @id @default(1)
+  heroText     String   @db.Text
+  heroSubText  String   @db.Text
+  logoUrl      String?
+  contactEmail String?
+  contactPhone String?
+  address      String?  @db.Text
+  updatedAt    DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  date        DateTime
+  imageUrl    String?
+  type        String   @default("workshop") // e.g., "workshop", "conference"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

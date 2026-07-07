@@ -1,17 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Zap, LogOut } from "lucide-react";
+import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/lib/auth-hooks";
-import { supabase } from "@/integrations/supabase/client";
-
 export function SiteHeader() {
-  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
-
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/" });
-  };
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/60">
@@ -32,22 +23,12 @@ export function SiteHeader() {
           <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
         </nav>
         <div className="flex items-center gap-2">
-          {user ? (
-            <>
-              {isAdmin && (
-                <Link to="/admin">
-                  <Button variant="outline" size="sm">Admin</Button>
-                </Link>
-              )}
-              <Button variant="ghost" size="sm" onClick={signOut}>
-                <LogOut className="w-4 h-4" />
-              </Button>
-            </>
-          ) : (
-            <Link to="/auth">
-              <Button size="sm" className="bg-gradient-primary shadow-elegant">Sign in</Button>
-            </Link>
-          )}
+          <Link to="/admin">
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex">Admin</Button>
+          </Link>
+          <Link to="/contact">
+            <Button size="sm" className="bg-gradient-primary shadow-elegant">Inquire Now</Button>
+          </Link>
         </div>
       </div>
     </header>
