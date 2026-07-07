@@ -1,0 +1,66 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ApplyDialog } from "./apply-dialog";
+
+export type EventRow = {
+  id: string;
+  title: string;
+  description: string;
+  event_date: string;
+  location: string;
+  capacity: number;
+  image_url: string | null;
+};
+
+export function EventCard({ event, index = 0 }: { event: EventRow; index?: number }) {
+  const [open, setOpen] = useState(false);
+  const date = new Date(event.event_date);
+
+  return (
+    <>
+      <motion.article
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5, delay: index * 0.08 }}
+        className="group relative rounded-2xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-elegant transition-all duration-500"
+      >
+        <div className="aspect-[16/10] overflow-hidden bg-gradient-primary relative">
+          {event.image_url ? (
+            <img
+              src={event.image_url}
+              alt={event.title}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-hero" />
+          )}
+          <div className="absolute top-4 left-4 bg-background/95 backdrop-blur px-3 py-2 rounded-lg text-center shadow-sm">
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              {date.toLocaleString("en-US", { month: "short" })}
+            </div>
+            <div className="text-xl font-bold leading-none">{date.getDate()}</div>
+          </div>
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+            {event.title}
+          </h3>
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{event.description}</p>
+          <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-5">
+            <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{date.toLocaleDateString()}</span>
+            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{event.location}</span>
+            <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" />{event.capacity} seats</span>
+          </div>
+          <Button onClick={() => setOpen(true)} className="w-full bg-gradient-primary shadow-elegant">
+            Secure your seat
+          </Button>
+        </div>
+      </motion.article>
+      <ApplyDialog eventId={event.id} eventTitle={event.title} open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
