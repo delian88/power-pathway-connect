@@ -214,6 +214,42 @@ function Index() {
         </div>
       </section>
 
+      {/* Upcoming Events */}
+      {events && events.length > 0 && (
+        <section className="py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-4">Upcoming Events & Workshops</h2>
+              <div className="w-16 h-1 bg-[#109cde] rounded-full mx-auto"></div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {events.map((ev: any) => (
+                <Link key={ev.id} to={`/events/${ev.id}`} className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+                  {ev.imageUrl && (
+                    <div className="h-48 overflow-hidden">
+                      <img src={ev.imageUrl} alt={ev.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    </div>
+                  )}
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="mb-3">
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${ev.type === 'conference' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                        {ev.type === 'conference' ? 'Conference' : 'Workshop'}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-[#263566] mb-2 group-hover:text-[#109cde] transition-colors">{ev.title}</h3>
+                    <p className="text-sm text-gray-500 mb-4">{new Date(ev.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                    <p className="text-gray-600 line-clamp-3 mb-6 flex-1">{ev.description}</p>
+                    <span className="text-[#109cde] font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                      View Details <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Our Approach */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6">
