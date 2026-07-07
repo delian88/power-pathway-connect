@@ -20,21 +20,23 @@ export const Route = createFileRoute("/events/$eventId")({
     const event = await getEventFn({ data: params.eventId });
     return { event };
   },
-  meta: ({ loaderData }) => {
-    if (!loaderData?.event) return [{ title: "Event Not Found" }];
+  head: ({ loaderData }) => {
+    if (!loaderData?.event) return { meta: [{ title: "Event Not Found" }] };
     const event = loaderData.event;
-    return [
-      { title: `${event.title} - National Electricity Workshop` },
-      { name: "description", content: event.description.substring(0, 160) },
-      { property: "og:title", content: event.title },
-      { property: "og:description", content: event.description.substring(0, 160) },
-      { property: "og:image", content: event.imageUrl || "https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-hero-v4.jpg" },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: event.title },
-      { name: "twitter:description", content: event.description.substring(0, 160) },
-      { name: "twitter:image", content: event.imageUrl || "https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-hero-v4.jpg" }
-    ];
+    return {
+      meta: [
+        { title: `${event.title} - National Electricity Workshop` },
+        { name: "description", content: event.description.substring(0, 160) },
+        { property: "og:title", content: event.title },
+        { property: "og:description", content: event.description.substring(0, 160) },
+        { property: "og:image", content: event.imageUrl || "https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-hero-v4.jpg" },
+        { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: event.title },
+        { name: "twitter:description", content: event.description.substring(0, 160) },
+        { name: "twitter:image", content: event.imageUrl || "https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-hero-v4.jpg" }
+      ]
+    };
   },
   component: EventPage,
 });

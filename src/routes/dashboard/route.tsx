@@ -1,5 +1,4 @@
 import { createFileRoute, Outlet, redirect, useRouter } from "@tanstack/react-router";
-import { getSessionFn, logoutFn } from "../login"; // wait, logoutFn is in admin/route or login?
 // Actually I need to export getSessionFn and logoutFn from somewhere central, or just put them in auth or here.
 // I'll put them in login.tsx or I'll just use the ones from admin/route.tsx for now.
 import { getSessionFn as getAdminSessionFn, logoutFn as adminLogoutFn } from "../admin/route";
