@@ -72,16 +72,11 @@ function Index() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover hidden md:block"
+            className="w-full h-full object-cover object-right md:object-center"
             poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
           >
             <source src="https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4" type="video/mp4" />
           </video>
-          <img
-            src="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
-            alt="Mobile background"
-            className="w-full h-full object-cover object-right md:hidden"
-          />
           {/* Dark overlay for readability */}
           <div className="absolute inset-0 bg-slate-900/60" />
         </div>
