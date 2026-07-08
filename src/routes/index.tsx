@@ -73,6 +73,7 @@ function Index() {
   }, []);
 
   const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [activeDay, setActiveDay] = useState(1);
 
   useEffect(() => {
     if (!events || events.length === 0) return;
@@ -178,177 +179,381 @@ function Index() {
         </div>
       </section>
 
-      {/* Value Proposition (Planners vs Suppliers) */}
-      <section className="w-full grid md:grid-cols-2">
-        {/* Planners */}
-        <div className="relative group overflow-hidden min-h-[500px] flex items-center justify-center">
-          <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=80" 
-              alt="For Planners" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-[#008753]/90 transition-opacity duration-500 group-hover:bg-[#006B42]/95" />
+      {/* Info Bar */}
+      <div className="w-full bg-[#008753] py-4 text-white">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-around items-center gap-4 text-sm md:text-base font-semibold tracking-wide">
+          <div className="flex items-center gap-2">
+            <span className="text-[#D4AF37] text-lg">📅</span> Mar 15-18, 2027
           </div>
-          <div className="relative z-10 text-center text-white p-12 max-w-lg">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-sans">For Planners</h2>
-            <p className="text-lg text-white/90 mb-8 leading-relaxed font-poppins">
-              We partner with you to develop custom event strategies that align with your organizational goals. Our comprehensive services ensure every detail is meticulously managed.
-            </p>
-            <Link to="/about">
-              <Button variant="outline" className="text-white border-white bg-transparent hover:bg-white hover:text-[#008753] transition-colors rounded-none px-8 py-6 uppercase tracking-wider text-sm font-semibold border-2">
-                Services for Planners
-              </Button>
-            </Link>
+          <div className="flex items-center gap-2">
+            <span className="text-[#D4AF37] text-lg">📍</span> Abuja, Nigeria
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[#D4AF37] text-lg">🎯</span> Sustainable Energy Future
           </div>
         </div>
+      </div>
 
-        {/* Suppliers */}
-        <div className="relative group overflow-hidden min-h-[500px] flex items-center justify-center">
-          <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1573165231977-3f0e27806045?auto=format&fit=crop&w=1000&q=80" 
-              alt="For Suppliers" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-[#0F1A1C]/90 transition-opacity duration-500 group-hover:bg-[#1A2A2E]/95" />
-          </div>
-          <div className="relative z-10 text-center text-white p-12 max-w-lg">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-sans">For Suppliers</h2>
-            <p className="text-lg text-white/90 mb-8 leading-relaxed font-poppins">
-              We connect hotels, destinations, and event suppliers with thousands of highly qualified meeting professionals, helping you grow your group business and build lasting relationships.
+      {/* Partner Strip */}
+      <div className="w-full bg-white py-10 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between items-center gap-8 text-gray-500 uppercase tracking-widest text-sm font-bold opacity-80 hover:opacity-100 transition-all">
+          <div className="flex flex-col items-center">HEOSL</div>
+          <div className="flex flex-col items-center">Africa Oil & Gas</div>
+          <div className="flex flex-col items-center">Energy Republic</div>
+          <div className="flex flex-col items-center">ICRC</div>
+          <div className="flex flex-col items-center">ECOWAS</div>
+          <div className="flex flex-col items-center">GIZ</div>
+        </div>
+      </div>
+
+      {/* Transformation Hub */}
+      <section className="py-24 bg-[#F8F9FA] relative">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+          
+          {/* Left Content */}
+          <div className="pr-4">
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-6 leading-tight">
+              Africa's Energy <span className="text-[#D4AF37]">Transformation <br/> Hub</span>
+            </h2>
+            <div className="w-24 h-1.5 bg-[#D4AF37] mb-8"></div>
+            <p className="text-lg text-gray-600 font-poppins leading-relaxed mb-12">
+              As the official energy event of the Federal Government of Nigeria, the Nigeria International Energy Summit (NIES) serves as the continent's premier platform for energy policy, investment, and innovation.
             </p>
-            <Link to="/about">
-              <Button variant="outline" className="text-white border-white bg-transparent hover:bg-white hover:text-[#0F1A1C] transition-colors rounded-none px-8 py-6 uppercase tracking-wider text-sm font-semibold border-2">
-                Supplier Partnerships
-              </Button>
-            </Link>
+            
+            <div className="flex flex-col gap-10">
+              <div className="flex gap-6 items-start">
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+                  🤝
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-[#008753] mb-2">High-Level Engagement</h4>
+                  <p className="text-gray-600">Direct access to ministers, regulators, and industry CEOs driving Africa's energy agenda.</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-6 items-start">
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+                  📈
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-[#008753] mb-2">Strategic Insights</h4>
+                  <p className="text-gray-600">Forward-looking analysis on emerging trends, policies, and investment opportunities.</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-6 items-start">
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+                  🌐
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-[#008753] mb-2">Global Connectivity</h4>
+                  <p className="text-gray-600">Connect with international energy leaders and explore cross-border partnerships.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Content / Image Stack */}
+          <div className="relative mt-8 lg:mt-0 h-[700px] w-full">
+            <div className="absolute inset-0 rounded-tl-[100px] rounded-br-[100px] overflow-hidden shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1541888081688-66175e18231a?auto=format&fit=crop&w=1200&q=80" 
+                alt="Energy Transformation Hub" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+            
+            {/* Top Right Floating Card */}
+            <div className="absolute -top-6 -right-6 md:top-8 md:-right-8 bg-white p-6 md:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col gap-4 border border-gray-100 max-w-[320px] z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-[#008753] flex items-center justify-center text-white text-xl flex-shrink-0">
+                  🏅
+                </div>
+                <span className="font-bold text-[#008753] text-lg leading-tight">Official Government<br/>Event</span>
+              </div>
+              <p className="text-gray-500 text-sm leading-relaxed mt-2">
+                Endorsed by the Federal Government of Nigeria as the principal energy industry gathering.
+              </p>
+            </div>
+            
+            {/* Bottom Left Floating Card */}
+            <div className="absolute -bottom-6 -left-6 md:bottom-12 md:-left-12 bg-white p-6 md:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col gap-4 border border-gray-100 max-w-[320px] z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-[#008753] flex items-center justify-center text-white text-xl flex-shrink-0">
+                  👥
+                </div>
+                <span className="font-bold text-[#008753] text-lg leading-tight">5,000+ Participants</span>
+              </div>
+              <p className="text-gray-500 text-sm leading-relaxed mt-2">
+                Join ministers, CEOs, and experts representing over 50 countries globally.
+              </p>
+            </div>
+            
           </div>
         </div>
       </section>
 
-      {/* Featured Events (Auto Sliding) */}
-      {events && events.length > 0 && (
-        <section className="py-24 bg-[#0F1A1C] text-white overflow-hidden relative border-t-[6px] border-[#D4AF37]">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#008753] rounded-full blur-[120px] opacity-20 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D4AF37] rounded-full blur-[120px] opacity-10 pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-16">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 font-sans text-white">Featured Events</h2>
-                <div className="w-24 h-1.5 bg-[#D4AF37]"></div>
-              </div>
-              <p className="text-gray-400 max-w-sm mt-6 md:mt-0 font-poppins text-lg">Discover some of the most anticipated gatherings and workshops in the industry.</p>
-            </div>
+      {/* Event Schedule */}
+      <section className="py-24 bg-[#FAFAFA] relative">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
+              Event <span className="text-[#D4AF37]">Schedule</span>
+            </h2>
+            <p className="text-gray-600 text-lg font-poppins">
+              Four days of transformative discussions, networking, and deal-making
+            </p>
+          </div>
 
-            <div className="relative min-h-[450px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={featuredIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="absolute inset-0 w-full"
-                >
-                  {events[featuredIndex] && (
-                    <div className="flex flex-col md:flex-row bg-[#1A2A2E] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-[#008753]/20 h-full group">
-                      <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
-                        <img 
-                          src={events[featuredIndex].imageUrl || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80"} 
-                          alt={events[featuredIndex].title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A2A2E] via-transparent to-transparent md:bg-gradient-to-r" />
-                        <div className="absolute top-4 left-4">
-                           <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider bg-[#D4AF37] text-[#0F1A1C] shadow-lg">
-                            Featured {events[featuredIndex].type === 'conference' ? 'Conference' : 'Workshop'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
-                        <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white font-sans leading-tight">{events[featuredIndex].title}</h3>
-                        <p className="text-[#D4AF37] font-semibold mb-6 flex items-center gap-2 text-lg">
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                          {new Date(events[featuredIndex].date).toLocaleDateString('en-GB', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
-                        </p>
-                        <p className="text-slate-300 leading-relaxed mb-8 line-clamp-4 text-lg">
-                          {events[featuredIndex].description}
-                        </p>
-                        <Link to="/events/$slug" params={{ slug: events[featuredIndex].slug }} className="mt-auto inline-block">
-                          <Button size="lg" className="bg-[#D4AF37] hover:bg-[#E8C257] text-[#0F1A1C] hover:text-[#0F1A1C] rounded-none px-10 py-6 font-bold shadow-lg transition-transform hover:-translate-y-1">
-                            View Event Details
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            
-            {/* Dots */}
-            <div className="flex justify-center gap-3 mt-12 relative z-20">
-              {events.map((_: any, idx: number) => (
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            {/* Tabs */}
+            <div className="flex bg-[#008753] text-white">
+              {[
+                { day: 1, date: "Feb 2" },
+                { day: 2, date: "Feb 3" },
+                { day: 3, date: "Feb 4" },
+                { day: 4, date: "Feb 5" }
+              ].map((tab) => (
                 <button
-                  key={idx}
-                  onClick={() => setFeaturedIndex(idx)}
-                  className={`w-3 h-3 rounded-full transition-colors ${idx === featuredIndex ? 'bg-[#D4AF37]' : 'bg-[#008753]/30 hover:bg-[#008753]'}`}
-                  aria-label={`Go to featured event ${idx + 1}`}
-                />
+                  key={tab.day}
+                  onClick={() => setActiveDay(tab.day)}
+                  className={`flex-1 py-4 flex flex-col items-center justify-center transition-all ${
+                    activeDay === tab.day 
+                      ? "bg-[#00A86B] border-b-[5px] border-[#D4AF37]" 
+                      : "hover:bg-[#00A86B]/50 border-b-[5px] border-transparent"
+                  }`}
+                >
+                  <span className="font-bold text-lg">Day {tab.day}</span>
+                  <span className="text-sm font-semibold opacity-90">{tab.date}</span>
+                </button>
               ))}
             </div>
-          </div>
-        </section>
-      )}
 
-      {/* Testimonials */}
+            {/* Schedule Content */}
+            <div className="p-0">
+              {/* Item 1 */}
+              <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
+                  <span className="text-[#008753] font-bold text-lg tracking-wide">09:30 - 09:45</span>
+                </div>
+                <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
+                  <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
+                    NIES – The Journey So Far
+                  </h4>
+                  <div className="flex flex-col gap-2 md:text-right">
+                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
+                      <span className="text-[#D4AF37] text-base">📍</span> Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja
+                    </div>
+                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
+                      <span className="text-[#D4AF37] text-base">👥</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Item 2 */}
+              <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
+                  <span className="text-[#008753] font-bold text-lg tracking-wide">09:45 - 10:00</span>
+                </div>
+                <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
+                  <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
+                    Welcome Address
+                  </h4>
+                  <div className="flex flex-col gap-2 md:text-right">
+                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
+                      <span className="text-[#D4AF37] text-base">📍</span> Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Why Attend NIES */}
+      <section className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-6">
+              Why Attend <span className="text-[#D4AF37]">NIES 2027?</span>
+            </h2>
+            <p className="text-gray-500 text-lg md:text-xl font-poppins">
+              Discover unparalleled opportunities for strategic growth and industry leadership
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 items-center lg:items-end">
+            
+            {/* Card 1 - Left */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 opacity-80 hover:opacity-100 transition-all transform scale-95 hover:scale-100 mb-4 lg:mb-0">
+              <div className="h-64 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80" alt="Networking" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">Strategic Networking</h3>
+                <p className="text-gray-400 font-poppins leading-relaxed text-sm">
+                  Connect with energy ministers, NOC/IOC CEOs, and policymakers in curated sessions designed for high-level engagement.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 - Center (Featured) */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#008753]/20 border-t-[6px] border-t-[#008753] relative z-10 transform scale-105">
+              <div className="h-72 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&w=800&q=80" alt="Industry Insights" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-10">
+                <h3 className="text-[28px] font-bold text-[#0F1A1C] mb-4 font-sans">Industry Insights</h3>
+                <p className="text-gray-600 font-poppins leading-relaxed">
+                  Gain exclusive insights into emerging policies, technologies, and market trends shaping the future of African energy.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 - Right */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 opacity-80 hover:opacity-100 transition-all transform scale-95 hover:scale-100 mb-4 lg:mb-0">
+              <div className="h-64 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1559136555-e46be62a259b?auto=format&fit=crop&w=800&q=80" alt="Investment Opportunities" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">Investment Opportunities</h3>
+                <p className="text-gray-400 font-poppins leading-relaxed text-sm">
+                  Access Africa's most promising energy projects and connect with international investors seeking strategic partnerships.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Conference Guide */}
+      <section className="py-24 bg-[#008753] relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-white mb-4">
+              Conference <span className="text-[#D4AF37]">Guide</span>
+            </h2>
+            <p className="text-white/90 text-lg font-poppins">
+              Comprehensive programming across multiple specialized tracks
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            
+            {/* Track 1: Plenary Sessions */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
+              <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
+                <div className="w-16 h-16 rounded-full bg-[#008753] flex items-center justify-center text-white mb-6 shadow-md shadow-[#008753]/30">
+                  {/* Mic Icon */}
+                  <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">Plenary Sessions</h3>
+                <p className="text-gray-400 font-medium">High-level strategic discussions</p>
+              </div>
+              <div className="p-8 bg-white min-h-[160px]">
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 02, 10:50 AM - 11:00 AM</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">Panel Session 1 - Local Content for Prosperity</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">Beyond Policy Control: Empowering African Energy Enterprises for Global Play...</p>
+              </div>
+            </div>
+
+            {/* Track 2: Technical Sessions */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
+              <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
+                <div className="w-16 h-16 rounded-full bg-[#008753] flex items-center justify-center text-white mb-6 shadow-md shadow-[#008753]/30">
+                  {/* Gears Icon */}
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">Technical Sessions</h3>
+                <p className="text-gray-400 font-medium">Deep-dive technical workshops</p>
+              </div>
+              <div className="p-8 bg-white min-h-[160px]">
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 04, 01:15 PM - 03:00 PM</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">EPC Roundtable 2.0-Invite Only</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">Attracting Global EPC Leaders to Power Nigeria's Oil & Gas Growth...</p>
+              </div>
+            </div>
+
+            {/* Track 3: Networking Events */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
+              <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
+                <div className="w-16 h-16 rounded-full bg-[#008753] flex items-center justify-center text-white mb-6 shadow-md shadow-[#008753]/30">
+                  {/* Star Icon */}
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">Networking Events</h3>
+                <p className="text-gray-400 font-medium">Strategic social interactions</p>
+              </div>
+              <div className="p-8 bg-white min-h-[160px]">
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 02, 06:00 PM - 07:30 PM</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">Ministers & Heads of Delegation Reception</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">Exclusive</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Speakers */}
       <section className="py-24 bg-[#F8F9FA] relative">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col items-center text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#0F1A1C] mb-4 font-sans">What Our Customers Say</h2>
-            <div className="w-24 h-1.5 bg-[#008753]"></div>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
+              Featured <span className="text-[#D4AF37]">Speakers</span>
+            </h2>
+            <p className="text-gray-500 text-lg font-poppins">
+              Learn from industry pioneers and thought leaders
+            </p>
           </div>
           
-          <div className="relative max-w-4xl mx-auto bg-white rounded-xl shadow-sm p-8 md:p-14 border border-slate-100">
-            <img 
-              src="https://conferencedirect.com/wp-content/uploads/2023/02/quote-mark-light-blue-v1.png" 
-              alt="Quote" 
-              className="absolute top-8 left-8 w-12 opacity-30"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <div className="relative z-10 min-h-[150px] flex items-center justify-center text-center mt-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={testimonialIndex}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <p className="text-xl md:text-3xl text-gray-700 leading-relaxed font-light italic mb-10 font-poppins px-4 md:px-12">
-                    "{TESTIMONIALS[testimonialIndex].quote}"
-                  </p>
-                  <div>
-                    <h4 className="text-[#0F1A1C] font-bold text-xl">{TESTIMONIALS[testimonialIndex].author}</h4>
-                    <span className="text-[#008753] text-sm font-semibold tracking-wide uppercase">{TESTIMONIALS[testimonialIndex].company}</span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+            {/* Speaker 1 */}
+            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
+              <div className="h-64 bg-[#E2E8F0] w-full">
+                 {/* Using placeholder colors or generic professional headshots */}
+                 <div className="w-full h-full bg-slate-200 object-cover" />
+              </div>
+              <div className="p-6 h-[100px] flex items-center">
+                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E. Bola Ahmed Tinubu</h3>
+              </div>
             </div>
-            
-            {/* Carousel indicators */}
-            <div className="flex justify-center gap-3 mt-10">
-              {TESTIMONIALS.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setTestimonialIndex(idx)}
-                  className={`w-3 h-3 rounded-full transition-colors ${idx === testimonialIndex ? 'bg-[#109cde]' : 'bg-slate-300 hover:bg-slate-400'}`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              ))}
+
+            {/* Speaker 2 */}
+            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
+              <div className="h-64 bg-[#E2E8F0] w-full">
+                 <div className="w-full h-full bg-slate-200 object-cover" />
+              </div>
+              <div className="p-6 h-[100px] flex items-center">
+                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E Adama Barrow</h3>
+              </div>
             </div>
+
+            {/* Speaker 3 */}
+            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
+              <div className="h-64 bg-[#E2E8F0] w-full">
+                 <div className="w-full h-full bg-slate-200 object-cover" />
+              </div>
+              <div className="p-6 h-[100px] flex items-center">
+                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E. Kashim Shettima</h3>
+              </div>
+            </div>
+
+            {/* Speaker 4 */}
+            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
+              <div className="h-64 bg-[#E2E8F0] w-full">
+                 <div className="w-full h-full bg-slate-200 object-cover" />
+              </div>
+              <div className="p-6 h-[100px] flex items-center">
+                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E Teodoro Obiang Nguema Mbasogo</h3>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
