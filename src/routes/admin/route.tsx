@@ -55,6 +55,7 @@ function AdminLayout() {
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Events", href: "/admin/events", icon: Calendar },
     { name: "Applicants", href: "/admin/applicants", icon: Users },
+    { name: "Notifications", href: "/admin/notifications", icon: Bell },
     { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
     { name: "Reports", href: "/admin/reports", icon: FileText },
     { name: "Settings", href: "/admin/settings", icon: Settings },

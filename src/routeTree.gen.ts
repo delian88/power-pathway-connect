@@ -28,7 +28,11 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as EventsSlugRouteImport } from './routes/events.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminReportsRouteImport } from './routes/admin/reports'
+import { Route as AdminNotificationsRouteImport } from './routes/admin/notifications'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminEventsRouteImport } from './routes/admin/events'
+import { Route as AdminApplicantsRouteImport } from './routes/admin/applicants'
 
 const SponsorshipRoute = SponsorshipRouteImport.update({
   id: '/sponsorship',
@@ -125,9 +129,29 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminEventsRoute = AdminEventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminApplicantsRoute = AdminApplicantsRouteImport.update({
+  id: '/applicants',
+  path: '/applicants',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -147,7 +171,11 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
   '/sponsorship': typeof SponsorshipRoute
+  '/admin/applicants': typeof AdminApplicantsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -167,7 +195,11 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
   '/sponsorship': typeof SponsorshipRoute
+  '/admin/applicants': typeof AdminApplicantsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -190,7 +222,11 @@ export interface FileRoutesById {
   '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
   '/sponsorship': typeof SponsorshipRoute
+  '/admin/applicants': typeof AdminApplicantsRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -214,7 +250,11 @@ export interface FileRouteTypes {
     | '/reports'
     | '/signup'
     | '/sponsorship'
+    | '/admin/applicants'
     | '/admin/events'
+    | '/admin/gallery'
+    | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin/'
@@ -234,7 +274,11 @@ export interface FileRouteTypes {
     | '/reports'
     | '/signup'
     | '/sponsorship'
+    | '/admin/applicants'
     | '/admin/events'
+    | '/admin/gallery'
+    | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin'
@@ -256,7 +300,11 @@ export interface FileRouteTypes {
     | '/reports'
     | '/signup'
     | '/sponsorship'
+    | '/admin/applicants'
     | '/admin/events'
+    | '/admin/gallery'
+    | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin/'
@@ -416,6 +464,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/notifications': {
+      id: '/admin/notifications'
+      path: '/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminNotificationsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/events': {
       id: '/admin/events'
       path: '/events'
@@ -423,17 +492,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/applicants': {
+      id: '/admin/applicants'
+      path: '/applicants'
+      fullPath: '/admin/applicants'
+      preLoaderRoute: typeof AdminApplicantsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
+  AdminApplicantsRoute: typeof AdminApplicantsRoute
   AdminEventsRoute: typeof AdminEventsRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
+  AdminNotificationsRoute: typeof AdminNotificationsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminApplicantsRoute: AdminApplicantsRoute,
   AdminEventsRoute: AdminEventsRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
+  AdminNotificationsRoute: AdminNotificationsRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }

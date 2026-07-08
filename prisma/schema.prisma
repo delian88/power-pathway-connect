@@ -26,7 +26,26 @@ model SiteSettings {
   contactPhone String?
   address      String?  @db.Text
   eventFee     Float    @default(0)
+  smtpHost     String?
+  smtpPort     Int?
+  smtpUser     String?
+  smtpPass     String?
+  emailEnabled Boolean  @default(false)
   updatedAt    DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  subject   String
+  message   String   @db.Text
+  sentAt    DateTime @default(now())
+}
+
+model GalleryImage {
+  id        String   @id @default(uuid())
+  url       String   @db.Text
+  caption   String?  @db.Text
+  createdAt DateTime @default(now())
 }
 
 model Event {
@@ -38,7 +57,11 @@ model Event {
   date            DateTime
   imageUrl        String?
   sponsorImageUrl String?
-  type            String   @default("workshop") // e.g., "workshop", "conference"
+  type            String   @default("workshop")
+  location        String?
+  capacity        Int?
+  status          String   @default("Draft")
+  category        String?
   userId          String?
   user            User?         @relation(fields: [userId], references: [id])
   applications    Application[]

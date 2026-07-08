@@ -79,7 +79,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+import { getSessionFn } from "@/routes/admin/route";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: async () => {
+    const session = await getSessionFn();
+    return { session };
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },

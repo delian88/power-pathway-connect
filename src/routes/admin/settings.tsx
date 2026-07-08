@@ -50,6 +50,11 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
         contactPhone: data.contactPhone,
         address: data.address,
         eventFee: Number(data.eventFee),
+        smtpHost: data.smtpHost,
+        smtpPort: data.smtpPort ? Number(data.smtpPort) : null,
+        smtpUser: data.smtpUser,
+        smtpPass: data.smtpPass,
+        emailEnabled: Boolean(data.emailEnabled),
       },
       create: {
         id: 1,
@@ -60,6 +65,11 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
         contactPhone: data.contactPhone,
         address: data.address,
         eventFee: Number(data.eventFee),
+        smtpHost: data.smtpHost,
+        smtpPort: data.smtpPort ? Number(data.smtpPort) : null,
+        smtpUser: data.smtpUser,
+        smtpPass: data.smtpPass,
+        emailEnabled: Boolean(data.emailEnabled),
       }
     });
 
@@ -83,6 +93,11 @@ function SettingsPage() {
     contactPhone: settings?.contactPhone || "",
     address: settings?.address || "",
     eventFee: settings?.eventFee || 0,
+    smtpHost: settings?.smtpHost || "",
+    smtpPort: settings?.smtpPort || "",
+    smtpUser: settings?.smtpUser || "",
+    smtpPass: settings?.smtpPass || "",
+    emailEnabled: settings?.emailEnabled || false,
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -214,12 +229,89 @@ function SettingsPage() {
               onChange={e => setFormData({...formData, eventFee: Number(e.target.value)})} 
             />
             <p className="text-xs text-gray-500 mt-1">Users pay this fee after publishing their first free event.</p>
+            
+            <div className="pt-6 border-t border-gray-100">
+              <h2 className="text-xl font-bold text-[#0F1A1C] mb-6">Email Configuration (SMTP)</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-bold text-gray-700">SMTP Host</Label>
+                  <Input 
+                    placeholder="e.g. smtp.gmail.com"
+                    value={formData.smtpHost} 
+                    onChange={e => setFormData(f => ({ ...f, smtpHost: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-bold text-gray-700">SMTP Port</Label>
+                  <Input 
+                    placeholder="e.g. 587 or 465"
+                    type="number"
+                    value={formData.smtpPort} 
+                    onChange={e => setFormData(f => ({ ...f, smtpPort: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="space-y-2">
+                  <Label className="text-sm font-bold text-gray-700">SMTP Username</Label>
+                  <Input 
+                    placeholder="e.g. you@gmail.com"
+                    value={formData.smtpUser} 
+                    onChange={e => setFormData(f => ({ ...f, smtpUser: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-bold text-gray-700">SMTP Password</Label>
+                  <Input 
+                    type="password"
+                    placeholder="Enter App Password or SMTP Password"
+                    value={formData.smtpPass} 
+                    onChange={e => setFormData(f => ({ ...f, smtpPass: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                <div className="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                  <input 
+                    type="checkbox" 
+                    name="toggle" 
+                    id="emailEnabled" 
+                    checked={formData.emailEnabled}
+                    onChange={e => setFormData(f => ({ ...f, emailEnabled: e.target.checked }))}
+                    className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10"
+                    style={{
+                      transform: formData.emailEnabled ? 'translateX(100%)' : 'translateX(0)',
+                      borderColor: formData.emailEnabled ? '#00A86B' : '#E5E7EB'
+                    }}
+                  />
+                  <label 
+                    htmlFor="emailEnabled" 
+                    className={`toggle-label block overflow-hidden h-6 rounded-full cursor-pointer transition-colors duration-200 ease-in-out ${formData.emailEnabled ? 'bg-[#00A86B]' : 'bg-gray-200'}`}
+                  ></label>
+                </div>
+                <Label htmlFor="emailEnabled" className="text-sm font-bold text-gray-700 cursor-pointer">
+                  Enable Outbound Email Sending
+                </Label>
+                <span className="text-xs text-gray-500 ml-auto">
+                  {formData.emailEnabled ? "Emails will be sent to applicants." : "No emails will be dispatched."}
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-gray-100">
+              <Button 
+                type="submit" 
+                disabled={saving}
+                className="bg-[#00A86B] hover:bg-[#008753] text-white px-8 font-bold"
+              >
+                {saving ? "Saving..." : "Save All Settings"}
+              </Button>
+            </div>
           </div>
         </div>
-
-        <Button type="submit" disabled={saving} className="w-full bg-[#109cde] hover:bg-[#0d84bf] text-white">
-          {saving ? "Saving..." : "Save Settings"}
-        </Button>
       </form>
     </div>
   );

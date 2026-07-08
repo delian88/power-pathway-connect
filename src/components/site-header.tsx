@@ -1,13 +1,21 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { Link, useNavigate, useRouterState, useRouteContext } from "@tanstack/react-router";
+import { Menu, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { logoutFn } from "@/routes/admin/route";
 
 export function SiteHeader() {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
+  const context = useRouteContext({ strict: false });
+  const session = (context as any)?.session;
+
+  const handleLogout = async () => {
+    await logoutFn();
+    window.location.reload();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,11 +110,31 @@ export function SiteHeader() {
 
           {/* CTAs */}
           <div className="flex items-center gap-3">
-            <Link to="/login" className="hidden sm:inline-flex">
-              <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold">
-                Login
-              </Button>
-            </Link>
+            {!session ? (
+              <Link to="/login" className="hidden sm:inline-flex">
+                <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold">
+                  Login
+                </Button>
+              </Link>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2">
+                <Link to="/admin">
+                  <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold flex items-center gap-1.5">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Admin
+                  </Button>
+                </Link>
+                <Button 
+                  onClick={handleLogout}
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-transparent border-transparent text-white/80 hover:bg-red-500/20 hover:text-white px-2"
+                  title="Logout"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
             <Link to="/contact">
               <Button size="sm" className="bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] hover:shadow-lg hover:-translate-y-0.5 transition-all font-bold">
                 Inquire Now
@@ -140,9 +168,26 @@ export function SiteHeader() {
                       transition={{ delay: navLinks.length * 0.1 }}
                       className="mt-6 flex flex-col gap-4"
                     >
-                      <Link to="/login" className="w-full">
-                        <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90">Login</Button>
-                      </Link>
+                      {!session ? (
+                        <Link to="/login" className="w-full">
+                          <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90">Login</Button>
+                        </Link>
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <Link to="/admin" className="w-full">
+                            <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90 flex items-center gap-2 justify-center">
+                              <LayoutDashboard className="w-4 h-4" /> Admin Panel
+                            </Button>
+                          </Link>
+                          <Button 
+                            onClick={handleLogout}
+                            variant="ghost" 
+                            className="w-full text-white/80 hover:bg-red-500/20 hover:text-white"
+                          >
+                            <LogOut className="w-4 h-4 mr-2" /> Logout
+                          </Button>
+                        </div>
+                      )}
                       <Link to="/contact" className="w-full">
                         <Button className="w-full bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] font-bold">Inquire Now</Button>
                       </Link>
