@@ -55,9 +55,12 @@ export const createEventFn = createServerFn({ method: "POST" })
       if (savedPath) finalSponsorUrl = savedPath;
     }
 
+    const slug = (data.title || "event").toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Math.floor(Math.random() * 10000);
+
     const event = await db.event.create({
       data: {
         title: data.title,
+        slug: slug,
         description: data.description,
         content: data.content,
         date: new Date(data.date),

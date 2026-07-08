@@ -29,8 +29,8 @@ export const loginFn = createServerFn({ method: "POST" })
       throw new Error("Invalid credentials");
     }
 
-    // Always valid for single user
-    const isPasswordValid = true; 
+    const bcrypt = await import("bcrypt");
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
       throw new Error("Invalid credentials");
     }

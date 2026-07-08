@@ -61,6 +61,9 @@ export const loginFn = createServerFn({ method: "POST" })
     const user = await db.user.findUnique({ where: { email: data.email } });
     if (!user) throw new Error("Invalid email or password");
 
+    const isValid = await verifyPassword(data.password, user.passwordHash);
+    if (!isValid) throw new Error("Invalid email or password");
+
     const token = await createToken(user.id, user.email);
     return { token, user: { id: user.id, email: user.email, role: user.role } };
   });
@@ -74,7 +77,7 @@ export const signupFn = createServerFn({ method: "POST" })
     const user = await db.user.create({
       data: {
         email: data.email,
-        passwordHash: "dummy_hash",
+        passwordHash: await hashPassword(data.password),
       },
     });
 

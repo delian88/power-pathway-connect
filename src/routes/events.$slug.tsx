@@ -8,16 +8,16 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export const getEventFn = createServerFn({ method: "GET" })
-  .validator((id: unknown) => id as string)
-  .handler(async ({ data: id }) => {
-    const event = await db.event.findUnique({ where: { id } });
+  .validator((slug: unknown) => slug as string)
+  .handler(async ({ data: slug }) => {
+    const event = await db.event.findUnique({ where: { slug } });
     if (!event) return null;
     return JSON.parse(JSON.stringify(event));
   });
 
-export const Route = createFileRoute("/events/$eventId")({
+export const Route = createFileRoute("/events/$slug")({
   loader: async ({ params }) => {
-    const event = await getEventFn({ data: params.eventId });
+    const event = await getEventFn({ data: params.slug });
     return { event };
   },
   head: ({ loaderData }) => {

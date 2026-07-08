@@ -29,7 +29,8 @@ export const signupFn = createServerFn({ method: "POST" })
       throw new Error("Email already in use");
     }
 
-    const passwordHash = "dummy_hash";
+    const bcrypt = await import("bcrypt");
+    const passwordHash = await bcrypt.hash(password, 10);
 
     const user = await db.user.create({
       data: {

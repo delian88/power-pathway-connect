@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, MapPin, Users, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ApplyDialog } from "./apply-dialog";
 
@@ -12,6 +12,7 @@ export type EventRow = {
   imageUrl: string | null;
   type: string;
   userId: string | null;
+  slug?: string;
 };
 
 export function EventCard({ event, index = 0 }: { event: EventRow; index?: number }) {
@@ -58,9 +59,34 @@ export function EventCard({ event, index = 0 }: { event: EventRow; index?: numbe
           <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-5">
             <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{date.toLocaleDateString("en-US")}</span>
           </div>
-          <Button onClick={() => setOpen(true)} className="w-full bg-gradient-primary shadow-elegant">
-            Secure your seat
-          </Button>
+          <div className="flex gap-2 w-full">
+            <Button onClick={() => setOpen(true)} className="flex-1 bg-gradient-primary shadow-elegant">
+              Secure your seat
+            </Button>
+            <Button 
+              variant="outline" 
+              className="px-3 border-slate-200 text-slate-600 hover:text-primary hover:border-primary/50 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const url = `${window.location.origin}/events/${event.slug || event.id}`;
+                if (navigator.share) {
+                  navigator.share({
+                    title: event.title,
+                    text: event.description,
+                    url: url,
+                  }).catch(console.error);
+                } else {
+                  navigator.clipboard.writeText(url);
+                  // We would ideally show a toast here, but for simplicity we just alert or rely on user notice
+                  alert("Link copied to clipboard!");
+                }
+              }}
+              aria-label="Share event"
+            >
+              <Share2 className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </motion.article>
       <ApplyDialog eventId={event.id} eventTitle={event.title} open={open} onOpenChange={setOpen} />

@@ -71,9 +71,12 @@ export const createUserEventFn = createServerFn({ method: "POST" })
       if (savedPath) finalImageUrl = savedPath;
     }
 
+    const slug = (data.title || "event").toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Math.floor(Math.random() * 10000);
+
     const event = await db.event.create({
       data: {
         title: data.title,
+        slug: slug,
         description: data.description,
         date: new Date(data.date),
         type: data.type,
