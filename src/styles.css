@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" source(none);
 @source "../src";
 
@@ -58,6 +59,17 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  --font-sans: 'Barlow', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  
+  --color-summit-primary: #008753;
+  --color-summit-primary-light: #00A86B;
+  --color-summit-primary-dark: #006B42;
+  --color-summit-gold: #D4AF37;
+  --color-summit-gold-light: #E8C257;
+  --color-summit-dark: #0F1A1C;
+  --color-summit-dark-light: #1A2A2E;
 }
 
 :root {

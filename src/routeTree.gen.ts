@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SponsorshipRouteImport } from './routes/sponsorship'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ExhibitionRouteImport } from './routes/exhibition'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
@@ -24,14 +30,39 @@ import { Route as EventsSlugRouteImport } from './routes/events.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminEventsRouteImport } from './routes/admin/events'
 
+const SponsorshipRoute = SponsorshipRouteImport.update({
+  id: '/sponsorship',
+  path: '/sponsorship',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrationRoute = RegistrationRouteImport.update({
+  id: '/registration',
+  path: '/registration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExhibitionRoute = ExhibitionRouteImport.update({
+  id: '/exhibition',
+  path: '/exhibition',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -47,6 +78,11 @@ const ContactRoute = ContactRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -100,11 +136,17 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRouteWithChildren
+  '/exhibition': typeof ExhibitionRoute
+  '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/registration': typeof RegistrationRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
+  '/sponsorship': typeof SponsorshipRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
@@ -114,11 +156,17 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRouteWithChildren
+  '/exhibition': typeof ExhibitionRoute
+  '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/registration': typeof RegistrationRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
+  '/sponsorship': typeof SponsorshipRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
@@ -131,11 +179,17 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRouteWithChildren
+  '/exhibition': typeof ExhibitionRoute
+  '/gallery': typeof GalleryRoute
   '/login': typeof LoginRoute
+  '/registration': typeof RegistrationRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
+  '/sponsorship': typeof SponsorshipRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
@@ -149,11 +203,17 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/about'
+    | '/agenda'
     | '/auth'
     | '/contact'
     | '/events'
+    | '/exhibition'
+    | '/gallery'
     | '/login'
+    | '/registration'
+    | '/reports'
     | '/signup'
+    | '/sponsorship'
     | '/admin/events'
     | '/admin/settings'
     | '/events/$slug'
@@ -163,11 +223,17 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/agenda'
     | '/auth'
     | '/contact'
     | '/events'
+    | '/exhibition'
+    | '/gallery'
     | '/login'
+    | '/registration'
+    | '/reports'
     | '/signup'
+    | '/sponsorship'
     | '/admin/events'
     | '/admin/settings'
     | '/events/$slug'
@@ -179,11 +245,17 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/about'
+    | '/agenda'
     | '/auth'
     | '/contact'
     | '/events'
+    | '/exhibition'
+    | '/gallery'
     | '/login'
+    | '/registration'
+    | '/reports'
     | '/signup'
+    | '/sponsorship'
     | '/admin/events'
     | '/admin/settings'
     | '/events/$slug'
@@ -196,15 +268,28 @@ export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AgendaRoute: typeof AgendaRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRouteWithChildren
+  ExhibitionRoute: typeof ExhibitionRoute
+  GalleryRoute: typeof GalleryRoute
   LoginRoute: typeof LoginRoute
+  RegistrationRoute: typeof RegistrationRoute
+  ReportsRoute: typeof ReportsRoute
   SignupRoute: typeof SignupRoute
+  SponsorshipRoute: typeof SponsorshipRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sponsorship': {
+      id: '/sponsorship'
+      path: '/sponsorship'
+      fullPath: '/sponsorship'
+      preLoaderRoute: typeof SponsorshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -212,11 +297,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registration': {
+      id: '/registration'
+      path: '/registration'
+      fullPath: '/registration'
+      preLoaderRoute: typeof RegistrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exhibition': {
+      id: '/exhibition'
+      path: '/exhibition'
+      fullPath: '/exhibition'
+      preLoaderRoute: typeof ExhibitionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -238,6 +351,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -350,11 +470,17 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AgendaRoute: AgendaRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   EventsRoute: EventsRouteWithChildren,
+  ExhibitionRoute: ExhibitionRoute,
+  GalleryRoute: GalleryRoute,
   LoginRoute: LoginRoute,
+  RegistrationRoute: RegistrationRoute,
+  ReportsRoute: ReportsRoute,
   SignupRoute: SignupRoute,
+  SponsorshipRoute: SponsorshipRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
