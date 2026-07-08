@@ -9,7 +9,7 @@ export function SiteHeader() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <img 
-            src="https://upload.wikimedia.org/wikipedia/en/8/87/Nigerian_Electricity_Regulatory_Commission_logo.png" 
+            src="/nerc-logo.png" 
             alt="NERC Logo" 
             className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" 
           />
