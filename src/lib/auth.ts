@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from 'jose';
-import { getCookie, setCookie, deleteCookie } from 'vinxi/http';
+import { getCookie, setCookie, deleteCookie } from '@tanstack/react-start/server';
 
 const secretKey = process.env.JWT_SECRET || 'supersecret_jwt_key_123!';
 const key = new TextEncoder().encode(secretKey);
