@@ -66,13 +66,13 @@ function Index() {
 
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden pt-16">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-slate-900">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover object-right md:object-center"
+            className="absolute top-0 right-0 h-full w-auto min-w-full max-w-none object-cover"
             poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
           >
             <source src="https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4" type="video/mp4" />
