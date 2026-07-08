@@ -37,9 +37,23 @@ function EventsPage() {
       <section className="pt-32 pb-16 max-w-7xl mx-auto px-6">
         <div className="text-xs uppercase tracking-widest text-primary font-semibold mb-2">Program</div>
         <h1 className="text-5xl md:text-6xl font-bold mb-4">Events & workshops</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p className="text-lg text-muted-foreground max-w-2xl mb-12">
           Reserve your seat at our upcoming gatherings for the national electricity community.
         </p>
+
+        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 md:p-8 mb-4 max-w-3xl">
+          <h4 className="text-sm uppercase tracking-widest font-semibold text-slate-500 mb-6">Strategic Institutional Partners</h4>
+          <div className="flex flex-wrap items-center gap-8 md:gap-12">
+            <div className="flex flex-col items-center justify-center gap-3">
+              <img src="/vp-seal.png" alt="Seal of the Vice President of Nigeria" className="w-20 h-20 object-contain drop-shadow-sm" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg' }} />
+              <span className="text-xs font-semibold text-slate-600 text-center max-w-[120px]">Office of the Vice President</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-3">
+              <img src="/fmoj-logo.png" alt="Federal Ministry of Justice" className="w-20 h-20 object-contain drop-shadow-sm" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg' }} />
+              <span className="text-xs font-semibold text-slate-600 text-center max-w-[120px]">Federal Ministry of Justice</span>
+            </div>
+          </div>
+        </div>
       </section>
       <section className="pb-24 max-w-7xl mx-auto px-6">
         {isLoading ? (

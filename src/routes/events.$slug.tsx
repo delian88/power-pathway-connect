@@ -159,6 +159,28 @@ function EventPage() {
                 </div>
               </>
             )}
+
+            {event.slug === '2-day-national-workshop-on-the-electricity-act-2023-as-amended' && (
+              <div className="mt-10 pt-8 border-t border-slate-100">
+                <h3 className="text-xl font-bold text-[#263566] mb-4">Sponsorship Details & Info</h3>
+                <p className="text-slate-700 leading-relaxed text-lg mb-8">
+                  The Workshop is being organised by Allstates Management Partners Solutions Limited under the auspices of the Office of the Vice President of the Federal Republic of Nigeria, in collaboration with key strategic institutional partners, namely the Federal Ministry of Power, Federal Ministry of Justice, Nigerian Electricity Regulatory Commission (NERC), and the Nigeria Governors' Forum (NGF). This collaboration underscores a shared commitment to supporting the effective implementation of the Electricity Act 2023, strengthening institutional capacity, encouraging public-private collaboration and accelerating the development of competitive, sustainable and investment-ready State electricity markets.
+                </p>
+                
+                <h4 className="text-lg font-semibold text-slate-800 mb-6 text-center">Strategic Institutional Partners</h4>
+                <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <img src="/vp-seal.png" alt="Seal of the Vice President of Nigeria" className="w-24 h-24 object-contain drop-shadow-sm" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg' }} />
+                    <span className="text-xs font-semibold text-slate-600 text-center max-w-[120px]">Office of the Vice President</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <img src="/fmoj-logo.png" alt="Federal Ministry of Justice" className="w-24 h-24 object-contain drop-shadow-sm" onError={(e) => { e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg' }} />
+                    <span className="text-xs font-semibold text-slate-600 text-center max-w-[120px]">Federal Ministry of Justice</span>
+                  </div>
+                  {/* Add more as needed */}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

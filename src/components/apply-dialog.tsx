@@ -19,10 +19,16 @@ const schema = z.object({
 const createApplicationFn = createServerFn({ method: "POST" })
   .validator((data: { eventId: string; name: string; email: string; phone: string; organization: string }) => data)
   .handler(async ({ data }) => {
-    // For now, we'll just log it since there's no Application model in Prisma schema
-    // You can add an Application model to prisma/schema.prisma if needed
-    console.log("Application received:", data);
-    return { success: true };
+    const application = await db.application.create({
+      data: {
+        eventId: data.eventId,
+        fullName: data.name,
+        email: data.email,
+        phone: data.phone,
+        organization: data.organization,
+      }
+    });
+    return JSON.parse(JSON.stringify(application));
   });
 
 export function ApplyDialog({

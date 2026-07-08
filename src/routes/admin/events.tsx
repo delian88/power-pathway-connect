@@ -7,11 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Trash2, Plus, Edit2, X } from "lucide-react";
+import { Trash2, Plus, Edit2, X, Users } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const getEventsFn = createServerFn({ method: "GET" }).handler(async () => {
   const events = await db.event.findMany({
-    include: { user: { select: { email: true } } },
+    include: { 
+      user: { select: { email: true } },
+      applications: true
+    },
     orderBy: { date: 'desc' }
   });
   return JSON.parse(JSON.stringify(events));
@@ -134,6 +138,7 @@ function EventsAdminPage() {
   const [file, setFile] = useState<File | null>(null);
   const [sponsorFile, setSponsorFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [viewingApplicantsEvent, setViewingApplicantsEvent] = useState<any | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -348,6 +353,10 @@ function EventsAdminPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
+                  <Button size="sm" variant="outline" onClick={() => setViewingApplicantsEvent(ev)} className="mr-2 border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100">
+                    <Users className="w-4 h-4 mr-2" />
+                    {ev.applications?.length || 0} Applicants
+                  </Button>
                   <Button size="icon" variant="ghost" onClick={() => handleEdit(ev)} className="text-gray-500 hover:text-[#109cde] hover:bg-blue-50">
                     <Edit2 className="w-4 h-4" />
                   </Button>
@@ -378,6 +387,38 @@ function EventsAdminPage() {
           {events.length === 0 && <p className="text-sm text-muted-foreground">No events yet.</p>}
         </div>
       </div>
+
+      <Dialog open={!!viewingApplicantsEvent} onOpenChange={(open) => !open && setViewingApplicantsEvent(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Applicants: {viewingApplicantsEvent?.title}</DialogTitle>
+            <DialogDescription>
+              {viewingApplicantsEvent?.applications?.length || 0} total registrations
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            {viewingApplicantsEvent?.applications?.length > 0 ? (
+              <div className="border rounded-md divide-y">
+                {viewingApplicantsEvent.applications.map((app: any) => (
+                  <div key={app.id} className="p-4 bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <div className="font-semibold text-[#263566] text-lg">{app.fullName}</div>
+                    <div className="text-sm text-slate-600 mt-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <div><span className="font-medium text-slate-500">Email:</span> {app.email}</div>
+                      <div><span className="font-medium text-slate-500">Phone:</span> {app.phone}</div>
+                      <div className="md:col-span-2"><span className="font-medium text-slate-500">Organization:</span> {app.organization}</div>
+                      <div className="md:col-span-2 text-xs text-slate-400 mt-1">Applied: {new Date(app.createdAt).toLocaleString()}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center p-8 text-slate-500 bg-slate-50 rounded-md">
+                No applicants yet for this event.
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
