@@ -46,12 +46,29 @@ function Index() {
     settings?.heroSubText || "Premier events and workshops for utility leaders, grid engineers, and energy innovators shaping the national electricity landscape."
   ];
 
+  const [heroBgIndex, setHeroBgIndex] = useState(0);
+
+  const heroMedia = [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1920&q=80', alt: 'Event in Nigeria 1' }, 
+    { type: 'video', src: 'https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1920&q=80', alt: 'Conference in Africa' }, 
+    { type: 'image', src: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1920&q=80', alt: 'Event Audience' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1551818255-e6e10975bc17?auto=format&fit=crop&w=1920&q=80', alt: 'Nigerian Tech Conference' },
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setHeroTextIndex((prev) => (prev + 1) % 2);
     }, 6000);
     return () => clearInterval(interval);
   }, [heroTexts.length]);
+
+  useEffect(() => {
+    const bgInterval = setInterval(() => {
+      setHeroBgIndex((prev) => (prev + 1) % heroMedia.length);
+    }, 5000);
+    return () => clearInterval(bgInterval);
+  }, [heroMedia.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,18 +84,41 @@ function Index() {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 z-0 overflow-hidden bg-slate-900">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute top-0 right-0 h-full w-auto min-w-full max-w-none object-cover"
-            poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
-          >
-            <source src="https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4" type="video/mp4" />
-          </video>
+          <AnimatePresence>
+            {heroMedia.map((media, idx) => (
+              idx === heroBgIndex && (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5 }}
+                  className="absolute inset-0"
+                >
+                  {media.type === 'video' ? (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                      poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
+                    >
+                      <source src={media.src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      src={media.src}
+                      alt={media.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </motion.div>
+              )
+            ))}
+          </AnimatePresence>
           {/* Dark overlay for readability */}
-          <div className="absolute inset-0 bg-slate-900/60" />
+          <div className="absolute inset-0 bg-slate-900/60 z-10" />
         </div>
 
         <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center text-white">
