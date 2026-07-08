@@ -102,7 +102,7 @@ function EventPage() {
                 <div className="flex flex-col">
                   <span className="text-sm text-slate-300 uppercase tracking-wider font-semibold">Date & Time</span>
                   <span className="font-medium">
-                    {new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} at {new Date(event.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                    {new Date(event.date).toLocaleDateString("en-US", { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} at {new Date(event.date).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
               </div>

@@ -56,7 +56,7 @@ export function EventCard({ event, index = 0 }: { event: EventRow; index?: numbe
           </h3>
           <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{event.description}</p>
           <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-5">
-            <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{date.toLocaleDateString()}</span>
+            <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{date.toLocaleDateString("en-US")}</span>
           </div>
           <Button onClick={() => setOpen(true)} className="w-full bg-gradient-primary shadow-elegant">
             Secure your seat
