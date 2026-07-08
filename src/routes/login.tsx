@@ -13,7 +13,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string(),
   password: z.string().min(6),
 });
 
@@ -83,7 +83,7 @@ function Login() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
