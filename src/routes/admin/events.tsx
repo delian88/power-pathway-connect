@@ -43,19 +43,27 @@ export const createEventFn = createServerFn({ method: "POST" })
   .validator((data: any) => data)
   .handler(async ({ data }) => {
     let finalImageUrl = data.imageUrl;
+    let finalSponsorUrl = data.sponsorImageUrl;
 
     if (data.imageBase64 && data.imageFileName) {
       const savedPath = await saveImageLocally(data.imageBase64, data.imageFileName);
       if (savedPath) finalImageUrl = savedPath;
+    }
+    
+    if (data.sponsorBase64 && data.sponsorFileName) {
+      const savedPath = await saveImageLocally(data.sponsorBase64, data.sponsorFileName);
+      if (savedPath) finalSponsorUrl = savedPath;
     }
 
     const event = await db.event.create({
       data: {
         title: data.title,
         description: data.description,
+        content: data.content,
         date: new Date(data.date),
         type: data.type,
         imageUrl: finalImageUrl,
+        sponsorImageUrl: finalSponsorUrl,
       }
     });
     return JSON.parse(JSON.stringify(event));
@@ -65,10 +73,16 @@ export const updateEventFn = createServerFn({ method: "POST" })
   .validator((data: any) => data)
   .handler(async ({ data }) => {
     let finalImageUrl = data.imageUrl;
+    let finalSponsorUrl = data.sponsorImageUrl;
 
     if (data.imageBase64 && data.imageFileName) {
       const savedPath = await saveImageLocally(data.imageBase64, data.imageFileName);
       if (savedPath) finalImageUrl = savedPath;
+    }
+    
+    if (data.sponsorBase64 && data.sponsorFileName) {
+      const savedPath = await saveImageLocally(data.sponsorBase64, data.sponsorFileName);
+      if (savedPath) finalSponsorUrl = savedPath;
     }
 
     const event = await db.event.update({
@@ -76,9 +90,11 @@ export const updateEventFn = createServerFn({ method: "POST" })
       data: {
         title: data.title,
         description: data.description,
+        content: data.content,
         date: new Date(data.date),
         type: data.type,
         imageUrl: finalImageUrl,
+        sponsorImageUrl: finalSponsorUrl,
       }
     });
     return JSON.parse(JSON.stringify(event));
@@ -103,14 +119,17 @@ function EventsAdminPage() {
   const emptyForm = {
     title: "",
     description: "",
+    content: "",
     date: "",
     type: "workshop",
     imageUrl: "",
+    sponsorImageUrl: "",
   };
 
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [sponsorFile, setSponsorFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,27 +137,36 @@ function EventsAdminPage() {
       setFile(e.target.files[0]);
     }
   };
+  
+  const handleSponsorFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSponsorFile(e.target.files[0]);
+    }
+  };
 
   const handleEdit = (ev: any) => {
     setEditingId(ev.id);
     const dateObj = new Date(ev.date);
-    // Format to YYYY-MM-DDThh:mm
     const dateString = new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
     
     setForm({
       title: ev.title,
       description: ev.description,
+      content: ev.content || "",
       date: dateString,
       type: ev.type,
       imageUrl: ev.imageUrl || "",
+      sponsorImageUrl: ev.sponsorImageUrl || "",
     });
     setFile(null);
+    setSponsorFile(null);
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setForm(emptyForm);
     setFile(null);
+    setSponsorFile(null);
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -147,6 +175,8 @@ function EventsAdminPage() {
     try {
       let imageBase64 = null;
       let imageFileName = null;
+      let sponsorBase64 = null;
+      let sponsorFileName = null;
       
       if (file) {
         imageFileName = file.name;
@@ -157,11 +187,23 @@ function EventsAdminPage() {
           reader.onerror = error => reject(error);
         });
       }
+      
+      if (sponsorFile) {
+        sponsorFileName = sponsorFile.name;
+        sponsorBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(sponsorFile);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
 
       const payload = {
         ...form,
         imageBase64,
         imageFileName,
+        sponsorBase64,
+        sponsorFileName,
       };
 
       if (editingId) {
@@ -216,8 +258,13 @@ function EventsAdminPage() {
           </div>
           
           <div>
-            <Label>Description</Label>
-            <Textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
+            <Label>Short Description</Label>
+            <Textarea rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
+          </div>
+          
+          <div>
+            <Label>Detailed Content (Objectives, Program, etc.)</Label>
+            <Textarea rows={5} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} placeholder="Write the full event details here..." />
           </div>
           
           <div className="grid grid-cols-2 gap-3">
@@ -238,23 +285,43 @@ function EventsAdminPage() {
             </div>
           </div>
           
-          <div>
-            <Label>Cover Image Upload</Label>
-            <Input type="file" accept="image/*" onChange={handleFileChange} />
-            <p className="text-xs text-gray-500 mt-1">Leave empty to keep existing image</p>
-          </div>
-
-          <div>
-            <Label>Image URL (Optional fallback)</Label>
-            <Input value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} placeholder="https://..." />
-            {form.imageUrl && (
-              <div className="mt-2 p-2 bg-gray-50 rounded inline-block">
-                <img src={form.imageUrl} alt="Preview" className="h-16 object-contain" />
+          <div className="grid grid-cols-2 gap-4 border-t pt-4 mt-2">
+            <div className="space-y-3">
+              <h3 className="font-medium text-sm">Cover Image</h3>
+              <div>
+                <Label className="text-xs">File Upload</Label>
+                <Input type="file" accept="image/*" onChange={handleFileChange} className="text-xs h-8" />
               </div>
-            )}
+              <div>
+                <Label className="text-xs">Or Image URL</Label>
+                <Input value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} placeholder="https://..." className="text-xs h-8" />
+              </div>
+              {form.imageUrl && (
+                <div className="p-1 bg-gray-50 rounded inline-block border">
+                  <img src={form.imageUrl} alt="Cover Preview" className="h-12 object-contain" />
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3 border-l pl-4">
+              <h3 className="font-medium text-sm">Sponsor/Partner Image</h3>
+              <div>
+                <Label className="text-xs">File Upload</Label>
+                <Input type="file" accept="image/*" onChange={handleSponsorFileChange} className="text-xs h-8" />
+              </div>
+              <div>
+                <Label className="text-xs">Or Image URL</Label>
+                <Input value={form.sponsorImageUrl} onChange={(e) => setForm({ ...form, sponsorImageUrl: e.target.value })} placeholder="https://..." className="text-xs h-8" />
+              </div>
+              {form.sponsorImageUrl && (
+                <div className="p-1 bg-gray-50 rounded inline-block border">
+                  <img src={form.sponsorImageUrl} alt="Sponsor Preview" className="h-12 object-contain" />
+                </div>
+              )}
+            </div>
           </div>
           
-          <Button type="submit" disabled={saving} className="w-full bg-[#109cde] hover:bg-[#0d84bf] text-white">
+          <Button type="submit" disabled={saving} className="w-full bg-[#109cde] hover:bg-[#0d84bf] text-white mt-4">
             {saving ? (editingId ? "Updating..." : "Publishing...") : (editingId ? "Update Event" : "Publish Event")}
           </Button>
         </form>
@@ -262,7 +329,7 @@ function EventsAdminPage() {
 
       <div className="space-y-4 pt-14">
         <h2 className="text-xl font-semibold">Posted Events ({Array.isArray(events) ? events.length : 0})</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 max-h-[800px] overflow-y-auto pr-2 pb-2">
           {Array.isArray(events) && events.map((ev: any) => (
             <div key={ev.id} className={`p-4 bg-white border rounded-xl shadow-sm flex flex-col gap-3 transition-colors ${editingId === ev.id ? 'border-[#109cde] bg-blue-50/30' : 'border-border/60'}`}>
               <div className="flex items-start justify-between gap-4">
@@ -277,7 +344,7 @@ function EventsAdminPage() {
                     {new Date(ev.date).toLocaleString()} • {ev.user ? `Posted by: ${ev.user.email}` : "Admin"}
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 shrink-0">
                   <Button size="icon" variant="ghost" onClick={() => handleEdit(ev)} className="text-gray-500 hover:text-[#109cde] hover:bg-blue-50">
                     <Edit2 className="w-4 h-4" />
                   </Button>
@@ -289,11 +356,19 @@ function EventsAdminPage() {
               
               <div className="flex gap-4">
                 {ev.imageUrl && (
-                  <div className="w-24 h-20 shrink-0 bg-gray-100 rounded-md overflow-hidden">
+                  <div className="w-24 h-20 shrink-0 bg-gray-100 rounded-md overflow-hidden border">
                     <img src={ev.imageUrl} alt={ev.title} className="w-full h-full object-cover" />
                   </div>
                 )}
-                <p className="text-sm line-clamp-3 flex-1">{ev.description}</p>
+                {ev.sponsorImageUrl && (
+                  <div className="w-16 h-12 shrink-0 bg-white rounded-md overflow-hidden border self-end absolute right-8">
+                    <img src={ev.sponsorImageUrl} alt="Sponsor" className="w-full h-full object-contain p-1" />
+                  </div>
+                )}
+                <div className="flex-1 flex flex-col">
+                  <p className="text-sm text-gray-700 font-medium line-clamp-2">{ev.description}</p>
+                  {ev.content && <p className="text-xs text-gray-500 line-clamp-2 mt-1">{ev.content}</p>}
+                </div>
               </div>
             </div>
           ))}
