@@ -40,7 +40,8 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} National Electricity Workshop. All rights reserved.
+        <p className="mb-2">© {new Date().getFullYear()} National Electricity Workshop. All rights reserved.</p>
+        <p className="font-semibold text-primary">Powered by Nutech</p>
       </div>
     </footer>
   );

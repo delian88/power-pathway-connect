@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export const getLandingDataFn = createServerFn({ method: "GET" }).handler(async () => {
   const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
-  const events = await db.event.findMany({ orderBy: { date: 'desc' }, take: 3 });
+  const events = await db.event.findMany({ orderBy: { date: 'desc' }, take: 10 });
   return JSON.parse(JSON.stringify({ settings, events }));
 });
 
@@ -49,11 +49,11 @@ function Index() {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
 
   const heroMedia = [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1920&q=80', alt: 'Event in Nigeria 1' }, 
-    { type: 'video', src: 'https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1920&q=80', alt: 'Conference in Africa' }, 
-    { type: 'image', src: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1920&q=80', alt: 'Event Audience' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1551818255-e6e10975bc17?auto=format&fit=crop&w=1920&q=80', alt: 'Nigerian Tech Conference' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1920&q=80', alt: 'Black professionals event 1' }, 
+    { type: 'image', src: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1920&q=80', alt: 'Black professionals event 2' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1573167243872-43c6433b9d40?auto=format&fit=crop&w=1920&q=80', alt: 'Black professionals event 3' }, 
+    { type: 'image', src: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=1920&q=80', alt: 'Black professionals event 4' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=1920&q=80', alt: 'Black professionals event 5' },
   ];
 
   useEffect(() => {
@@ -76,6 +76,16 @@ function Index() {
     }, 8000);
     return () => clearInterval(interval);
   }, []);
+
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!events || events.length === 0) return;
+    const interval = setInterval(() => {
+      setFeaturedIndex((prev) => (prev + 1) % events.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [events?.length]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -102,7 +112,7 @@ function Index() {
                       muted
                       playsInline
                       className="w-full h-full object-cover"
-                      poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
+                      poster="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1920&q=80"
                     >
                       <source src={media.src} type="video/mp4" />
                     </video>
@@ -156,7 +166,7 @@ function Index() {
         <div className="relative group overflow-hidden min-h-[500px] flex items-center justify-center">
           <div className="absolute inset-0 z-0">
             <img 
-              src="https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-our_approach-v1.jpg" 
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=80" 
               alt="For Planners" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -179,7 +189,7 @@ function Index() {
         <div className="relative group overflow-hidden min-h-[500px] flex items-center justify-center">
           <div className="absolute inset-0 z-0">
             <img 
-              src="https://conferencedirect.com/wp-content/uploads/2026/05/ConferenceDirect-2026-bg-suppliers-v1.jpg" 
+              src="https://images.unsplash.com/photo-1573165231977-3f0e27806045?auto=format&fit=crop&w=1000&q=80" 
               alt="For Suppliers" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -249,6 +259,78 @@ function Index() {
         </div>
       </section>
 
+      {/* Featured Events (Auto Sliding) */}
+      {events && events.length > 0 && (
+        <section className="py-20 bg-slate-900 text-white overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Events</h2>
+                <div className="w-16 h-1 bg-[#109cde] rounded-full"></div>
+              </div>
+              <p className="text-slate-400 max-w-sm mt-4 md:mt-0">Discover some of the most anticipated gatherings and workshops in the industry.</p>
+            </div>
+
+            <div className="relative min-h-[450px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={featuredIndex}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full"
+                >
+                  {events[featuredIndex] && (
+                    <div className="flex flex-col md:flex-row bg-slate-800 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 h-full">
+                      <div className="md:w-1/2 h-64 md:h-auto relative">
+                        <img 
+                          src={events[featuredIndex].imageUrl || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80"} 
+                          alt={events[featuredIndex].title} 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-4 left-4">
+                           <span className="px-3 py-1 text-xs font-semibold rounded-full bg-[#109cde] text-white shadow-md">
+                            Featured {events[featuredIndex].type === 'conference' ? 'Conference' : 'Workshop'}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{events[featuredIndex].title}</h3>
+                        <p className="text-[#109cde] font-semibold mb-6 flex items-center gap-2">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                          {new Date(events[featuredIndex].date).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                        </p>
+                        <p className="text-slate-300 leading-relaxed mb-8 line-clamp-4 text-lg">
+                          {events[featuredIndex].description}
+                        </p>
+                        <Link to="/events/$eventId" params={{ eventId: events[featuredIndex].id }} className="mt-auto inline-block">
+                          <Button size="lg" className="bg-[#109cde] hover:bg-white hover:text-[#109cde] text-white rounded-md px-8">
+                            View Event Details
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
+            {/* Dots */}
+            <div className="flex justify-center gap-3 mt-8 relative z-20">
+              {events.map((_: any, idx: number) => (
+                <button
+                  key={idx}
+                  onClick={() => setFeaturedIndex(idx)}
+                  className={`w-3 h-3 rounded-full transition-colors ${idx === featuredIndex ? 'bg-[#109cde]' : 'bg-slate-700 hover:bg-slate-500'}`}
+                  aria-label={`Go to featured event ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Upcoming Events */}
       {events && events.length > 0 && (
         <section className="py-24 bg-white">
@@ -257,33 +339,50 @@ function Index() {
               <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-4">Upcoming Events & Workshops</h2>
               <div className="w-16 h-1 bg-[#109cde] rounded-full mx-auto"></div>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {events.map((ev: any) => (
-                <Link key={ev.id} to="/events/$eventId" params={{ eventId: ev.id }} className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
-                  {ev.imageUrl && (
-                    <div className="h-48 overflow-hidden">
-                      <img src={ev.imageUrl} alt={ev.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-                  )}
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="mb-3">
-                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${ev.type === 'conference' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
-                        {ev.type === 'conference' ? 'Conference' : 'Workshop'}
+                <div key={ev.id} className="min-w-[300px] md:min-w-[380px] snap-center">
+                  <Link to="/events/$eventId" params={{ eventId: ev.id }} className="group flex flex-col bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow h-full">
+                    {ev.imageUrl && (
+                      <div className="h-48 overflow-hidden">
+                        <img src={ev.imageUrl} alt={ev.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      </div>
+                    )}
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="mb-3">
+                        <span className={`px-3 py-1 text-xs font-semibold rounded-full ${ev.type === 'conference' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                          {ev.type === 'conference' ? 'Conference' : 'Workshop'}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold text-[#263566] mb-2 group-hover:text-[#109cde] transition-colors">{ev.title}</h3>
+                      <p className="text-sm text-gray-500 mb-4">{new Date(ev.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                      <p className="text-gray-600 line-clamp-3 mb-6 flex-1">{ev.description}</p>
+                      <span className="text-[#109cde] font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                        View Details <span aria-hidden="true">&rarr;</span>
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-[#263566] mb-2 group-hover:text-[#109cde] transition-colors">{ev.title}</h3>
-                    <p className="text-sm text-gray-500 mb-4">{new Date(ev.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</p>
-                    <p className="text-gray-600 line-clamp-3 mb-6 flex-1">{ev.description}</p>
-                    <span className="text-[#109cde] font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                      View Details <span aria-hidden="true">&rarr;</span>
-                    </span>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
         </section>
       )}
+
+      {/* Post Your Event CTA */}
+      <section className="py-24 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-6">Host Your Own Event?</h2>
+          <p className="text-lg text-slate-600 mb-10 leading-relaxed">
+            Reach thousands of highly qualified professionals by listing your event with us. Whether it's a workshop, seminar, or large-scale conference, we provide the platform for you to succeed and connect with the right audience.
+          </p>
+          <Link to="/signup">
+            <Button size="lg" className="bg-[#109cde] hover:bg-[#0d84bf] text-white rounded-md px-10 py-6 text-lg font-medium transition-all shadow-lg hover:shadow-xl">
+              Post Your Event Now
+            </Button>
+          </Link>
+        </div>
+      </section>
 
       {/* Our Approach */}
       <section className="py-24">
@@ -297,7 +396,7 @@ function Index() {
             {/* Card 1 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-our_approach-v1.jpg" 
+                src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" 
                 alt="Event Strategy" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -314,7 +413,7 @@ function Index() {
             {/* Card 2 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-event_logistics-v1.jpg" 
+                src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=800&q=80" 
                 alt="Event Logistics" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -331,7 +430,7 @@ function Index() {
             {/* Card 3 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-event_tech-v1.jpg" 
+                src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=800&q=80" 
                 alt="Event Technology" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -352,7 +451,7 @@ function Index() {
       <section className="relative py-28 bg-[#263566] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <img 
-            src="https://conferencedirect.com/wp-content/uploads/2026/01/ConferenceDirect-2026-bg-perfect-partnership-v2.jpg" 
+            src="https://images.unsplash.com/photo-1573165067006-259166f21226?auto=format&fit=crop&w=1920&q=80" 
             alt="Perfect Partnership" 
             className="w-full h-full object-cover"
           />
