@@ -72,7 +72,7 @@ function Index() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[75%_center] md:object-center"
             poster="https://conferencedirect.com/wp-content/uploads/2023/03/cd-mobile-video-bg-globe-v1.jpg"
           >
             <source src="https://conferencedirect.com/wp-content/uploads/2023/04/CD-global-presence-slider-video-v3.mp4" type="video/mp4" />
