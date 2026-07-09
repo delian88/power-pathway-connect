@@ -22,6 +22,8 @@ function SponsorshipSkeleton() {
   );
 }
 
+import { getSiteSettingsFn } from "@/lib/server-functions";
+
 export const Route = createFileRoute("/sponsorship")({
   head: () => ({
     meta: [
@@ -29,11 +31,51 @@ export const Route = createFileRoute("/sponsorship")({
       { name: "description", content: "Partner With Us to Drive Energy Innovation" },
     ],
   }),
+  loader: async () => await getSiteSettingsFn(),
   pendingComponent: SponsorshipSkeleton,
   component: SponsorshipPage,
 });
 
 function SponsorshipPage() {
+  const settings = Route.useLoaderData();
+  const partners = Array.isArray(settings?.sponsorshipPartners) ? settings.sponsorshipPartners : [];
+  
+  // Default packages if none exist
+  const defaultPackages = [
+    {
+      name: "Platinum Package",
+      price: "",
+      subtitle: "Premium positioning and maximum brand visibility",
+      isPopular: true,
+      features: "Main Stage Branding, Keynote Speaking Slot, Exclusive VIP Access, Lead Generation Tech, Dedicated Meeting Room"
+    },
+    {
+      name: "Gold Package",
+      price: "",
+      subtitle: "Excellent visibility and comprehensive branding",
+      isPopular: false,
+      features: "Plenary Session Sponsorship, Exhibition Booth, VIP Access, 15 Complimentary Passes, Digital Marketing Package"
+    },
+    {
+      name: "Silver Package",
+      price: "",
+      subtitle: "Strategic visibility and networking platform",
+      isPopular: false,
+      features: "Dedicated Session Hosting, Exhibition Space, Networking Reception, Branding in Event App, 10 Complimentary Passes, Digital Promotion"
+    },
+    {
+      name: "Bronze Package",
+      price: "",
+      subtitle: "Essential visibility and partnership recognition",
+      isPopular: false,
+      features: "Standard Exhibition Space, Networking Opportunities, Logo in Event Materials, Digital Recognition, 5 Complimentary Passes, Email Marketing Inclusion"
+    }
+  ];
+  
+  const packages = Array.isArray(settings?.sponsorshipPackages) && settings.sponsorshipPackages.length > 0
+    ? settings.sponsorshipPackages
+    : defaultPackages;
+
   return (
     <div className="min-h-screen bg-[#F8F9FA] font-sans">
       <SiteHeader />
@@ -52,23 +94,22 @@ function SponsorshipPage() {
             transition={{ duration: 0.6 }}
             className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase"
           >
-            NIES 2027 Sponsorship
+            {settings?.sponsorshipHeroTagline || "NIES 2027 Sponsorship"}
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold font-sans text-white drop-shadow-lg leading-tight mb-6 max-w-4xl mx-auto"
-          >
-            Partner With Us to Drive <span className="text-[#D4AF37]">Energy Innovation</span>
-          </motion.h1>
+            dangerouslySetInnerHTML={{ __html: settings?.sponsorshipHeroTitle || `Partner With Us to Drive <span class="text-[#D4AF37]">Energy Innovation</span>` }}
+          />
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="text-lg md:text-xl text-white/90 font-poppins mb-10 leading-relaxed max-w-3xl mx-auto"
           >
-            Join leading organizations and brands in supporting the Nigeria International Energy Summit 2027. Gain visibility, network with industry leaders, and showcase your commitment to shaping Africa's energy future.
+            {settings?.sponsorshipHeroDesc || "Join leading organizations and brands in supporting the Nigeria International Energy Summit 2027. Gain visibility, network with industry leaders, and showcase your commitment to shaping Africa's energy future."}
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -92,17 +133,28 @@ function SponsorshipPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F1A1C] mb-4">Our Sponsors & Partners</h2>
-            <p className="text-gray-500 font-poppins max-w-2xl mx-auto">Leading organizations driving Africa's energy transformation through strategic partnerships.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F1A1C] mb-4">{settings?.sponsorshipPartnersTitle || "Our Sponsors & Partners"}</h2>
+            <p className="text-gray-500 font-poppins max-w-2xl mx-auto">{settings?.sponsorshipPartnersDesc || "Leading organizations driving Africa's energy transformation through strategic partnerships."}</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-             {/* Placeholder Logos (using generic shapes or text for now) */}
-             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
-                <div key={i} className="flex items-center justify-center p-4 h-24 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer">
-                  <span className="font-bold text-gray-400 text-sm">PARTNER {i}</span>
-                </div>
-             ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-center transition-all duration-500">
+             {partners.length > 0 ? (
+               partners.map((p: any, i: number) => (
+                 <div key={i} className="flex items-center justify-center p-4 h-24 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all grayscale hover:grayscale-0">
+                   {p.logoUrl ? (
+                     <img src={p.logoUrl} alt={p.name} className="max-h-16 max-w-full object-contain" />
+                   ) : (
+                     <span className="font-bold text-gray-400 text-sm">{p.name || `PARTNER ${i+1}`}</span>
+                   )}
+                 </div>
+               ))
+             ) : (
+               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
+                  <div key={i} className="flex items-center justify-center p-4 h-24 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer opacity-60 grayscale hover:grayscale-0">
+                    <span className="font-bold text-gray-400 text-sm">PARTNER {i}</span>
+                  </div>
+               ))
+             )}
           </div>
         </div>
       </section>
@@ -111,149 +163,50 @@ function SponsorshipPage() {
       <section id="sponsorship-packages" className="py-24 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
-              Sponsorship <span className="text-[#D4AF37]">Packages</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4" dangerouslySetInnerHTML={{ __html: settings?.sponsorshipPackagesTitle || `Sponsorship <span class="text-[#D4AF37]">Packages</span>` }} />
             <p className="text-gray-600 text-lg font-poppins max-w-2xl mx-auto">
-              Choose the package that best fits your organization's goals and maximize your impact
+              {settings?.sponsorshipPackagesDesc || "Choose the package that best fits your organization's goals and maximize your impact"}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            
-            {/* Platinum */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white border-2 border-[#D4AF37] rounded-2xl p-8 relative shadow-lg hover:-translate-y-2 transition-transform"
-            >
-              <div className="absolute top-0 right-8 -translate-y-1/2 bg-[#D4AF37] text-white px-4 py-1 font-bold text-sm uppercase rounded-full shadow-md">
-                Most Popular
-              </div>
-              <h3 className="text-3xl font-bold text-[#0F1A1C] mb-2 font-sans">Platinum Package</h3>
-              <p className="text-gray-500 mb-6 font-poppins text-sm">Premium positioning and maximum brand visibility</p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Main Stage Branding
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Keynote Speaking Slot
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Exclusive VIP Access
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Lead Generation Tech
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Dedicated Meeting Room
-                </li>
-              </ul>
-              
-              <Button className="w-full bg-[#008753] hover:bg-[#006B42] text-white rounded-none py-6 uppercase tracking-wider text-sm font-bold">
-                Inquire Now
-              </Button>
-            </motion.div>
-
-            {/* Gold */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-md hover:-translate-y-2 transition-all"
-            >
-              <h3 className="text-3xl font-bold text-[#0F1A1C] mb-2 font-sans">Gold Package</h3>
-              <p className="text-gray-500 mb-6 font-poppins text-sm">Excellent visibility and comprehensive branding</p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Plenary Session Sponsorship
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Exhibition Booth
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> VIP Access
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> 15 Complimentary Passes
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Digital Marketing Package
-                </li>
-              </ul>
-              
-              <Button variant="outline" className="w-full border-2 border-[#0F1A1C] text-[#0F1A1C] hover:bg-[#0F1A1C] hover:text-white rounded-none py-6 font-bold uppercase tracking-wider text-sm transition-colors">
-                Get Started
-              </Button>
-            </motion.div>
-
-            {/* Silver */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:-translate-y-2 transition-transform hover:shadow-lg">
-              <h3 className="text-3xl font-bold text-[#0F1A1C] mb-2 font-sans">Silver Package</h3>
-              <p className="text-gray-500 mb-6 font-poppins text-sm">Strategic visibility and networking platform</p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Dedicated Session Hosting
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Exhibition Space
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Networking Reception
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Branding in Event App
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> 10 Complimentary Passes
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Digital Promotion
-                </li>
-              </ul>
-              
-              <Button variant="outline" className="w-full border-2 border-[#0F1A1C] text-[#0F1A1C] hover:bg-[#0F1A1C] hover:text-white rounded-none py-6 font-bold uppercase tracking-wider text-sm transition-colors">
-                Get Started
-              </Button>
-            </div>
-
-            {/* Bronze */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:-translate-y-2 transition-transform hover:shadow-lg">
-              <h3 className="text-3xl font-bold text-[#0F1A1C] mb-2 font-sans">Bronze Package</h3>
-              <p className="text-gray-500 mb-6 font-poppins text-sm">Essential visibility and partnership recognition</p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Standard Exhibition Space
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Networking Opportunities
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Logo in Event Materials
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Digital Recognition
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> 5 Complimentary Passes
-                </li>
-                <li className="flex items-start gap-3 text-gray-700">
-                  <span className="text-[#008753] mt-1">✔</span> Email Marketing Inclusion
-                </li>
-              </ul>
-              
-              <Button variant="outline" className="w-full border-2 border-[#0F1A1C] text-[#0F1A1C] hover:bg-[#0F1A1C] hover:text-white rounded-none py-6 font-bold uppercase tracking-wider text-sm transition-colors">
-                Get Started
-              </Button>
-            </div>
-
+            {packages.map((pkg: any, index: number) => {
+              const isPop = pkg.isPopular === true || pkg.isPopular === "true";
+              const featuresList = pkg.features ? pkg.features.split(",").map((s: string) => s.trim()) : [];
+              return (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`bg-white rounded-2xl p-8 relative transition-transform hover:-translate-y-2 ${isPop ? 'border-2 border-[#D4AF37] shadow-lg' : 'border border-gray-200 shadow-sm hover:shadow-md'}`}
+                >
+                  {isPop && (
+                    <div className="absolute top-0 right-8 -translate-y-1/2 bg-[#D4AF37] text-white px-4 py-1 font-bold text-sm uppercase rounded-full shadow-md">
+                      Most Popular
+                    </div>
+                  )}
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-3xl font-bold text-[#0F1A1C] font-sans">{pkg.name}</h3>
+                    {pkg.price && <span className="text-xl font-bold text-[#008753]">{pkg.price}</span>}
+                  </div>
+                  <p className="text-gray-500 mb-6 font-poppins text-sm">{pkg.subtitle}</p>
+                  
+                  <ul className="space-y-4 mb-8">
+                    {featuresList.map((feature: string, fIdx: number) => (
+                      <li key={fIdx} className="flex items-start gap-3 text-gray-700">
+                        <span className="text-[#008753] mt-1">✔</span> {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <Button variant={isPop ? "default" : "outline"} className={`w-full rounded-none py-6 uppercase tracking-wider text-sm font-bold ${isPop ? 'bg-[#008753] hover:bg-[#006B42] text-white' : 'border-2 border-[#0F1A1C] text-[#0F1A1C] hover:bg-[#0F1A1C] hover:text-white transition-colors'}`}>
+                    {isPop ? "Inquire Now" : "Get Started"}
+                  </Button>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -264,11 +217,9 @@ function SponsorshipPage() {
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#D4AF37] rounded-full blur-[200px] opacity-10 pointer-events-none" />
         
         <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold font-sans text-white mb-6">
-            Become a <span className="text-[#D4AF37]">Sponsor</span>
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold font-sans text-white mb-6" dangerouslySetInnerHTML={{ __html: settings?.sponsorshipCtaTitle || `Become a <span class="text-[#D4AF37]">Sponsor</span>` }} />
           <p className="text-white/80 text-lg font-poppins mb-10 max-w-2xl mx-auto leading-relaxed">
-            Join industry leaders in shaping Africa's energy future. Limited sponsorship opportunities available.
+            {settings?.sponsorshipCtaDesc || "Join industry leaders in shaping Africa's energy future. Limited sponsorship opportunities available."}
           </p>
           <a href="#sponsorship-packages">
             <Button size="lg" className="bg-[#008753] hover:bg-[#006B42] text-white rounded-none px-12 py-7 uppercase tracking-wider font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">

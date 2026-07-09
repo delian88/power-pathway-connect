@@ -138,6 +138,21 @@ model SiteSettings {
   agendaDays                 Json?
   agendaBrochureUrl          String? @db.Text
 
+  sponsorshipHeroTagline String?
+  sponsorshipHeroTitle   String?
+  sponsorshipHeroDesc    String? @db.Text
+
+  sponsorshipPartnersTitle String?
+  sponsorshipPartnersDesc  String? @db.Text
+  sponsorshipPartners      Json?
+
+  sponsorshipPackagesTitle String?
+  sponsorshipPackagesDesc  String? @db.Text
+  sponsorshipPackages      Json?
+
+  sponsorshipCtaTitle      String?
+  sponsorshipCtaDesc       String? @db.Text
+
   updatedAt    DateTime @updatedAt
 }
 

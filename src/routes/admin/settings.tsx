@@ -190,6 +190,28 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       }
     }
 
+    let finalSponsorshipPartners = data.sponsorshipPartners || [];
+    for (let i = 0; i < finalSponsorshipPartners.length; i++) {
+      const p = finalSponsorshipPartners[i];
+      if (p.imgBase64 && p.imgFileName) {
+        try {
+          const fs = await import("fs");
+          const path = await import("path");
+          const publicDir = path.join(process.cwd(), 'public');
+          if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+          const base64Data = p.imgBase64.replace(/^data:image\/\w+;base64,/, "");
+          const buffer = Buffer.from(base64Data, 'base64');
+          const filePath = path.join(publicDir, p.imgFileName);
+          fs.writeFileSync(filePath, buffer);
+          p.logoUrl = `/${p.imgFileName}`;
+          delete p.imgBase64;
+          delete p.imgFileName;
+        } catch (e) {
+          console.error("Failed to save partner logo", e);
+        }
+      }
+    }
+
     const payload = {
       heroText: data.heroText,
       heroSubText: data.heroSubText,
@@ -290,6 +312,17 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       agendaSectionSubtitle: data.agendaSectionSubtitle,
       agendaDaysCount: data.agendaDaysCount,
       agendaDays: data.agendaDays,
+      sponsorshipHeroTagline: data.sponsorshipHeroTagline,
+      sponsorshipHeroTitle: data.sponsorshipHeroTitle,
+      sponsorshipHeroDesc: data.sponsorshipHeroDesc,
+      sponsorshipPartnersTitle: data.sponsorshipPartnersTitle,
+      sponsorshipPartnersDesc: data.sponsorshipPartnersDesc,
+      sponsorshipPartners: finalSponsorshipPartners,
+      sponsorshipPackagesTitle: data.sponsorshipPackagesTitle,
+      sponsorshipPackagesDesc: data.sponsorshipPackagesDesc,
+      sponsorshipPackages: data.sponsorshipPackages,
+      sponsorshipCtaTitle: data.sponsorshipCtaTitle,
+      sponsorshipCtaDesc: data.sponsorshipCtaDesc,
       ...(data.whyAttendCard1ImgUrl && { whyAttendCard1ImgUrl: data.whyAttendCard1ImgUrl }),
       ...(data.whyAttendCard2ImgUrl && { whyAttendCard2ImgUrl: data.whyAttendCard2ImgUrl }),
       ...(data.whyAttendCard3ImgUrl && { whyAttendCard3ImgUrl: data.whyAttendCard3ImgUrl }),
@@ -416,6 +449,17 @@ function SettingsPage() {
     agendaSectionSubtitle: settings?.agendaSectionSubtitle || "",
     agendaDaysCount: settings?.agendaDaysCount || 4,
     agendaDays: Array.isArray(settings?.agendaDays) ? settings.agendaDays : [],
+    sponsorshipHeroTagline: settings?.sponsorshipHeroTagline || "",
+    sponsorshipHeroTitle: settings?.sponsorshipHeroTitle || "",
+    sponsorshipHeroDesc: settings?.sponsorshipHeroDesc || "",
+    sponsorshipPartnersTitle: settings?.sponsorshipPartnersTitle || "",
+    sponsorshipPartnersDesc: settings?.sponsorshipPartnersDesc || "",
+    sponsorshipPartners: Array.isArray(settings?.sponsorshipPartners) ? settings.sponsorshipPartners : [],
+    sponsorshipPackagesTitle: settings?.sponsorshipPackagesTitle || "",
+    sponsorshipPackagesDesc: settings?.sponsorshipPackagesDesc || "",
+    sponsorshipPackages: Array.isArray(settings?.sponsorshipPackages) ? settings.sponsorshipPackages : [],
+    sponsorshipCtaTitle: settings?.sponsorshipCtaTitle || "",
+    sponsorshipCtaDesc: settings?.sponsorshipCtaDesc || "",
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -428,6 +472,7 @@ function SettingsPage() {
   const [aboutHeroFile, setAboutHeroFile] = useState<File | null>(null);
   const [agendaHeroFile, setAgendaHeroFile] = useState<File | null>(null);
   const [agendaBrochureFile, setAgendaBrochureFile] = useState<File | null>(null);
+  const [sponsorshipPartnerFiles, setSponsorshipPartnerFiles] = useState<{ [key: number]: File }>({});
   const [saving, setSaving] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -506,11 +551,26 @@ function SettingsPage() {
         }
       }
 
+      let updatedSponsorshipPartners = [...formData.sponsorshipPartners];
+      for (let i = 0; i < updatedSponsorshipPartners.length; i++) {
+        const pFile = sponsorshipPartnerFiles[i];
+        if (pFile) {
+          const b64 = await new Promise<string>((resolve, reject) => {
+            const r = new FileReader();
+            r.onload = () => resolve(r.result as string);
+            r.onerror = e => reject(e);
+            r.readAsDataURL(pFile);
+          });
+          updatedSponsorshipPartners[i] = { ...updatedSponsorshipPartners[i], imgFileName: pFile.name, imgBase64: b64 };
+        }
+      }
+
       await updateSettingsFn({
         data: {
           ...formData,
           featuredSpeakers: updatedSpeakers,
           aboutVenues: updatedVenues,
+          sponsorshipPartners: updatedSponsorshipPartners,
           logoBase64,
           logoFileName,
           sliderImagesBase64,
@@ -1374,6 +1434,152 @@ function SettingsPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Sponsorship Page - Hero</h2>
+          <div>
+            <Label>Hero Tagline</Label>
+            <Input value={formData.sponsorshipHeroTagline} onChange={e => setFormData({...formData, sponsorshipHeroTagline: e.target.value})} placeholder="NIES 2027 Sponsorship" />
+          </div>
+          <div>
+            <Label>Hero Title</Label>
+            <Input value={formData.sponsorshipHeroTitle} onChange={e => setFormData({...formData, sponsorshipHeroTitle: e.target.value})} placeholder="Partner With Us to Drive Energy Innovation" />
+          </div>
+          <div>
+            <Label>Hero Description</Label>
+            <Textarea value={formData.sponsorshipHeroDesc} onChange={e => setFormData({...formData, sponsorshipHeroDesc: e.target.value})} rows={3} />
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Sponsorship Page - Partners Grid</h2>
+          <div>
+            <Label>Partners Title</Label>
+            <Input value={formData.sponsorshipPartnersTitle} onChange={e => setFormData({...formData, sponsorshipPartnersTitle: e.target.value})} placeholder="Our Sponsors & Partners" />
+          </div>
+          <div>
+            <Label>Partners Description</Label>
+            <Textarea value={formData.sponsorshipPartnersDesc} onChange={e => setFormData({...formData, sponsorshipPartnersDesc: e.target.value})} rows={2} />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-lg font-bold">Partner Logos</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => setFormData({...formData, sponsorshipPartners: [...formData.sponsorshipPartners, { name: "", logoUrl: "" }]})}>
+                + Add Partner
+              </Button>
+            </div>
+            {formData.sponsorshipPartners.map((p: any, i: number) => (
+              <div key={i} className="flex gap-4 items-end border p-3 rounded-lg relative">
+                <div className="flex-1 space-y-2">
+                  <Label>Partner Name</Label>
+                  <Input value={p.name || ""} onChange={e => {
+                    const newP = [...formData.sponsorshipPartners];
+                    newP[i].name = e.target.value;
+                    setFormData({...formData, sponsorshipPartners: newP});
+                  }} />
+                </div>
+                <div className="flex-1 space-y-2">
+                  <Label>Logo Image</Label>
+                  <Input type="file" accept="image/*" onChange={e => {
+                    if (e.target.files && e.target.files[0]) {
+                      setSponsorshipPartnerFiles({...sponsorshipPartnerFiles, [i]: e.target.files[0]});
+                    }
+                  }} />
+                  {p.logoUrl && !sponsorshipPartnerFiles[i] && (
+                    <img src={p.logoUrl} alt="Logo" className="h-8 object-contain" />
+                  )}
+                </div>
+                <Button type="button" variant="destructive" size="sm" onClick={() => {
+                  const newP = formData.sponsorshipPartners.filter((_: any, idx: number) => idx !== i);
+                  setFormData({...formData, sponsorshipPartners: newP});
+                }}>Remove</Button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Sponsorship Page - Packages</h2>
+          <div>
+            <Label>Packages Title</Label>
+            <Input value={formData.sponsorshipPackagesTitle} onChange={e => setFormData({...formData, sponsorshipPackagesTitle: e.target.value})} />
+          </div>
+          <div>
+            <Label>Packages Description</Label>
+            <Textarea value={formData.sponsorshipPackagesDesc} onChange={e => setFormData({...formData, sponsorshipPackagesDesc: e.target.value})} rows={2} />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-lg font-bold">Packages List</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => setFormData({...formData, sponsorshipPackages: [...formData.sponsorshipPackages, { name: "", subtitle: "", price: "", features: "", isPopular: false }]})}>
+                + Add Package
+              </Button>
+            </div>
+            {formData.sponsorshipPackages.map((pkg: any, i: number) => (
+              <div key={i} className="space-y-3 border p-4 rounded-lg relative">
+                <Button type="button" variant="destructive" size="sm" className="absolute top-2 right-2 h-6 w-6 p-0 rounded-full" onClick={() => {
+                  const newPkgs = formData.sponsorshipPackages.filter((_: any, idx: number) => idx !== i);
+                  setFormData({...formData, sponsorshipPackages: newPkgs});
+                }}>×</Button>
+                
+                <div className="grid md:grid-cols-2 gap-4 pr-8">
+                  <div>
+                    <Label>Package Name</Label>
+                    <Input value={pkg.name || ""} onChange={e => {
+                      const newPkgs = [...formData.sponsorshipPackages];
+                      newPkgs[i].name = e.target.value;
+                      setFormData({...formData, sponsorshipPackages: newPkgs});
+                    }} />
+                  </div>
+                  <div>
+                    <Label>Price (e.g. $5,000)</Label>
+                    <Input value={pkg.price || ""} onChange={e => {
+                      const newPkgs = [...formData.sponsorshipPackages];
+                      newPkgs[i].price = e.target.value;
+                      setFormData({...formData, sponsorshipPackages: newPkgs});
+                    }} />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label>Subtitle / Short Description</Label>
+                    <Input value={pkg.subtitle || ""} onChange={e => {
+                      const newPkgs = [...formData.sponsorshipPackages];
+                      newPkgs[i].subtitle = e.target.value;
+                      setFormData({...formData, sponsorshipPackages: newPkgs});
+                    }} />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label>Features (Comma separated)</Label>
+                    <Textarea value={pkg.features || ""} onChange={e => {
+                      const newPkgs = [...formData.sponsorshipPackages];
+                      newPkgs[i].features = e.target.value;
+                      setFormData({...formData, sponsorshipPackages: newPkgs});
+                    }} placeholder="Main Stage Branding, VIP Access, 10 Complimentary Passes" rows={3} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id={`popular-${i}`} checked={pkg.isPopular || false} onChange={e => {
+                      const newPkgs = [...formData.sponsorshipPackages];
+                      newPkgs[i].isPopular = e.target.checked;
+                      setFormData({...formData, sponsorshipPackages: newPkgs});
+                    }} />
+                    <Label htmlFor={`popular-${i}`}>Highlight as "Most Popular"</Label>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Sponsorship Page - Bottom CTA</h2>
+          <div>
+            <Label>CTA Title</Label>
+            <Input value={formData.sponsorshipCtaTitle} onChange={e => setFormData({...formData, sponsorshipCtaTitle: e.target.value})} placeholder="Become a Sponsor" />
+          </div>
+          <div>
+            <Label>CTA Description</Label>
+            <Textarea value={formData.sponsorshipCtaDesc} onChange={e => setFormData({...formData, sponsorshipCtaDesc: e.target.value})} rows={2} />
           </div>
         </div>
 
