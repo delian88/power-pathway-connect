@@ -323,6 +323,9 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       sponsorshipPackages: data.sponsorshipPackages,
       sponsorshipCtaTitle: data.sponsorshipCtaTitle,
       sponsorshipCtaDesc: data.sponsorshipCtaDesc,
+      contactPageTagline: data.contactPageTagline,
+      contactPageTitle: data.contactPageTitle,
+      contactPageDesc: data.contactPageDesc,
       ...(data.whyAttendCard1ImgUrl && { whyAttendCard1ImgUrl: data.whyAttendCard1ImgUrl }),
       ...(data.whyAttendCard2ImgUrl && { whyAttendCard2ImgUrl: data.whyAttendCard2ImgUrl }),
       ...(data.whyAttendCard3ImgUrl && { whyAttendCard3ImgUrl: data.whyAttendCard3ImgUrl }),
@@ -460,6 +463,9 @@ function SettingsPage() {
     sponsorshipPackages: Array.isArray(settings?.sponsorshipPackages) ? settings.sponsorshipPackages : [],
     sponsorshipCtaTitle: settings?.sponsorshipCtaTitle || "",
     sponsorshipCtaDesc: settings?.sponsorshipCtaDesc || "",
+    contactPageTagline: settings?.contactPageTagline || "",
+    contactPageTitle: settings?.contactPageTitle || "",
+    contactPageDesc: settings?.contactPageDesc || "",
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -1586,6 +1592,18 @@ function SettingsPage() {
         <div className="space-y-4 pt-4">
           <h2 className="text-xl font-semibold border-b pb-2">Business Settings</h2>
           <div>
+            <Label>Contact Page Tagline</Label>
+            <Input value={formData.contactPageTagline} onChange={e => setFormData({...formData, contactPageTagline: e.target.value})} placeholder="Get in touch" />
+          </div>
+          <div>
+            <Label>Contact Page Title</Label>
+            <Input value={formData.contactPageTitle} onChange={e => setFormData({...formData, contactPageTitle: e.target.value})} placeholder="Let's talk." />
+          </div>
+          <div>
+            <Label>Contact Page Description</Label>
+            <Textarea value={formData.contactPageDesc} onChange={e => setFormData({...formData, contactPageDesc: e.target.value})} rows={2} />
+          </div>
+          <div className="pt-4">
             <Label>Event Publishing Fee ($)</Label>
             <Input 
               type="number"

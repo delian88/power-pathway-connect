@@ -153,6 +153,10 @@ model SiteSettings {
   sponsorshipCtaTitle      String?
   sponsorshipCtaDesc       String? @db.Text
 
+  contactPageTagline       String?
+  contactPageTitle         String?
+  contactPageDesc          String? @db.Text
+
   updatedAt    DateTime @updatedAt
 }
 
