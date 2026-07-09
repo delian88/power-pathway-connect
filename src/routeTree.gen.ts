@@ -28,6 +28,7 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as EventsSlugRouteImport } from './routes/events.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminScheduleRouteImport } from './routes/admin/schedule'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminNotificationsRouteImport } from './routes/admin/notifications'
 import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
@@ -129,6 +130,11 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminScheduleRoute = AdminScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminReportsRoute = AdminReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/notifications': typeof AdminNotificationsRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/notifications': typeof AdminNotificationsRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/notifications': typeof AdminNotificationsRoute
   '/admin/reports': typeof AdminReportsRoute
+  '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/events/$slug': typeof EventsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -255,6 +264,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/notifications'
     | '/admin/reports'
+    | '/admin/schedule'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin/'
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/notifications'
     | '/admin/reports'
+    | '/admin/schedule'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/notifications'
     | '/admin/reports'
+    | '/admin/schedule'
     | '/admin/settings'
     | '/events/$slug'
     | '/admin/'
@@ -464,6 +476,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/schedule': {
+      id: '/admin/schedule'
+      path: '/schedule'
+      fullPath: '/admin/schedule'
+      preLoaderRoute: typeof AdminScheduleRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/reports': {
       id: '/admin/reports'
       path: '/reports'
@@ -508,6 +527,7 @@ interface AdminRouteRouteChildren {
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminNotificationsRoute: typeof AdminNotificationsRoute
   AdminReportsRoute: typeof AdminReportsRoute
+  AdminScheduleRoute: typeof AdminScheduleRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -518,6 +538,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminGalleryRoute: AdminGalleryRoute,
   AdminNotificationsRoute: AdminNotificationsRoute,
   AdminReportsRoute: AdminReportsRoute,
+  AdminScheduleRoute: AdminScheduleRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }

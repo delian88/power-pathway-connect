@@ -19,6 +19,7 @@ model User {
 
 model SiteSettings {
   id           Int      @id @default(1)
+  heroBadgeText String?  @db.Text
   heroText     String   @db.Text
   heroSubText  String   @db.Text
   logoUrl      String?
@@ -31,7 +32,93 @@ model SiteSettings {
   smtpUser     String?
   smtpPass     String?
   emailEnabled Boolean  @default(false)
+
+  // Landing Page Dynamics
+  headerPatronageText String?  @db.Text
+  headerPresidentText String?  @db.Text
+  headerLocationText  String?  @db.Text
+  headerLocationSubText String? @db.Text
+  headerDateText      String?
+  heroSliderImages    String?  @db.Text
+  transformationHubTitle String? @db.Text
+  transformationHubDescription String? @db.Text
+  partnerNames        String?  @db.Text
+  infoBarDateText String?
+  infoBarLocationText String?
+  infoBarThemeText String?
+
+  transformationHubFeature1Title String?
+  transformationHubFeature1Desc  String? @db.Text
+  transformationHubFeature2Title String?
+  transformationHubFeature2Desc  String? @db.Text
+  transformationHubFeature3Title String?
+  transformationHubFeature3Desc  String? @db.Text
+  transformationHubFeature4Title String?
+  transformationHubFeature4Desc  String? @db.Text
+
+  scheduleTitle       String?
+  scheduleDescription String? @db.Text
+  
+  whyAttendTitle      String?
+  whyAttendSubtitle   String? @db.Text
+  whyAttendCard1Title String?
+  whyAttendCard1Desc  String? @db.Text
+  whyAttendCard1ImgUrl String? @db.Text
+  whyAttendCard2Title String?
+  whyAttendCard2Desc  String? @db.Text
+  whyAttendCard2ImgUrl String? @db.Text
+  whyAttendCard3Title String?
+  whyAttendCard3Desc  String? @db.Text
+  whyAttendCard3ImgUrl String? @db.Text
+  scheduleDaysCount   Int?  @default(4)
+  scheduleDates       Json?
+
+  confGuideTitle             String?
+  confGuideSubtitle          String? @db.Text
+  confGuideTrack1Title       String?
+  confGuideTrack1Subtitle    String? @db.Text
+  confGuideTrack1Date        String?
+  confGuideTrack1EventTitle  String?
+  confGuideTrack1EventDesc   String? @db.Text
+  confGuideTrack2Title       String?
+  confGuideTrack2Subtitle    String? @db.Text
+  confGuideTrack2Date        String?
+  confGuideTrack2EventTitle  String?
+  confGuideTrack2EventDesc   String? @db.Text
+  confGuideTrack3Title       String?
+  confGuideTrack3Subtitle    String? @db.Text
+  confGuideTrack3Date        String?
+  confGuideTrack3EventTitle  String?
+  confGuideTrack3EventDesc   String? @db.Text
+
+  featuredSpeakersTitle      String?
+  featuredSpeakersSubtitle   String? @db.Text
+  featuredSpeakersCount      Int?  @default(4)
+  featuredSpeakers           Json?
+
+  ourApproachTitle           String?
+  ourApproachCard1Title      String?
+  ourApproachCard1Desc       String? @db.Text
+  ourApproachCard1ImgUrl     String? @db.Text
+  ourApproachCard2Title      String?
+  ourApproachCard2Desc       String? @db.Text
+  ourApproachCard2ImgUrl     String? @db.Text
+  ourApproachCard3Title      String?
+  ourApproachCard3Desc       String? @db.Text
+  ourApproachCard3ImgUrl     String? @db.Text
+
   updatedAt    DateTime @updatedAt
+}
+
+model ScheduleItem {
+  id        String   @id @default(uuid())
+  day       Int
+  timeRange String
+  title     String
+  location  String?
+  speaker   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Notification {

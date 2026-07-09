@@ -80,11 +80,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 import { getSessionFn } from "@/routes/admin/route";
+import { getSiteSettingsFn } from "@/lib/server-functions";
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient, session: any, settings: any }>()({
   beforeLoad: async () => {
     const session = await getSessionFn();
-    return { session };
+    const settings = await getSiteSettingsFn();
+    return { session, settings };
   },
   head: () => ({
     meta: [

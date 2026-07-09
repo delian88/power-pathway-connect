@@ -11,6 +11,7 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const context = useRouteContext({ strict: false });
   const session = (context as any)?.session;
+  const settings = (context as any)?.settings || {};
 
   const handleLogout = async () => {
     await logoutFn();
@@ -57,13 +58,13 @@ export function SiteHeader() {
 
           {/* Center: Details */}
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
-            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR</span>
-            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria</span>
-            <span className="text-[#008753] font-bold mt-1 text-[15px]">PRESIDENTIAL BANQUET HALL - ASO VILLA</span>
-            <span className="text-gray-600 text-[13px] mb-2">Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja</span>
+            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
+            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPresidentText || "President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria"}</span>
+            <span className="text-[#008753] font-bold mt-1 text-[15px]">{settings.headerLocationText || "PRESIDENTIAL BANQUET HALL - ASO VILLA"}</span>
+            <span className="text-gray-600 text-[13px] mb-2">{settings.headerLocationSubText || "Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja"}</span>
             
             <div className="bg-[#E6F3EE] text-[#008753] px-6 py-1.5 rounded-full text-sm font-bold tracking-wide">
-              15TH – 18TH MARCH 2027
+              {settings.headerDateText || "15TH – 18TH MARCH 2027"}
             </div>
           </div>
 

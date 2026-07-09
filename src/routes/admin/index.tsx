@@ -351,7 +351,7 @@ function AdminDashboard() {
                       <div className="text-xs text-gray-500 flex flex-col gap-1.5 mt-auto">
                         <div className="flex items-center gap-1.5">
                           <Calendar className="w-3.5 h-3.5" />
-                          {new Date(event.date).toLocaleDateString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+                          {new Date(event.date).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
                         </div>
                         <div className="flex items-center gap-1.5">
                           <span className="text-[10px]">📍</span>

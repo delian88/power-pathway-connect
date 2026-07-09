@@ -2,6 +2,22 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
+
+function AboutSkeleton() {
+  return (
+    <div className="min-h-screen bg-white">
+      <SiteHeader />
+      <div className="w-full h-[60vh] min-h-[500px] bg-gray-900 flex flex-col items-center justify-center pt-16">
+        <Skeleton className="h-10 w-64 mb-6 bg-white/20 rounded-full" />
+        <Skeleton className="h-20 w-3/4 max-w-2xl mb-6 bg-white/20" />
+        <Skeleton className="h-6 w-1/2 max-w-xl mb-10 bg-white/20" />
+        <Skeleton className="h-14 w-40 bg-white/20" />
+      </div>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -10,6 +26,7 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Learn about the mission behind the Nigeria International Energy Summit (NIES)." },
     ],
   }),
+  pendingComponent: AboutSkeleton,
   component: About,
 });
 
@@ -30,22 +47,42 @@ function About() {
         </div>
         
         <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
-          <div className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase"
+          >
             The Global Platform for Stimulating Discussion
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 font-sans">
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl font-bold mb-6 font-sans"
+          >
             About <span className="text-[#D4AF37]">NIES</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/90 font-poppins max-w-2xl mx-auto mb-10 leading-relaxed">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-lg md:text-xl text-white/90 font-poppins max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
             The Nigeria International Energy Summit (NIES) is the official energy event of the Federal Government of Nigeria, endorsed at the highest level of the Federal Executive Council.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
             <Link to="/registration">
               <Button className="bg-[#008753] hover:bg-[#006B42] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
                 Register Now
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -63,7 +100,13 @@ function About() {
 
           <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Mission */}
-            <div className="bg-[#FAFAFA] p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="bg-[#FAFAFA] p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="w-16 h-16 bg-[#008753]/10 text-[#008753] rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               </div>
@@ -71,10 +114,16 @@ function About() {
               <p className="text-gray-600 font-poppins leading-relaxed">
                 To be Africa's leading platform for energy dialogue, policy development, and investment, uniting global stakeholders to address the continent's energy challenges and opportunities. We foster strategic partnerships, highlight innovation, and advance sustainable energy development through high-level engagement and thought leadership.
               </p>
-            </div>
+            </motion.div>
 
             {/* Vision */}
-            <div className="bg-[#FAFAFA] p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-[#FAFAFA] p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="w-16 h-16 bg-[#D4AF37]/10 text-[#D4AF37] rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
               </div>
@@ -82,7 +131,7 @@ function About() {
               <p className="text-gray-600 font-poppins leading-relaxed">
                 To be the definitive catalyst for Africa's energy transformation, fostering sustainable economic growth, energy security, and environmental stewardship through collaborative action and innovative solutions. We envision an Africa where energy serves as the foundation for prosperity, industrialization, and improved quality of life for all its people.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

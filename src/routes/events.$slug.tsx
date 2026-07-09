@@ -5,6 +5,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Calendar, Share2, Facebook, Twitter, Linkedin, Copy, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 export const getEventFn = createServerFn({ method: "GET" })
@@ -38,8 +40,27 @@ export const Route = createFileRoute("/events/$slug")({
       ]
     };
   },
+  pendingComponent: EventSlugSkeleton,
   component: EventPage,
 });
+
+function EventSlugSkeleton() {
+  return (
+    <div className="min-h-screen bg-white">
+      <SiteHeader />
+      <div className="w-full h-[60vh] min-h-[500px] bg-slate-900 flex flex-col justify-end pb-16 px-6">
+        <div className="w-full max-w-7xl mx-auto">
+          <Skeleton className="h-10 w-48 mb-6 bg-white/20 rounded-full" />
+          <Skeleton className="h-20 w-3/4 max-w-3xl mb-6 bg-white/20" />
+          <Skeleton className="h-6 w-1/2 max-w-2xl mb-10 bg-white/20" />
+          <div className="flex gap-4">
+            <Skeleton className="h-14 w-40 bg-white/20" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function EventPage() {
   const { event } = Route.useLoaderData();
@@ -101,33 +122,56 @@ function EventPage() {
             </div>
             <div className="absolute inset-0 z-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-transparent" />
             <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent z-10" />
           </>
         )}
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 mb-6 text-sm font-bold uppercase tracking-wider rounded-full bg-[#109cde]/20 text-[#109cde] border border-[#109cde]/30 backdrop-blur-sm">
-              {event.type === 'workshop' ? 'National Workshop' : 'Conference'}
-            </span>
-            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              {event.title}
-            </h1>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed font-light">
-              {event.description}
-            </p>
-            <div className="flex flex-wrap items-center gap-6 text-white">
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 rounded-lg border border-white/10">
-                <Calendar className="w-6 h-6 text-[#109cde]" />
-                <div className="flex flex-col">
-                  <span className="text-sm text-slate-300 uppercase tracking-wider font-semibold">Date & Time</span>
-                  <span className="font-medium">
-                    {new Date(event.date).toLocaleDateString("en-US", { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} at {new Date(event.date).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                </div>
-              </div>
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end mt-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-6 max-w-fit border border-white/20"
+        >
+          <Award className="h-4 w-4 text-[#109cde]" />
+          <span className="text-sm font-semibold tracking-wide text-white uppercase">{event.type === 'workshop' ? 'National Workshop' : 'Conference'}</span>
+        </motion.div>
+        
+        <motion.h1 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl tracking-tight"
+        >
+          {event.title}
+        </motion.h1>
+
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-xl text-slate-300 mb-8 leading-relaxed font-light max-w-3xl"
+        >
+          {event.description}
+        </motion.p>
+        
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-wrap items-center gap-6 text-white"
+        >
+          <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 rounded-lg border border-white/10">
+            <Calendar className="mr-2 h-6 w-6 text-[#109cde]" />
+            <div className="flex flex-col">
+              <span className="text-sm text-slate-300 uppercase tracking-wider font-semibold">Date & Time</span>
+              <span className="font-medium">
+                {new Date(event.date).toLocaleDateString("en-US", { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} at {new Date(event.date).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </div>
+    </section>
 
       {/* Main Content */}
       <main className="flex-1 max-w-6xl mx-auto px-6 py-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 -mt-10 relative z-20">

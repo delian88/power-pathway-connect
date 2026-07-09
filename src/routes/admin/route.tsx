@@ -53,6 +53,7 @@ function AdminLayout() {
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "Schedule", href: "/admin/schedule", icon: Calendar },
     { name: "Events", href: "/admin/events", icon: Calendar },
     { name: "Applicants", href: "/admin/applicants", icon: Users },
     { name: "Notifications", href: "/admin/notifications", icon: Bell },

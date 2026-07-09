@@ -2,7 +2,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+
+function AgendaSkeleton() {
+  return (
+    <div className="min-h-screen bg-white">
+      <SiteHeader />
+      <div className="w-full h-[60vh] min-h-[500px] bg-[#0F1A1C] flex flex-col items-start justify-center pt-16 px-6">
+        <div className="w-full max-w-7xl mx-auto md:w-[70%] lg:w-[60%] mr-auto">
+          <Skeleton className="h-10 w-48 mb-6 bg-white/20 rounded-full" />
+          <Skeleton className="h-20 w-full mb-6 bg-white/20" />
+          <Skeleton className="h-6 w-3/4 mb-10 bg-white/20" />
+          <div className="flex gap-4">
+            <Skeleton className="h-14 w-40 bg-white/20" />
+            <Skeleton className="h-14 w-48 bg-white/20" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/agenda")({
   head: () => ({
@@ -11,6 +32,7 @@ export const Route = createFileRoute("/agenda")({
       { name: "description", content: "Explore the comprehensive agenda for NIES 2027." },
     ],
   }),
+  pendingComponent: AgendaSkeleton,
   component: AgendaPage,
 });
 
@@ -33,16 +55,36 @@ function AgendaPage() {
         </div>
         
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 text-white text-center md:text-left md:w-[70%] lg:w-[60%] mr-auto">
-          <div className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase"
+          >
             NIES 2027 Agenda
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold font-sans text-white drop-shadow-lg leading-tight mb-6">
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl font-bold font-sans text-white drop-shadow-lg leading-tight mb-6"
+          >
             Conference <br/> <span className="text-[#D4AF37]">Schedule & Sessions</span>
-          </h1>
-          <p className="text-lg text-white/90 font-poppins mb-10 leading-relaxed max-w-xl">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-lg text-white/90 font-poppins mb-10 leading-relaxed max-w-xl mx-auto md:mx-0"
+          >
             Explore the comprehensive agenda for NIES 2027, featuring keynote addresses, panel discussions, and technical sessions with global energy leaders.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          >
             <Link to="/registration">
               <Button size="lg" className="bg-[#0F1A1C] hover:bg-[#1A2A2E] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
                 Register Now ➔
@@ -53,23 +95,35 @@ function AgendaPage() {
                 View Agenda 📑
               </Button>
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Main Content Area */}
       <section id="schedule-section" className="py-24 bg-[#FAFAFA] relative">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
               Event <span className="text-[#D4AF37]">Agenda</span>
             </h2>
             <p className="text-gray-600 text-lg font-poppins">
               Four days of transformative discussions, networking, and deal-making
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+          >
             {/* Tabs */}
             <div className="flex bg-[#008753] text-white overflow-x-auto">
               {[
@@ -95,9 +149,16 @@ function AgendaPage() {
 
             {/* Schedule Content */}
             <div className="p-0">
-              
-              {/* Day 1 Content */}
-              {activeDay === 1 && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeDay}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Day 1 Content */}
+                  {activeDay === 1 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="bg-[#1A2A2E] text-white p-6 border-b border-gray-200">
                     <h3 className="font-bold text-xl text-[#D4AF37] uppercase tracking-wide mb-2">
@@ -184,8 +245,10 @@ function AgendaPage() {
                 </div>
               )}
               
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
           
           <div className="mt-12 text-center">
              <Button variant="outline" size="lg" className="border-2 border-[#008753] text-[#008753] hover:bg-[#008753] hover:text-white rounded-none px-10 py-6 font-bold uppercase transition-colors">

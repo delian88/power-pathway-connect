@@ -6,10 +6,31 @@ import { db } from "@/lib/db";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getLandingDataFn } from "@/lib/server-functions";
+
+function IndexSkeleton() {
+  return (
+    <div className="min-h-screen bg-white">
+      <SiteHeader />
+      <div className="w-full h-screen bg-gray-900 flex items-center justify-center pt-16">
+        <div className="w-full max-w-7xl mx-auto px-6 pt-24">
+          <Skeleton className="h-10 w-48 mb-6 bg-white/20" />
+          <Skeleton className="h-20 w-3/4 mb-6 bg-white/20" />
+          <Skeleton className="h-6 w-1/2 mb-10 bg-white/20" />
+          <div className="flex gap-4">
+            <Skeleton className="h-14 w-40 bg-white/20" />
+            <Skeleton className="h-14 w-48 bg-white/20" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   loader: async () => await getLandingDataFn(),
+  pendingComponent: IndexSkeleton,
   component: Index,
 });
 
@@ -32,7 +53,7 @@ const TESTIMONIALS = [
 ];
 
 function Index() {
-  const { settings, events } = Route.useLoaderData();
+  const { settings, events, scheduleItems } = Route.useLoaderData();
   const [heroTextIndex, setHeroTextIndex] = useState(0);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
@@ -43,7 +64,15 @@ function Index() {
 
   const [heroBgIndex, setHeroBgIndex] = useState(0);
 
-  const heroMedia = [
+  let customHeroMedia = [];
+  if (settings?.heroSliderImages) {
+    try {
+      const urls = JSON.parse(settings.heroSliderImages);
+      customHeroMedia = urls.map((url: string) => ({ type: 'image', src: url, alt: 'Hero image' }));
+    } catch(e) {}
+  }
+
+  const heroMedia = customHeroMedia.length > 0 ? customHeroMedia : [
     { type: 'image', src: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1920&q=80', alt: 'Illuminated light bulbs representing power and ideas' }, 
     { type: 'image', src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80', alt: 'Global electricity network and glowing earth' },
     { type: 'image', src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1920&q=80', alt: 'Event stage with bright lights and crowd' }, 
@@ -134,9 +163,10 @@ function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#D4AF37] px-5 py-2 rounded-full font-semibold text-sm mb-6">
-                <span>👑</span> Africa's Premier Energy Event
-              </div>
+              <div 
+                className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#D4AF37] px-5 py-2 rounded-full font-semibold text-sm mb-6"
+                dangerouslySetInnerHTML={{ __html: settings?.heroBadgeText || "<span>👑</span> Africa's Premier Energy Event" }}
+              />
             </motion.div>
             
             <motion.h1
@@ -144,10 +174,8 @@ function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-5xl md:text-6xl lg:text-[70px] font-bold leading-[1.1] text-white font-sans drop-shadow-lg mb-6"
-            >
-              Shaping the Future of <br />
-              <span className="text-[#D4AF37]">African Energy</span>
-            </motion.h1>
+              dangerouslySetInnerHTML={{ __html: settings?.heroText || "Shaping the Future of <br /> <span class=\"text-[#D4AF37]\">African Energy</span>" }}
+            />
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -155,7 +183,7 @@ function Index() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg md:text-xl text-white/90 leading-relaxed mb-10 max-w-2xl font-poppins"
             >
-              Join global energy leaders, policymakers, and innovators at Africa's most influential energy gathering. Drive investment, forge partnerships, and transform the continent's energy landscape.
+              {settings?.heroSubText || "Join global energy leaders, policymakers, and innovators at Africa's most influential energy gathering. Drive investment, forge partnerships, and transform the continent's energy landscape."}
             </motion.p>
           </div>
           
@@ -183,26 +211,36 @@ function Index() {
       <div className="w-full bg-[#008753] py-4 text-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-around items-center gap-4 text-sm md:text-base font-semibold tracking-wide">
           <div className="flex items-center gap-2">
-            <span className="text-[#D4AF37] text-lg">📅</span> Mar 15-18, 2027
+            <span className="text-[#D4AF37] text-lg">📅</span> {settings?.infoBarDateText || "Mar 15-18, 2027"}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#D4AF37] text-lg">📍</span> Abuja, Nigeria
+            <span className="text-[#D4AF37] text-lg">📍</span> {settings?.infoBarLocationText || "Abuja, Nigeria"}
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#D4AF37] text-lg">🎯</span> Sustainable Energy Future
+            <span className="text-[#D4AF37] text-lg">🎯</span> {settings?.infoBarThemeText || "Sustainable Energy Future"}
           </div>
         </div>
       </div>
 
       {/* Partner Strip */}
-      <div className="w-full bg-white py-10 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between items-center gap-8 text-gray-500 uppercase tracking-widest text-sm font-bold opacity-80 hover:opacity-100 transition-all">
-          <div className="flex flex-col items-center">HEOSL</div>
-          <div className="flex flex-col items-center">Africa Oil & Gas</div>
-          <div className="flex flex-col items-center">Energy Republic</div>
-          <div className="flex flex-col items-center">ICRC</div>
-          <div className="flex flex-col items-center">ECOWAS</div>
-          <div className="flex flex-col items-center">GIZ</div>
+      <div className="w-full bg-white py-10 border-b border-gray-100 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex">
+          <motion.div 
+            className="flex w-max items-center gap-16 pr-16 text-gray-500 uppercase tracking-widest text-sm font-bold opacity-80 hover:opacity-100 transition-opacity"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+          >
+            {(() => {
+              const basePartners = settings?.partnerNames ? settings.partnerNames.split(',').map(p => p.trim()).filter(Boolean) : ["HEOSL", "Africa Oil & Gas", "Energy Republic", "ICRC", "ECOWAS", "GIZ"];
+              // Duplicate the array to create a seamless loop
+              const duplicatedPartners = [...basePartners, ...basePartners, ...basePartners, ...basePartners];
+              return duplicatedPartners.map((partner, i) => (
+                <div key={i} className="flex flex-col items-center whitespace-nowrap">
+                  {partner}
+                </div>
+              ));
+            })()}
+          </motion.div>
         </div>
       </div>
 
@@ -213,50 +251,77 @@ function Index() {
           {/* Left Content */}
           <div className="pr-4">
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-6 leading-tight">
-              Africa's Energy <span className="text-[#D4AF37]">Transformation <br/> Hub</span>
+              {settings?.transformationHubTitle ? settings.transformationHubTitle : <>Africa's Energy <span className="text-[#D4AF37]">Transformation <br/> Hub</span></>}
             </h2>
-            <div className="w-24 h-1.5 bg-[#D4AF37] mb-8"></div>
+            <motion.div 
+              initial={{ scaleX: 0 }} 
+              whileInView={{ scaleX: 1 }} 
+              transition={{ duration: 0.8 }} 
+              className="w-24 h-1.5 bg-[#D4AF37] mb-8 origin-left"
+            ></motion.div>
             <p className="text-lg text-gray-600 font-poppins leading-relaxed mb-12">
-              As the official energy event of the Federal Government of Nigeria, the Nigeria International Energy Summit (NIES) serves as the continent's premier platform for energy policy, investment, and innovation.
+              {settings?.transformationHubDescription || "As the official energy event of the Federal Government of Nigeria, the Nigeria International Energy Summit (NIES) serves as the continent's premier platform for energy policy, investment, and innovation."}
             </p>
             
             <div className="flex flex-col gap-10">
-              <div className="flex gap-6 items-start">
-                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 0.5 }} 
+                className="flex gap-6 items-start"
+              >
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20 hover:scale-110 transition-transform">
                   🤝
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-[#008753] mb-2">High-Level Engagement</h4>
-                  <p className="text-gray-600">Direct access to ministers, regulators, and industry CEOs driving Africa's energy agenda.</p>
+                  <h4 className="text-xl font-bold text-[#008753] mb-2">{settings?.transformationHubFeature1Title || "High-Level Engagement"}</h4>
+                  <p className="text-gray-600">{settings?.transformationHubFeature1Desc || "Direct access to ministers, regulators, and industry CEOs driving Africa's energy agenda."}</p>
                 </div>
-              </div>
+              </motion.div>
               
-              <div className="flex gap-6 items-start">
-                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20 hover:scale-110 transition-transform">
                   📈
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-[#008753] mb-2">Strategic Insights</h4>
-                  <p className="text-gray-600">Forward-looking analysis on emerging trends, policies, and investment opportunities.</p>
+                  <h4 className="text-xl font-bold text-[#008753] mb-2">{settings?.transformationHubFeature2Title || "Strategic Insights"}</h4>
+                  <p className="text-gray-600">{settings?.transformationHubFeature2Desc || "Forward-looking analysis on emerging trends, policies, and investment opportunities."}</p>
                 </div>
-              </div>
+              </motion.div>
               
-              <div className="flex gap-6 items-start">
-                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-14 h-14 rounded-xl bg-[#008753] flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-[#008753]/20 hover:scale-110 transition-transform">
                   🌐
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-[#008753] mb-2">Global Connectivity</h4>
                   <p className="text-gray-600">Connect with international energy leaders and explore cross-border partnerships.</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
           
           {/* Right Content / Image Stack */}
-          <div className="relative mt-8 lg:mt-0 h-[700px] w-full">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative mt-8 lg:mt-0 h-[700px] w-full"
+          >
             <div className="absolute inset-0 rounded-tl-[100px] rounded-br-[100px] overflow-hidden shadow-2xl">
-              <img 
+              <motion.img 
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6 }}
                 src="https://images.unsplash.com/photo-1541888081688-66175e18231a?auto=format&fit=crop&w=1200&q=80" 
                 alt="Energy Transformation Hub" 
                 className="w-full h-full object-cover" 
@@ -269,10 +334,10 @@ function Index() {
                 <div className="w-12 h-12 rounded-lg bg-[#008753] flex items-center justify-center text-white text-xl flex-shrink-0">
                   🏅
                 </div>
-                <span className="font-bold text-[#008753] text-lg leading-tight">Official Government<br/>Event</span>
+                <span className="font-bold text-[#008753] text-lg leading-tight whitespace-pre-line">{settings?.transformationHubFeature3Title || "Official Government\nEvent"}</span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed mt-2">
-                Endorsed by the Federal Government of Nigeria as the principal energy industry gathering.
+                {settings?.transformationHubFeature3Desc || "Endorsed by the Federal Government of Nigeria as the principal energy industry gathering."}
               </p>
             </div>
             
@@ -282,14 +347,14 @@ function Index() {
                 <div className="w-12 h-12 rounded-lg bg-[#008753] flex items-center justify-center text-white text-xl flex-shrink-0">
                   👥
                 </div>
-                <span className="font-bold text-[#008753] text-lg leading-tight">5,000+ Participants</span>
+                <span className="font-bold text-[#008753] text-lg leading-tight">{settings?.transformationHubFeature4Title || "5,000+ Participants"}</span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed mt-2">
-                Join ministers, CEOs, and experts representing over 50 countries globally.
+                {settings?.transformationHubFeature4Desc || "Join ministers, CEOs, and experts representing over 50 countries globally."}
               </p>
             </div>
             
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -298,75 +363,77 @@ function Index() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
-              Event <span className="text-[#D4AF37]">Schedule</span>
+              {settings?.scheduleTitle ? settings.scheduleTitle : <>Event <span className="text-[#D4AF37]">Schedule</span></>}
             </h2>
             <p className="text-gray-600 text-lg font-poppins">
-              Four days of transformative discussions, networking, and deal-making
+              {settings?.scheduleDescription || "Four days of transformative discussions, networking, and deal-making"}
             </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
             {/* Tabs */}
-            <div className="flex bg-[#008753] text-white">
-              {[
-                { day: 1, date: "Feb 2" },
-                { day: 2, date: "Feb 3" },
-                { day: 3, date: "Feb 4" },
-                { day: 4, date: "Feb 5" }
-              ].map((tab) => (
+            <div className="flex bg-[#008753] text-white overflow-x-auto">
+              {Array.from({ length: settings?.scheduleDaysCount || 4 }).map((_, idx) => {
+                const day = idx + 1;
+                let dateStr = `Day ${day}`;
+                if (settings?.scheduleDates && Array.isArray(settings.scheduleDates) && settings.scheduleDates[idx]) {
+                  dateStr = settings.scheduleDates[idx];
+                }
+                return { day, date: dateStr };
+              }).map((tab) => (
                 <button
                   key={tab.day}
                   onClick={() => setActiveDay(tab.day)}
-                  className={`flex-1 py-4 flex flex-col items-center justify-center transition-all ${
+                  className={`flex-1 min-w-[100px] py-4 flex flex-col items-center justify-center transition-all ${
                     activeDay === tab.day 
                       ? "bg-[#00A86B] border-b-[5px] border-[#D4AF37]" 
                       : "hover:bg-[#00A86B]/50 border-b-[5px] border-transparent"
                   }`}
                 >
-                  <span className="font-bold text-lg">Day {tab.day}</span>
-                  <span className="text-sm font-semibold opacity-90">{tab.date}</span>
+                  <span className="font-bold text-lg whitespace-nowrap">Day {tab.day}</span>
+                  <span className="text-sm font-semibold opacity-90 whitespace-nowrap">{tab.date}</span>
                 </button>
               ))}
             </div>
 
             {/* Schedule Content */}
             <div className="p-0">
-              {/* Item 1 */}
-              <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
-                  <span className="text-[#008753] font-bold text-lg tracking-wide">09:30 - 09:45</span>
-                </div>
-                <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
-                  <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
-                    NIES – The Journey So Far
-                  </h4>
-                  <div className="flex flex-col gap-2 md:text-right">
-                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
-                      <span className="text-[#D4AF37] text-base">📍</span> Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja
+              {/* @ts-ignore */}
+              {(() => {
+                // @ts-ignore
+                const currentItems = (scheduleItems || []).filter((item: any) => item.day === activeDay);
+                if (currentItems.length === 0) {
+                  return (
+                    <div className="p-12 text-center text-gray-500 font-medium bg-gray-50">
+                      Schedule items for Day {activeDay} will be announced soon.
                     </div>
-                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
-                      <span className="text-[#D4AF37] text-base">👥</span>
+                  );
+                }
+                return currentItems.map((item: any) => (
+                  <div key={item.id} className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                    <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
+                      <span className="text-[#008753] font-bold text-lg tracking-wide">{item.timeRange}</span>
+                    </div>
+                    <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
+                      <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
+                        {item.title}
+                      </h4>
+                      <div className="flex flex-col gap-2 md:text-right">
+                        {item.location && (
+                          <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
+                            <span className="text-[#D4AF37] text-base">📍</span> {item.location}
+                          </div>
+                        )}
+                        {item.speaker && (
+                          <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
+                            <span className="text-[#D4AF37] text-base">👥</span> {item.speaker}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Item 2 */}
-              <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
-                  <span className="text-[#008753] font-bold text-lg tracking-wide">09:45 - 10:00</span>
-                </div>
-                <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
-                  <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
-                    Welcome Address
-                  </h4>
-                  <div className="flex flex-col gap-2 md:text-right">
-                    <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
-                      <span className="text-[#D4AF37] text-base">📍</span> Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja
-                    </div>
-                  </div>
-                </div>
-              </div>
+                ));
+              })()}
             </div>
           </div>
         </div>
@@ -378,10 +445,10 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-6">
-              Why Attend <span className="text-[#D4AF37]">NIES 2027?</span>
+              {settings?.whyAttendTitle || <>Why Attend <span className="text-[#D4AF37]">NIES 2027?</span></>}
             </h2>
             <p className="text-gray-500 text-lg md:text-xl font-poppins">
-              Discover unparalleled opportunities for strategic growth and industry leadership
+              {settings?.whyAttendSubtitle || "Discover unparalleled opportunities for strategic growth and industry leadership"}
             </p>
           </div>
 
@@ -390,12 +457,12 @@ function Index() {
             {/* Card 1 - Left */}
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 opacity-80 hover:opacity-100 transition-all transform scale-95 hover:scale-100 mb-4 lg:mb-0">
               <div className="h-64 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80" alt="Networking" className="w-full h-full object-cover" />
+                <img src={settings?.whyAttendCard1ImgUrl || "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80"} alt="Networking" className="w-full h-full object-cover" />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">Strategic Networking</h3>
+                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">{settings?.whyAttendCard1Title || "Strategic Networking"}</h3>
                 <p className="text-gray-400 font-poppins leading-relaxed text-sm">
-                  Connect with energy ministers, NOC/IOC CEOs, and policymakers in curated sessions designed for high-level engagement.
+                  {settings?.whyAttendCard1Desc || "Connect with energy ministers, NOC/IOC CEOs, and policymakers in curated sessions designed for high-level engagement."}
                 </p>
               </div>
             </div>
@@ -403,12 +470,12 @@ function Index() {
             {/* Card 2 - Center (Featured) */}
             <div className="bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#008753]/20 border-t-[6px] border-t-[#008753] relative z-10 transform scale-105">
               <div className="h-72 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&w=800&q=80" alt="Industry Insights" className="w-full h-full object-cover" />
+                <img src={settings?.whyAttendCard2ImgUrl || "https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&w=800&q=80"} alt="Industry Insights" className="w-full h-full object-cover" />
               </div>
               <div className="p-10">
-                <h3 className="text-[28px] font-bold text-[#0F1A1C] mb-4 font-sans">Industry Insights</h3>
+                <h3 className="text-[28px] font-bold text-[#0F1A1C] mb-4 font-sans">{settings?.whyAttendCard2Title || "Industry Insights"}</h3>
                 <p className="text-gray-600 font-poppins leading-relaxed">
-                  Gain exclusive insights into emerging policies, technologies, and market trends shaping the future of African energy.
+                  {settings?.whyAttendCard2Desc || "Gain exclusive insights into emerging policies, technologies, and market trends shaping the future of African energy."}
                 </p>
               </div>
             </div>
@@ -416,12 +483,12 @@ function Index() {
             {/* Card 3 - Right */}
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 opacity-80 hover:opacity-100 transition-all transform scale-95 hover:scale-100 mb-4 lg:mb-0">
               <div className="h-64 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559136555-e46be62a259b?auto=format&fit=crop&w=800&q=80" alt="Investment Opportunities" className="w-full h-full object-cover" />
+                <img src={settings?.whyAttendCard3ImgUrl || "https://images.unsplash.com/photo-1559136555-e46be62a259b?auto=format&fit=crop&w=800&q=80"} alt="Investment Opportunities" className="w-full h-full object-cover" />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">Investment Opportunities</h3>
+                <h3 className="text-2xl font-bold text-gray-500 mb-4 font-sans">{settings?.whyAttendCard3Title || "Investment Opportunities"}</h3>
                 <p className="text-gray-400 font-poppins leading-relaxed text-sm">
-                  Access Africa's most promising energy projects and connect with international investors seeking strategic partnerships.
+                  {settings?.whyAttendCard3Desc || "Access Africa's most promising energy projects and connect with international investors seeking strategic partnerships."}
                 </p>
               </div>
             </div>
@@ -435,10 +502,10 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-white mb-4">
-              Conference <span className="text-[#D4AF37]">Guide</span>
+              {settings?.confGuideTitle || <>Conference <span className="text-[#D4AF37]">Guide</span></>}
             </h2>
             <p className="text-white/90 text-lg font-poppins">
-              Comprehensive programming across multiple specialized tracks
+              {settings?.confGuideSubtitle || "Comprehensive programming across multiple specialized tracks"}
             </p>
           </div>
 
@@ -451,13 +518,13 @@ function Index() {
                   {/* Mic Icon */}
                   <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-[#008753] mb-3">Plenary Sessions</h3>
-                <p className="text-gray-400 font-medium">High-level strategic discussions</p>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">{settings?.confGuideTrack1Title || "Plenary Sessions"}</h3>
+                <p className="text-gray-400 font-medium">{settings?.confGuideTrack1Subtitle || "High-level strategic discussions"}</p>
               </div>
               <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 02, 10:50 AM - 11:00 AM</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">Panel Session 1 - Local Content for Prosperity</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">Beyond Policy Control: Empowering African Energy Enterprises for Global Play...</p>
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack1Date || "Feb 02, 10:50 AM - 11:00 AM"}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack1EventTitle || "Panel Session 1 - Local Content for Prosperity"}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack1EventDesc || "Beyond Policy Control: Empowering African Energy Enterprises for Global Play..."}</p>
               </div>
             </div>
 
@@ -468,13 +535,13 @@ function Index() {
                   {/* Gears Icon */}
                   <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-[#008753] mb-3">Technical Sessions</h3>
-                <p className="text-gray-400 font-medium">Deep-dive technical workshops</p>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">{settings?.confGuideTrack2Title || "Technical Sessions"}</h3>
+                <p className="text-gray-400 font-medium">{settings?.confGuideTrack2Subtitle || "Deep-dive technical workshops"}</p>
               </div>
               <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 04, 01:15 PM - 03:00 PM</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">EPC Roundtable 2.0-Invite Only</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">Attracting Global EPC Leaders to Power Nigeria's Oil & Gas Growth...</p>
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack2Date || "Feb 04, 01:15 PM - 03:00 PM"}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack2EventTitle || "EPC Roundtable 2.0-Invite Only"}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack2EventDesc || "Attracting Global EPC Leaders to Power Nigeria's Oil & Gas Growth..."}</p>
               </div>
             </div>
 
@@ -485,13 +552,13 @@ function Index() {
                   {/* Star Icon */}
                   <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-[#008753] mb-3">Networking Events</h3>
-                <p className="text-gray-400 font-medium">Strategic social interactions</p>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">{settings?.confGuideTrack3Title || "Networking Events"}</h3>
+                <p className="text-gray-400 font-medium">{settings?.confGuideTrack3Subtitle || "Strategic social interactions"}</p>
               </div>
               <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">Feb 02, 06:00 PM - 07:30 PM</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">Ministers & Heads of Delegation Reception</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">Exclusive</p>
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack3Date || "Feb 02, 06:00 PM - 07:30 PM"}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack3EventTitle || "Ministers & Heads of Delegation Reception"}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack3EventDesc || "Exclusive"}</p>
               </div>
             </div>
 
@@ -504,55 +571,29 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
-              Featured <span className="text-[#D4AF37]">Speakers</span>
+              {settings?.featuredSpeakersTitle || <>Featured <span className="text-[#D4AF37]">Speakers</span></>}
             </h2>
             <p className="text-gray-500 text-lg font-poppins">
-              Learn from industry pioneers and thought leaders
+              {settings?.featuredSpeakersSubtitle || "Learn from industry pioneers and thought leaders"}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            {/* Speaker 1 */}
-            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
-              <div className="h-64 bg-[#E2E8F0] w-full">
-                 {/* Using placeholder colors or generic professional headshots */}
-                 <div className="w-full h-full bg-slate-200 object-cover" />
+            {(Array.isArray(settings?.featuredSpeakers) ? settings.featuredSpeakers : []).map((speaker: any, index: number) => (
+              <div key={index} className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
+                <div className="h-64 bg-[#E2E8F0] w-full relative">
+                   {speaker.imgUrl ? (
+                     <img src={speaker.imgUrl} alt={speaker.name || "Speaker"} className="w-full h-full object-cover" />
+                   ) : (
+                     <div className="w-full h-full bg-slate-200 object-cover" />
+                   )}
+                </div>
+                <div className="p-6 h-[100px] flex items-center">
+                  <h3 className="font-bold text-[#008753] text-lg leading-tight">{speaker.name || "Speaker Name"}</h3>
+                </div>
               </div>
-              <div className="p-6 h-[100px] flex items-center">
-                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E. Bola Ahmed Tinubu</h3>
-              </div>
-            </div>
-
-            {/* Speaker 2 */}
-            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
-              <div className="h-64 bg-[#E2E8F0] w-full">
-                 <div className="w-full h-full bg-slate-200 object-cover" />
-              </div>
-              <div className="p-6 h-[100px] flex items-center">
-                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E Adama Barrow</h3>
-              </div>
-            </div>
-
-            {/* Speaker 3 */}
-            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
-              <div className="h-64 bg-[#E2E8F0] w-full">
-                 <div className="w-full h-full bg-slate-200 object-cover" />
-              </div>
-              <div className="p-6 h-[100px] flex items-center">
-                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E. Kashim Shettima</h3>
-              </div>
-            </div>
-
-            {/* Speaker 4 */}
-            <div className="bg-white rounded-[20px] overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:-translate-y-1 transition-transform">
-              <div className="h-64 bg-[#E2E8F0] w-full">
-                 <div className="w-full h-full bg-slate-200 object-cover" />
-              </div>
-              <div className="p-6 h-[100px] flex items-center">
-                <h3 className="font-bold text-[#008753] text-lg leading-tight">H.E Teodoro Obiang Nguema Mbasogo</h3>
-              </div>
-            </div>
+            ))}
 
           </div>
         </div>
@@ -596,26 +637,12 @@ function Index() {
         </section>
       )}
 
-      {/* Post Your Event CTA */}
-      <section className="py-24 bg-slate-50 border-y border-slate-100">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-6">Host Your Own Event?</h2>
-          <p className="text-lg text-slate-600 mb-10 leading-relaxed">
-            Reach thousands of highly qualified professionals by listing your event with us. Whether it's a workshop, seminar, or large-scale conference, we provide the platform for you to succeed and connect with the right audience.
-          </p>
-          <Link to="/signup">
-            <Button size="lg" className="bg-[#109cde] hover:bg-[#0d84bf] text-white rounded-md px-10 py-6 text-lg font-medium transition-all shadow-lg hover:shadow-xl">
-              Post Your Event Now
-            </Button>
-          </Link>
-        </div>
-      </section>
 
       {/* Our Approach */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-4">Our Approach</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#263566] mb-4">{settings?.ourApproachTitle || "Our Approach"}</h2>
             <div className="w-16 h-1 bg-[#109cde] rounded-full mx-auto"></div>
           </div>
 
@@ -623,16 +650,16 @@ function Index() {
             {/* Card 1 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80" 
-                alt="Event Strategy" 
+                src={settings?.ourApproachCard1ImgUrl || "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80"} 
+                alt={settings?.ourApproachCard1Title || "Event Strategy"} 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#263566]/90 via-[#263566]/40 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-8 transform transition-transform duration-500 group-hover:-translate-y-4">
-                <h3 className="text-2xl font-bold text-white mb-2">Event Strategy</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{settings?.ourApproachCard1Title || "Event Strategy"}</h3>
                 <div className="w-8 h-1 bg-[#109cde] mb-4 transition-all duration-500 group-hover:w-16"></div>
                 <p className="text-white/80 opacity-0 transition-opacity duration-500 group-hover:opacity-100 line-clamp-3">
-                  Strategic design and planning to ensure your events meet your organizational objectives and deliver measurable ROI.
+                  {settings?.ourApproachCard1Desc || "Strategic design and planning to ensure your events meet your organizational objectives and deliver measurable ROI."}
                 </p>
               </div>
             </div>
@@ -640,16 +667,16 @@ function Index() {
             {/* Card 2 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=800&q=80" 
-                alt="Event Logistics" 
+                src={settings?.ourApproachCard2ImgUrl || "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=800&q=80"} 
+                alt={settings?.ourApproachCard2Title || "Event Logistics"} 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#263566]/90 via-[#263566]/40 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-8 transform transition-transform duration-500 group-hover:-translate-y-4">
-                <h3 className="text-2xl font-bold text-white mb-2">Event Logistics</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{settings?.ourApproachCard2Title || "Event Logistics"}</h3>
                 <div className="w-8 h-1 bg-[#109cde] mb-4 transition-all duration-500 group-hover:w-16"></div>
                 <p className="text-white/80 opacity-0 transition-opacity duration-500 group-hover:opacity-100 line-clamp-3">
-                  Flawless execution from sourcing and contracting to registration, housing, and on-site management.
+                  {settings?.ourApproachCard2Desc || "Flawless execution from sourcing and contracting to registration, housing, and on-site management."}
                 </p>
               </div>
             </div>
@@ -657,16 +684,16 @@ function Index() {
             {/* Card 3 */}
             <div className="relative group overflow-hidden h-[400px] rounded-lg shadow-md cursor-pointer">
               <img 
-                src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=800&q=80" 
-                alt="Event Technology" 
+                src={settings?.ourApproachCard3ImgUrl || "https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=800&q=80"} 
+                alt={settings?.ourApproachCard3Title || "Event Technology"} 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#263566]/90 via-[#263566]/40 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-8 transform transition-transform duration-500 group-hover:-translate-y-4">
-                <h3 className="text-2xl font-bold text-white mb-2">Event Technology</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{settings?.ourApproachCard3Title || "Event Technology"}</h3>
                 <div className="w-8 h-1 bg-[#109cde] mb-4 transition-all duration-500 group-hover:w-16"></div>
                 <p className="text-white/80 opacity-0 transition-opacity duration-500 group-hover:opacity-100 line-clamp-3">
-                  Innovative technological solutions that enhance the attendee experience and streamline event management processes.
+                  {settings?.ourApproachCard3Desc || "Innovative technological solutions that enhance the attendee experience and streamline event management processes."}
                 </p>
               </div>
             </div>
