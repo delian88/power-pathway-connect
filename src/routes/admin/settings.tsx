@@ -62,6 +62,30 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       if (url) data.ourApproachCard3ImgUrl = url;
     }
 
+    if (data.aboutHeroImgBase64) {
+      const url = await saveImg(data.aboutHeroImgBase64, data.aboutHeroImgFileName);
+      if (url) data.aboutHeroImgUrl = url;
+    }
+    if (data.agendaHeroImgBase64) {
+      const url = await saveImg(data.agendaHeroImgBase64, data.agendaHeroImgFileName);
+      if (url) data.agendaHeroImgUrl = url;
+    }
+    if (data.agendaBrochureBase64) {
+      try {
+        const fs = await import("fs");
+        const path = await import("path");
+        const publicDir = path.join(process.cwd(), 'public');
+        if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+        const base64Data = data.agendaBrochureBase64.replace(/^data:application\/pdf;base64,/, "").replace(/^data:.*?;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        const filePath = path.join(publicDir, data.agendaBrochureFileName);
+        fs.writeFileSync(filePath, buffer);
+        data.agendaBrochureUrl = `/${data.agendaBrochureFileName}`;
+      } catch (e) {
+        console.error("Failed to save brochure", e);
+      }
+    }
+
     // If a file was uploaded as base64, save it to the public directory
     if (data.logoBase64 && data.logoFileName) {
       try {
@@ -144,6 +168,28 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       }
     }
 
+    let finalVenues = data.aboutVenues || [];
+    for (let i = 0; i < finalVenues.length; i++) {
+      const v = finalVenues[i];
+      if (v.imgBase64 && v.imgFileName) {
+        try {
+          const fs = await import("fs");
+          const path = await import("path");
+          const publicDir = path.join(process.cwd(), 'public');
+          if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+          const base64Data = v.imgBase64.replace(/^data:image\/\w+;base64,/, "");
+          const buffer = Buffer.from(base64Data, 'base64');
+          const filePath = path.join(publicDir, v.imgFileName);
+          fs.writeFileSync(filePath, buffer);
+          v.imgUrl = `/${v.imgFileName}`;
+          delete v.imgBase64;
+          delete v.imgFileName;
+        } catch (e) {
+          console.error("Failed to save venue image", e);
+        }
+      }
+    }
+
     const payload = {
       heroText: data.heroText,
       heroSubText: data.heroSubText,
@@ -221,12 +267,38 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       ourApproachCard2Desc: data.ourApproachCard2Desc,
       ourApproachCard3Title: data.ourApproachCard3Title,
       ourApproachCard3Desc: data.ourApproachCard3Desc,
+      aboutHeroBadgeText: data.aboutHeroBadgeText,
+      aboutHeroTitle: data.aboutHeroTitle,
+      aboutHeroSubtitle: data.aboutHeroSubtitle,
+      aboutMissionTitle: data.aboutMissionTitle,
+      aboutMissionSubtitle: data.aboutMissionSubtitle,
+      aboutMissionCardTitle: data.aboutMissionCardTitle,
+      aboutMissionCardDesc: data.aboutMissionCardDesc,
+      aboutVisionCardTitle: data.aboutVisionCardTitle,
+      aboutVisionCardDesc: data.aboutVisionCardDesc,
+      aboutVenuesTitle: data.aboutVenuesTitle,
+      aboutVenuesSubtitle: data.aboutVenuesSubtitle,
+      aboutVenuesCount: data.aboutVenuesCount,
+      aboutVenues: finalVenues,
+      aboutVenuesWarningText: data.aboutVenuesWarningText,
+      aboutCtaTitle: data.aboutCtaTitle,
+      aboutCtaSubtitle: data.aboutCtaSubtitle,
+      agendaHeroTitle: data.agendaHeroTitle,
+      agendaHeroSubtitle: data.agendaHeroSubtitle,
+      agendaHeroDesc: data.agendaHeroDesc,
+      agendaSectionTitle: data.agendaSectionTitle,
+      agendaSectionSubtitle: data.agendaSectionSubtitle,
+      agendaDaysCount: data.agendaDaysCount,
+      agendaDays: data.agendaDays,
       ...(data.whyAttendCard1ImgUrl && { whyAttendCard1ImgUrl: data.whyAttendCard1ImgUrl }),
       ...(data.whyAttendCard2ImgUrl && { whyAttendCard2ImgUrl: data.whyAttendCard2ImgUrl }),
       ...(data.whyAttendCard3ImgUrl && { whyAttendCard3ImgUrl: data.whyAttendCard3ImgUrl }),
       ...(data.ourApproachCard1ImgUrl && { ourApproachCard1ImgUrl: data.ourApproachCard1ImgUrl }),
       ...(data.ourApproachCard2ImgUrl && { ourApproachCard2ImgUrl: data.ourApproachCard2ImgUrl }),
       ...(data.ourApproachCard3ImgUrl && { ourApproachCard3ImgUrl: data.ourApproachCard3ImgUrl }),
+      ...(data.aboutHeroImgUrl && { aboutHeroImgUrl: data.aboutHeroImgUrl }),
+      ...(data.agendaHeroImgUrl && { agendaHeroImgUrl: data.agendaHeroImgUrl }),
+      ...(data.agendaBrochureUrl && { agendaBrochureUrl: data.agendaBrochureUrl }),
     };
 
     const updated = await db.siteSettings.upsert({
@@ -318,18 +390,44 @@ function SettingsPage() {
     ourApproachTitle: settings?.ourApproachTitle || "",
     ourApproachCard1Title: settings?.ourApproachCard1Title || "",
     ourApproachCard1Desc: settings?.ourApproachCard1Desc || "",
-    ourApproachCard2Title: settings?.ourApproachCard2Title || "",
     ourApproachCard2Desc: settings?.ourApproachCard2Desc || "",
     ourApproachCard3Title: settings?.ourApproachCard3Title || "",
     ourApproachCard3Desc: settings?.ourApproachCard3Desc || "",
+    aboutHeroBadgeText: settings?.aboutHeroBadgeText || "",
+    aboutHeroTitle: settings?.aboutHeroTitle || "",
+    aboutHeroSubtitle: settings?.aboutHeroSubtitle || "",
+    aboutMissionTitle: settings?.aboutMissionTitle || "",
+    aboutMissionSubtitle: settings?.aboutMissionSubtitle || "",
+    aboutMissionCardTitle: settings?.aboutMissionCardTitle || "",
+    aboutMissionCardDesc: settings?.aboutMissionCardDesc || "",
+    aboutVisionCardTitle: settings?.aboutVisionCardTitle || "",
+    aboutVisionCardDesc: settings?.aboutVisionCardDesc || "",
+    aboutVenuesTitle: settings?.aboutVenuesTitle || "",
+    aboutVenuesSubtitle: settings?.aboutVenuesSubtitle || "",
+    aboutVenuesCount: settings?.aboutVenuesCount || 2,
+    aboutVenues: Array.isArray(settings?.aboutVenues) ? settings.aboutVenues : [],
+    aboutVenuesWarningText: settings?.aboutVenuesWarningText || "",
+    aboutCtaTitle: settings?.aboutCtaTitle || "",
+    aboutCtaSubtitle: settings?.aboutCtaSubtitle || "",
+    agendaHeroTitle: settings?.agendaHeroTitle || "",
+    agendaHeroSubtitle: settings?.agendaHeroSubtitle || "",
+    agendaHeroDesc: settings?.agendaHeroDesc || "",
+    agendaSectionTitle: settings?.agendaSectionTitle || "",
+    agendaSectionSubtitle: settings?.agendaSectionSubtitle || "",
+    agendaDaysCount: settings?.agendaDaysCount || 4,
+    agendaDays: Array.isArray(settings?.agendaDays) ? settings.agendaDays : [],
   });
 
   const [file, setFile] = useState<File | null>(null);
   const [sliderFiles, setSliderFiles] = useState<FileList | null>(null);
   const [featuredSpeakerFiles, setFeaturedSpeakerFiles] = useState<{ [key: number]: File }>({});
+  const [aboutVenueFiles, setAboutVenueFiles] = useState<{ [key: number]: File }>({});
   const [ourApproachCard1File, setOurApproachCard1File] = useState<File | null>(null);
   const [ourApproachCard2File, setOurApproachCard2File] = useState<File | null>(null);
   const [ourApproachCard3File, setOurApproachCard3File] = useState<File | null>(null);
+  const [aboutHeroFile, setAboutHeroFile] = useState<File | null>(null);
+  const [agendaHeroFile, setAgendaHeroFile] = useState<File | null>(null);
+  const [agendaBrochureFile, setAgendaBrochureFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -393,10 +491,26 @@ function SettingsPage() {
         }
       }
 
+      let updatedVenues = [...formData.aboutVenues];
+      for (let i = 0; i < formData.aboutVenuesCount; i++) {
+        if (!updatedVenues[i]) updatedVenues[i] = { title: "", location: "", desc: "" };
+        const vFile = aboutVenueFiles[i];
+        if (vFile) {
+          const b64 = await new Promise<string>((resolve, reject) => {
+            const r = new FileReader();
+            r.onload = () => resolve(r.result as string);
+            r.onerror = e => reject(e);
+            r.readAsDataURL(vFile);
+          });
+          updatedVenues[i] = { ...updatedVenues[i], imgFileName: vFile.name, imgBase64: b64 };
+        }
+      }
+
       await updateSettingsFn({
         data: {
           ...formData,
           featuredSpeakers: updatedSpeakers,
+          aboutVenues: updatedVenues,
           logoBase64,
           logoFileName,
           sliderImagesBase64,
@@ -417,6 +531,24 @@ function SettingsPage() {
             ourApproachCard3ImgFileName: ourApproachCard3File.name,
             ourApproachCard3ImgBase64: await new Promise((resolve) => {
               const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(ourApproachCard3File);
+            })
+          }),
+          ...(aboutHeroFile && {
+            aboutHeroImgFileName: aboutHeroFile.name,
+            aboutHeroImgBase64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(aboutHeroFile);
+            })
+          }),
+          ...(agendaHeroFile && {
+            agendaHeroImgFileName: agendaHeroFile.name,
+            agendaHeroImgBase64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(agendaHeroFile);
+            })
+          }),
+          ...(agendaBrochureFile && {
+            agendaBrochureFileName: agendaBrochureFile.name,
+            agendaBrochureBase64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(agendaBrochureFile);
             })
           }),
         }
@@ -781,7 +913,115 @@ function SettingsPage() {
           </div>
         </div>
 
-        <div className="space-y-4 pt-4">
+        <div className="space-y-4 pt-4 border-t-4 border-gray-200 mt-8">
+          <h2 className="text-2xl font-bold border-b pb-2">About Page Configuration</h2>
+          
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Hero Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Hero Background Image</Label>
+                <Input type="file" accept="image/*" onChange={e => e.target.files && setAboutHeroFile(e.target.files[0])} />
+              </div>
+              <div>
+                <Label>Hero Badge Text</Label>
+                <Input value={formData.aboutHeroBadgeText} onChange={e => setFormData({...formData, aboutHeroBadgeText: e.target.value})} placeholder="The Global Platform..." />
+              </div>
+              <div>
+                <Label>Hero Title</Label>
+                <Input value={formData.aboutHeroTitle} onChange={e => setFormData({...formData, aboutHeroTitle: e.target.value})} placeholder="About NIES" />
+              </div>
+              <div>
+                <Label>Hero Subtitle</Label>
+                <Textarea value={formData.aboutHeroSubtitle} onChange={e => setFormData({...formData, aboutHeroSubtitle: e.target.value})} rows={2} />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-4 border-t">
+            <h3 className="text-lg font-semibold">Mission & Vision Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="col-span-2 md:col-span-1">
+                <Label>Section Title</Label>
+                <Input value={formData.aboutMissionTitle} onChange={e => setFormData({...formData, aboutMissionTitle: e.target.value})} placeholder="Our Mission & Vision" />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <Label>Section Subtitle</Label>
+                <Input value={formData.aboutMissionSubtitle} onChange={e => setFormData({...formData, aboutMissionSubtitle: e.target.value})} placeholder="Guiding principles..." />
+              </div>
+              <div className="space-y-2 border p-3 rounded bg-gray-50">
+                <h4 className="font-bold">Mission Card</h4>
+                <Label>Title</Label>
+                <Input value={formData.aboutMissionCardTitle} onChange={e => setFormData({...formData, aboutMissionCardTitle: e.target.value})} placeholder="Our Mission" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutMissionCardDesc} onChange={e => setFormData({...formData, aboutMissionCardDesc: e.target.value})} rows={4} />
+              </div>
+              <div className="space-y-2 border p-3 rounded bg-gray-50">
+                <h4 className="font-bold">Vision Card</h4>
+                <Label>Title</Label>
+                <Input value={formData.aboutVisionCardTitle} onChange={e => setFormData({...formData, aboutVisionCardTitle: e.target.value})} placeholder="Our Vision" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutVisionCardDesc} onChange={e => setFormData({...formData, aboutVisionCardDesc: e.target.value})} rows={4} />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-4 border-t">
+            <h3 className="text-lg font-semibold">Event Venues Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="col-span-2 md:col-span-1">
+                <Label>Section Title</Label>
+                <Input value={formData.aboutVenuesTitle} onChange={e => setFormData({...formData, aboutVenuesTitle: e.target.value})} placeholder="Event Venues" />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <Label>Section Subtitle</Label>
+                <Input value={formData.aboutVenuesSubtitle} onChange={e => setFormData({...formData, aboutVenuesSubtitle: e.target.value})} placeholder="Experience NIES 2027..." />
+              </div>
+              <div className="col-span-2">
+                <Label>Warning/Note Text</Label>
+                <Input value={formData.aboutVenuesWarningText} onChange={e => setFormData({...formData, aboutVenuesWarningText: e.target.value})} placeholder="Abuja is a large city..." />
+              </div>
+              <div className="space-y-2 border p-3 rounded bg-gray-50">
+                <h4 className="font-bold">Venue 1</h4>
+                <Label>Image</Label>
+                <Input type="file" accept="image/*" onChange={e => e.target.files && setAboutVenue1File(e.target.files[0])} />
+                <Label>Title</Label>
+                <Input value={formData.aboutVenue1Title} onChange={e => setFormData({...formData, aboutVenue1Title: e.target.value})} placeholder="Presidential Banquet Hall" />
+                <Label>Location</Label>
+                <Input value={formData.aboutVenue1Location} onChange={e => setFormData({...formData, aboutVenue1Location: e.target.value})} placeholder="Aso Villa, Abuja" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutVenue1Desc} onChange={e => setFormData({...formData, aboutVenue1Desc: e.target.value})} rows={3} />
+              </div>
+              <div className="space-y-2 border p-3 rounded bg-gray-50">
+                <h4 className="font-bold">Venue 2</h4>
+                <Label>Image</Label>
+                <Input type="file" accept="image/*" onChange={e => e.target.files && setAboutVenue2File(e.target.files[0])} />
+                <Label>Title</Label>
+                <Input value={formData.aboutVenue2Title} onChange={e => setFormData({...formData, aboutVenue2Title: e.target.value})} placeholder="Bola Ahmed Tinubu ICC" />
+                <Label>Location</Label>
+                <Input value={formData.aboutVenue2Location} onChange={e => setFormData({...formData, aboutVenue2Location: e.target.value})} placeholder="Central Business District" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutVenue2Desc} onChange={e => setFormData({...formData, aboutVenue2Desc: e.target.value})} rows={3} />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-4 border-t">
+            <h3 className="text-lg font-semibold">Call to Action Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Title</Label>
+                <Input value={formData.aboutCtaTitle} onChange={e => setFormData({...formData, aboutCtaTitle: e.target.value})} placeholder="Join Africa's Energy Transformation" />
+              </div>
+              <div>
+                <Label>Subtitle</Label>
+                <Textarea value={formData.aboutCtaSubtitle} onChange={e => setFormData({...formData, aboutCtaSubtitle: e.target.value})} rows={3} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-8">
           <h2 className="text-xl font-semibold border-b pb-2">Branding & Logo</h2>
           <div>
             <Label>Current Logo URL</Label>
@@ -828,6 +1068,312 @@ function SettingsPage() {
               onChange={e => setFormData({...formData, address: e.target.value})} 
               rows={2}
             />
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">About Page Configuration</h2>
+          
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">1. Hero Section</h3>
+            <div>
+              <Label>Hero Background Image</Label>
+              <Input type="file" accept="image/*" onChange={e => e.target.files && setAboutHeroFile(e.target.files[0])} />
+            </div>
+            <div>
+              <Label>Hero Badge Text</Label>
+              <Input value={formData.aboutHeroBadgeText} onChange={e => setFormData({...formData, aboutHeroBadgeText: e.target.value})} placeholder="The Global Platform for Stimulating Discussion" />
+            </div>
+            <div>
+              <Label>Hero Title</Label>
+              <Input value={formData.aboutHeroTitle} onChange={e => setFormData({...formData, aboutHeroTitle: e.target.value})} placeholder="About NIES" />
+            </div>
+            <div>
+              <Label>Hero Subtitle</Label>
+              <Textarea value={formData.aboutHeroSubtitle} onChange={e => setFormData({...formData, aboutHeroSubtitle: e.target.value})} rows={2} />
+            </div>
+          </div>
+
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">2. Mission & Vision</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Section Title</Label>
+                <Input value={formData.aboutMissionTitle} onChange={e => setFormData({...formData, aboutMissionTitle: e.target.value})} placeholder="Our Mission & Vision" />
+              </div>
+              <div>
+                <Label>Section Subtitle</Label>
+                <Input value={formData.aboutMissionSubtitle} onChange={e => setFormData({...formData, aboutMissionSubtitle: e.target.value})} />
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="space-y-2 border p-3 rounded bg-white">
+                <Label className="font-bold text-blue-800">Mission Card</Label>
+                <Label>Title</Label>
+                <Input value={formData.aboutMissionCardTitle} onChange={e => setFormData({...formData, aboutMissionCardTitle: e.target.value})} placeholder="Our Mission" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutMissionCardDesc} onChange={e => setFormData({...formData, aboutMissionCardDesc: e.target.value})} rows={4} />
+              </div>
+              <div className="space-y-2 border p-3 rounded bg-white">
+                <Label className="font-bold text-blue-800">Vision Card</Label>
+                <Label>Title</Label>
+                <Input value={formData.aboutVisionCardTitle} onChange={e => setFormData({...formData, aboutVisionCardTitle: e.target.value})} placeholder="Our Vision" />
+                <Label>Description</Label>
+                <Textarea value={formData.aboutVisionCardDesc} onChange={e => setFormData({...formData, aboutVisionCardDesc: e.target.value})} rows={4} />
+              </div>
+            </div>
+          </div>
+
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">3. Event Venues</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Section Title</Label>
+                <Input value={formData.aboutVenuesTitle} onChange={e => setFormData({...formData, aboutVenuesTitle: e.target.value})} placeholder="Event Venues" />
+              </div>
+              <div>
+                <Label>Section Subtitle</Label>
+                <Input value={formData.aboutVenuesSubtitle} onChange={e => setFormData({...formData, aboutVenuesSubtitle: e.target.value})} />
+              </div>
+            </div>
+            
+            <div className="mt-4 border p-3 rounded bg-white">
+              <Label>Number of Venues to Display</Label>
+              <Input type="number" min={1} max={10} value={formData.aboutVenuesCount} onChange={e => setFormData({...formData, aboutVenuesCount: Number(e.target.value)})} />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              {Array.from({ length: formData.aboutVenuesCount }).map((_, i) => (
+                <div key={i} className="space-y-2 border p-3 rounded bg-white">
+                  <Label className="font-bold text-blue-800">Venue {i + 1}</Label>
+                  <Label>Image</Label>
+                  <Input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={e => e.target.files && setAboutVenueFiles({...aboutVenueFiles, [i]: e.target.files[0]})} 
+                  />
+                  <Label>Venue Name</Label>
+                  <Input 
+                    value={formData.aboutVenues[i]?.title || ""} 
+                    onChange={e => {
+                      const newVenues = [...formData.aboutVenues];
+                      newVenues[i] = { ...newVenues[i], title: e.target.value };
+                      setFormData({...formData, aboutVenues: newVenues});
+                    }} 
+                  />
+                  <Label>Location</Label>
+                  <Input 
+                    value={formData.aboutVenues[i]?.location || ""} 
+                    onChange={e => {
+                      const newVenues = [...formData.aboutVenues];
+                      newVenues[i] = { ...newVenues[i], location: e.target.value };
+                      setFormData({...formData, aboutVenues: newVenues});
+                    }} 
+                  />
+                  <Label>Description</Label>
+                  <Textarea 
+                    value={formData.aboutVenues[i]?.desc || ""} 
+                    onChange={e => {
+                      const newVenues = [...formData.aboutVenues];
+                      newVenues[i] = { ...newVenues[i], desc: e.target.value };
+                      setFormData({...formData, aboutVenues: newVenues});
+                    }} 
+                    rows={3} 
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 border p-3 rounded bg-white">
+              <Label>Warning / Notice Text (bottom of venues)</Label>
+              <Input value={formData.aboutVenuesWarningText} onChange={e => setFormData({...formData, aboutVenuesWarningText: e.target.value})} placeholder="Abuja is a large city, please plan travel between venues accordingly." />
+            </div>
+          </div>
+
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">4. Call to Action Banner</h3>
+            <div>
+              <Label>CTA Title</Label>
+              <Input value={formData.aboutCtaTitle} onChange={e => setFormData({...formData, aboutCtaTitle: e.target.value})} placeholder="Join Africa's Energy Transformation" />
+            </div>
+            <div>
+              <Label>CTA Subtitle</Label>
+              <Textarea value={formData.aboutCtaSubtitle} onChange={e => setFormData({...formData, aboutCtaSubtitle: e.target.value})} rows={2} />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Agenda Page Configuration</h2>
+          
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">1. Hero Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Title</Label>
+                <Input value={formData.agendaHeroTitle} onChange={e => setFormData({...formData, agendaHeroTitle: e.target.value})} placeholder="Conference Schedule & Sessions" />
+              </div>
+              <div>
+                <Label>Subtitle (Tagline)</Label>
+                <Input value={formData.agendaHeroSubtitle} onChange={e => setFormData({...formData, agendaHeroSubtitle: e.target.value})} placeholder="NIES 2027 Agenda" />
+              </div>
+            </div>
+            <div>
+              <Label>Description</Label>
+              <Textarea value={formData.agendaHeroDesc} onChange={e => setFormData({...formData, agendaHeroDesc: e.target.value})} rows={2} />
+            </div>
+            <div>
+              <Label>Hero Background Image</Label>
+              <Input type="file" accept="image/*" onChange={e => e.target.files && setAgendaHeroFile(e.target.files[0])} />
+            </div>
+            <div>
+              <Label className="font-bold text-blue-800">Download Brochure PDF</Label>
+              <Input type="file" accept="application/pdf" onChange={e => e.target.files && setAgendaBrochureFile(e.target.files[0])} />
+            </div>
+          </div>
+
+          <div className="border p-4 rounded bg-gray-50 space-y-4">
+            <h3 className="font-bold text-lg">2. Agenda Content Section</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Section Title</Label>
+                <Input value={formData.agendaSectionTitle} onChange={e => setFormData({...formData, agendaSectionTitle: e.target.value})} placeholder="Event Agenda" />
+              </div>
+              <div>
+                <Label>Section Subtitle</Label>
+                <Input value={formData.agendaSectionSubtitle} onChange={e => setFormData({...formData, agendaSectionSubtitle: e.target.value})} placeholder="Four days of transformative discussions..." />
+              </div>
+            </div>
+            
+            <div className="mt-4 border p-3 rounded bg-white">
+              <Label>Number of Days to Display</Label>
+              <Input type="number" min={1} max={7} value={formData.agendaDaysCount} onChange={e => setFormData({...formData, agendaDaysCount: Number(e.target.value)})} />
+            </div>
+
+            <div className="space-y-4 mt-4">
+              {Array.from({ length: formData.agendaDaysCount }).map((_, i) => (
+                <div key={i} className="space-y-2 border p-3 rounded bg-white">
+                  <h4 className="font-bold text-blue-800 border-b pb-1">Day {i + 1}</h4>
+                  <div className="grid md:grid-cols-3 gap-2">
+                    <div>
+                      <Label>Date (e.g. Feb 2)</Label>
+                      <Input 
+                        value={formData.agendaDays[i]?.date || ""} 
+                        onChange={e => {
+                          const newDays = [...formData.agendaDays];
+                          newDays[i] = { ...newDays[i], date: e.target.value };
+                          setFormData({...formData, agendaDays: newDays});
+                        }} 
+                      />
+                    </div>
+                    <div>
+                      <Label>Short Title (e.g. Policy & Diplomacy)</Label>
+                      <Input 
+                        value={formData.agendaDays[i]?.title || ""} 
+                        onChange={e => {
+                          const newDays = [...formData.agendaDays];
+                          newDays[i] = { ...newDays[i], title: e.target.value };
+                          setFormData({...formData, agendaDays: newDays});
+                        }} 
+                      />
+                    </div>
+                    <div>
+                      <Label>Location</Label>
+                      <Input 
+                        value={formData.agendaDays[i]?.location || ""} 
+                        onChange={e => {
+                          const newDays = [...formData.agendaDays];
+                          newDays[i] = { ...newDays[i], location: e.target.value };
+                          setFormData({...formData, agendaDays: newDays});
+                        }} 
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Long Description Title</Label>
+                    <Input 
+                      value={formData.agendaDays[i]?.longTitle || ""} 
+                      onChange={e => {
+                        const newDays = [...formData.agendaDays];
+                        newDays[i] = { ...newDays[i], longTitle: e.target.value };
+                        setFormData({...formData, agendaDays: newDays});
+                      }} 
+                    />
+                  </div>
+                  
+                  <div className="mt-4 border p-3 rounded bg-gray-50">
+                    <div className="flex justify-between items-center mb-2">
+                      <Label className="font-bold">Sessions for Day {i + 1}</Label>
+                      <Button type="button" variant="outline" size="sm" onClick={() => {
+                        const newDays = [...formData.agendaDays];
+                        const day = newDays[i] || {};
+                        const sessions = day.sessions || [];
+                        newDays[i] = { ...day, sessions: [...sessions, { time: "", title: "", contentHtml: "" }] };
+                        setFormData({...formData, agendaDays: newDays});
+                      }}>
+                        + Add Session
+                      </Button>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      {(formData.agendaDays[i]?.sessions || []).map((session: any, sIdx: number) => (
+                        <div key={sIdx} className="border border-gray-200 p-3 rounded bg-white relative">
+                          <Button 
+                            type="button" 
+                            variant="destructive" 
+                            size="sm" 
+                            className="absolute top-2 right-2 h-6 w-6 p-0 rounded-full"
+                            onClick={() => {
+                              const newDays = [...formData.agendaDays];
+                              newDays[i].sessions = newDays[i].sessions.filter((_: any, idx: number) => idx !== sIdx);
+                              setFormData({...formData, agendaDays: newDays});
+                            }}
+                          >
+                            ×
+                          </Button>
+                          <div className="grid md:grid-cols-2 gap-2 mb-2 pr-8">
+                            <div>
+                              <Label>Time (e.g. 8:00 AM - 9:00 AM)</Label>
+                              <Input 
+                                value={session.time || ""} 
+                                onChange={e => {
+                                  const newDays = [...formData.agendaDays];
+                                  newDays[i].sessions[sIdx].time = e.target.value;
+                                  setFormData({...formData, agendaDays: newDays});
+                                }} 
+                              />
+                            </div>
+                            <div>
+                              <Label>Session Title</Label>
+                              <Input 
+                                value={session.title || ""} 
+                                onChange={e => {
+                                  const newDays = [...formData.agendaDays];
+                                  newDays[i].sessions[sIdx].title = e.target.value;
+                                  setFormData({...formData, agendaDays: newDays});
+                                }} 
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <Label>Session Details (Accepts raw HTML for bullet points, bolding, etc.)</Label>
+                            <Textarea 
+                              value={session.contentHtml || ""} 
+                              onChange={e => {
+                                const newDays = [...formData.agendaDays];
+                                newDays[i].sessions[sIdx].contentHtml = e.target.value;
+                                setFormData({...formData, agendaDays: newDays});
+                              }} 
+                              rows={4}
+                              placeholder="<ul><li>• <b>Speaker Name</b> - Role</li></ul>"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

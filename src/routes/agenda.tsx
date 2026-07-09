@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { getSiteSettingsFn } from "@/lib/server-functions";
 
 function AgendaSkeleton() {
   return (
@@ -32,11 +33,15 @@ export const Route = createFileRoute("/agenda")({
       { name: "description", content: "Explore the comprehensive agenda for NIES 2027." },
     ],
   }),
+  loader: async () => {
+    return await getSiteSettingsFn();
+  },
   pendingComponent: AgendaSkeleton,
   component: AgendaPage,
 });
 
 function AgendaPage() {
+  const settings = Route.useLoaderData();
   const [activeDay, setActiveDay] = useState(1);
 
   return (
@@ -47,7 +52,7 @@ function AgendaPage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden pt-16 bg-[#0F1A1C]">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2000&q=80" 
+            src={settings?.agendaHeroImgUrl || "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2000&q=80"} 
             alt="Agenda Background" 
             className="w-full h-full object-cover opacity-30"
           />
@@ -61,7 +66,7 @@ function AgendaPage() {
             transition={{ duration: 0.6 }}
             className="inline-block bg-[#D4AF37]/20 text-[#D4AF37] px-6 py-2 rounded-full text-sm font-bold border border-[#D4AF37]/30 mb-6 tracking-wide uppercase"
           >
-            NIES 2027 Agenda
+            {settings?.agendaHeroSubtitle || "NIES 2027 Agenda"}
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, x: -30 }}
@@ -69,7 +74,11 @@ function AgendaPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold font-sans text-white drop-shadow-lg leading-tight mb-6"
           >
-            Conference <br/> <span className="text-[#D4AF37]">Schedule & Sessions</span>
+            {settings?.agendaHeroTitle ? (
+              <span dangerouslySetInnerHTML={{__html: settings.agendaHeroTitle.replace("Schedule", `<span class="text-[#D4AF37]">Schedule</span>`).replace("Sessions", `<span class="text-[#D4AF37]">Sessions</span>`)}} />
+            ) : (
+              <>Conference <br/> <span className="text-[#D4AF37]">Schedule & Sessions</span></>
+            )}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -77,7 +86,7 @@ function AgendaPage() {
             transition={{ duration: 1, delay: 0.4 }}
             className="text-lg text-white/90 font-poppins mb-10 leading-relaxed max-w-xl mx-auto md:mx-0"
           >
-            Explore the comprehensive agenda for NIES 2027, featuring keynote addresses, panel discussions, and technical sessions with global energy leaders.
+            {settings?.agendaHeroDesc || "Explore the comprehensive agenda for NIES 2027, featuring keynote addresses, panel discussions, and technical sessions with global energy leaders."}
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -90,11 +99,19 @@ function AgendaPage() {
                 Register Now ➔
               </Button>
             </Link>
-            <a href="#schedule-section">
-              <Button variant="outline" size="lg" className="bg-transparent border-white/30 hover:bg-white/10 text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1">
-                View Agenda 📑
-              </Button>
-            </a>
+            {settings?.agendaBrochureUrl ? (
+              <a href={settings.agendaBrochureUrl} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="lg" className="bg-[#D4AF37] border-transparent hover:bg-[#b08d24] text-[#0F1A1C] rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1 shadow-lg">
+                  Download Brochure 📄
+                </Button>
+              </a>
+            ) : (
+              <a href="#schedule-section">
+                <Button variant="outline" size="lg" className="bg-transparent border-white/30 hover:bg-white/10 text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1">
+                  View Agenda 📑
+                </Button>
+              </a>
+            )}
           </motion.div>
         </div>
       </section>
@@ -110,10 +127,14 @@ function AgendaPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold font-sans text-[#0F1A1C] mb-4">
-              Event <span className="text-[#D4AF37]">Agenda</span>
+              {settings?.agendaSectionTitle ? (
+                <span dangerouslySetInnerHTML={{__html: settings.agendaSectionTitle.replace("Agenda", `<span class="text-[#D4AF37]">Agenda</span>`)}} />
+              ) : (
+                <>Event <span className="text-[#D4AF37]">Agenda</span></>
+              )}
             </h2>
             <p className="text-gray-600 text-lg font-poppins">
-              Four days of transformative discussions, networking, and deal-making
+              {settings?.agendaSectionSubtitle || "Four days of transformative discussions, networking, and deal-making"}
             </p>
           </motion.div>
 
@@ -126,25 +147,28 @@ function AgendaPage() {
           >
             {/* Tabs */}
             <div className="flex bg-[#008753] text-white overflow-x-auto">
-              {[
+              {(settings?.agendaDays?.length ? settings.agendaDays : [
                 { day: 1, date: "Feb 2", title: "Policy & Diplomacy" },
                 { day: 2, date: "Feb 3", title: "Investment & Strategy" },
                 { day: 3, date: "Feb 4", title: "Technology & Innovation" },
                 { day: 4, date: "Feb 5", title: "Closing & Site Visits" }
-              ].map((tab) => (
-                <button
-                  key={tab.day}
-                  onClick={() => setActiveDay(tab.day)}
-                  className={`flex-1 min-w-[200px] py-4 px-4 flex flex-col items-center justify-center transition-all ${
-                    activeDay === tab.day 
-                      ? "bg-[#00A86B] border-b-[5px] border-[#D4AF37]" 
-                      : "hover:bg-[#00A86B]/50 border-b-[5px] border-transparent"
-                  }`}
-                >
-                  <span className="font-bold text-lg whitespace-nowrap">Day {tab.day} - {tab.date}</span>
-                  <span className="text-xs font-semibold opacity-90 mt-1 uppercase tracking-wider text-center">{tab.title}</span>
-                </button>
-              ))}
+              ]).map((tab: any, idx: number) => {
+                const dayNum = tab.day || (idx + 1);
+                return (
+                  <button
+                    key={dayNum}
+                    onClick={() => setActiveDay(dayNum)}
+                    className={`flex-1 min-w-[200px] py-4 px-4 flex flex-col items-center justify-center transition-all ${
+                      activeDay === dayNum 
+                        ? "bg-[#00A86B] border-b-[5px] border-[#D4AF37]" 
+                        : "hover:bg-[#00A86B]/50 border-b-[5px] border-transparent"
+                    }`}
+                  >
+                    <span className="font-bold text-lg whitespace-nowrap">Day {dayNum} - {tab.date}</span>
+                    <span className="text-xs font-semibold opacity-90 mt-1 uppercase tracking-wider text-center">{tab.title}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Schedule Content */}
@@ -157,93 +181,56 @@ function AgendaPage() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Day 1 Content */}
-                  {activeDay === 1 && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="bg-[#1A2A2E] text-white p-6 border-b border-gray-200">
-                    <h3 className="font-bold text-xl text-[#D4AF37] uppercase tracking-wide mb-2">
-                      Setting the Agenda: Local Content - Regional Energy - Policy & Diplomacy
-                    </h3>
-                    <p className="text-sm font-semibold opacity-80 flex items-center gap-2">
-                      <span className="text-[#008753]">📍</span> International Conference Centre, Abuja
-                    </p>
-                  </div>
+                  {(() => {
+                    const activeDayData = (settings?.agendaDays || []).find((d: any, idx: number) => (d.day || (idx + 1)) === activeDay);
+                    
+                    if (activeDayData && activeDayData.sessions && activeDayData.sessions.length > 0) {
+                      return (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                          <div className="bg-[#1A2A2E] text-white p-6 border-b border-gray-200">
+                            <h3 className="font-bold text-xl text-[#D4AF37] uppercase tracking-wide mb-2">
+                              {activeDayData.longTitle || `Day ${activeDay} Agenda`}
+                            </h3>
+                            {activeDayData.location && (
+                              <p className="text-sm font-semibold opacity-80 flex items-center gap-2">
+                                <span className="text-[#008753]">📍</span> {activeDayData.location}
+                              </p>
+                            )}
+                          </div>
 
-                  {/* Item 1 */}
-                  <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                    <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
-                      <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">8:00 AM - 9:00 AM</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-2">
-                        Registration & Networking
-                      </h4>
-                    </div>
-                  </div>
+                          {activeDayData.sessions.map((session: any, sIdx: number) => (
+                            <div key={sIdx} className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                              <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
+                                <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">{session.time}</span>
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-4 leading-snug">
+                                  {session.title}
+                                </h4>
+                                {session.contentHtml && (
+                                  <div 
+                                    className="space-y-4 text-gray-600 text-sm prose max-w-none prose-ul:my-1 prose-li:my-0 prose-h5:text-[#D4AF37] prose-h5:uppercase prose-h5:font-bold prose-h5:mb-1"
+                                    dangerouslySetInnerHTML={{ __html: session.contentHtml }}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    }
 
-                  {/* Item 2 */}
-                  <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                    <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
-                      <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">9:15 AM - 9:30 AM</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-4">
-                        Official Pre-Conference Opening
-                      </h4>
-                      <div className="space-y-4">
-                        <div>
-                          <h5 className="font-bold text-[#D4AF37] text-sm uppercase mb-1">Kickstarting Addresses:</h5>
-                          <ul className="text-gray-600 text-sm space-y-1">
-                            <li>• <span className="font-semibold text-gray-800">Mr. Paul Mervin</span> - Chairman, Brevity Anderson Limited</li>
-                            <li>• <span className="font-semibold text-gray-800">Mrs. Patience N. Oyekunle</span> - Permanent Secretary, Ministry of Petroleum Resources</li>
-                          </ul>
+                    // Empty state fallback
+                    return (
+                      <div className="p-16 text-center animate-in fade-in slide-in-from-bottom-4">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <span className="text-2xl">⏳</span>
                         </div>
-                        <div>
-                          <h5 className="font-bold text-[#D4AF37] text-sm uppercase mb-1">Opening Remarks by:</h5>
-                          <ul className="text-gray-600 text-sm space-y-1">
-                            <li>• <span className="font-semibold text-gray-800">Sen. Heineken Lokpobiri (Ph.D)</span> - Honourable Minister of State, Ministry of Petroleum Resources (Oil)</li>
-                            <li>• <span className="font-semibold text-gray-800">Rt. Hon. Ekperikpe Ekpo</span> - Honourable Minister of State, Ministry of Petroleum Resources (Gas)</li>
-                          </ul>
-                        </div>
+                        <h3 className="text-xl font-bold text-[#0F1A1C] mb-2">Detailed Schedule Coming Soon</h3>
+                        <p className="text-gray-500">The agenda for Day {activeDay} is currently being finalized. Please check back shortly for full session details and speaker announcements.</p>
                       </div>
-                    </div>
-                  </div>
-                  
-                  {/* Item 3 */}
-                  <div className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                    <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
-                      <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">9:30 AM - 10:30 AM</span>
-                    </div>
-                    <div className="flex-1">
-                      <span className="inline-block bg-[#0F1A1C] text-[#D4AF37] text-xs font-bold uppercase px-3 py-1 mb-3">SESSION ONE - Local Content in Action</span>
-                      <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-4 leading-snug">
-                        Theme: Local Content Beyond Compliance: Building African Industrial Powerhouses
-                      </h4>
-                      <div className="space-y-4">
-                        <div>
-                          <h5 className="font-bold text-[#D4AF37] text-sm uppercase mb-1">Fireside Chat / Keynote Conversation</h5>
-                          <ul className="text-gray-600 text-sm space-y-1">
-                            <li>• <span className="font-semibold text-gray-800">Topic:</span> "Empowering African Energy Enterprises for Global Play"</li>
-                            <li>• <span className="font-semibold text-gray-800">Guest:</span> Engr. Felix Omatsola Ogbe - Executive Secretary, NCDMB</li>
-                            <li>• <span className="font-semibold text-gray-800">Host:</span> Ms. Joanna Mustapha - Senior Business Correspondent, News Central Television</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Day 2, 3, 4 Empty States */}
-              {activeDay !== 1 && (
-                <div className="p-16 text-center animate-in fade-in slide-in-from-bottom-4">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">⏳</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#0F1A1C] mb-2">Detailed Schedule Coming Soon</h3>
-                  <p className="text-gray-500">The agenda for Day {activeDay} is currently being finalized. Please check back shortly for full session details and speaker announcements.</p>
-                </div>
-              )}
+                    );
+                  })()}
               
                 </motion.div>
               </AnimatePresence>

@@ -107,6 +107,37 @@ model SiteSettings {
   ourApproachCard3Desc       String? @db.Text
   ourApproachCard3ImgUrl     String? @db.Text
 
+  aboutHeroBadgeText         String?
+  aboutHeroTitle             String?
+  aboutHeroSubtitle          String? @db.Text
+  aboutHeroImgUrl            String? @db.Text
+
+  aboutMissionTitle          String?
+  aboutMissionSubtitle       String? @db.Text
+  aboutMissionCardTitle      String?
+  aboutMissionCardDesc       String? @db.Text
+  aboutVisionCardTitle       String?
+  aboutVisionCardDesc        String? @db.Text
+
+  aboutVenuesTitle           String?
+  aboutVenuesSubtitle        String? @db.Text
+  aboutVenuesCount           Int?    @default(2)
+  aboutVenues                Json?
+  aboutVenuesWarningText     String? @db.Text
+
+  aboutCtaTitle              String?
+  aboutCtaSubtitle           String? @db.Text
+
+  agendaHeroTitle            String?
+  agendaHeroSubtitle         String? @db.Text
+  agendaHeroDesc             String? @db.Text
+  agendaHeroImgUrl           String? @db.Text
+  agendaSectionTitle         String?
+  agendaSectionSubtitle      String? @db.Text
+  agendaDaysCount            Int?    @default(4)
+  agendaDays                 Json?
+  agendaBrochureUrl          String? @db.Text
+
   updatedAt    DateTime @updatedAt
 }
 
@@ -165,4 +196,17 @@ model Application {
   phone        String
   organization String
   createdAt    DateTime @default(now())
+}
+
+model Registration {
+  id              String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  organization    String
+  jobTitle        String
+  ticketType      String   
+  status          String   @default("PENDING") 
+  createdAt       DateTime @default(now())
 }

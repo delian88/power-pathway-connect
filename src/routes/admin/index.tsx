@@ -21,6 +21,7 @@ export const getStatsFn = createServerFn({ method: "GET" }).handler(async () => 
   const eventsCount = await db.event.count();
   const applicantsCount = await db.application.count();
   const workshopsCount = await db.event.count({ where: { type: "Workshop" } });
+  const registrationsCount = await db.registration.count();
   
   const events = await db.event.findMany({
     orderBy: { createdAt: 'desc' },
@@ -35,6 +36,7 @@ export const getStatsFn = createServerFn({ method: "GET" }).handler(async () => 
     eventsCount, 
     applicantsCount, 
     workshopsCount, 
+    registrationsCount,
     sponsorsCount: 14, // Mocked for now since there's no standalone sponsor model
     events 
   }));
@@ -69,7 +71,7 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function AdminDashboard() {
-  const { eventsCount, applicantsCount, workshopsCount, sponsorsCount, events } = Route.useLoaderData();
+  const { eventsCount, applicantsCount, workshopsCount, registrationsCount, sponsorsCount, events } = Route.useLoaderData();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -102,9 +104,9 @@ function AdminDashboard() {
 
   const stats = [
     { title: "Total Events", value: eventsCount.toString(), icon: Calendar, trend: "+12%", bg: "bg-green-50", iconColor: "text-green-600" },
-    { title: "Total Applicants", value: applicantsCount.toString(), icon: Users, trend: "+18%", bg: "bg-blue-50", iconColor: "text-blue-500" },
+    { title: "Registrations", value: registrationsCount.toString(), icon: Users, trend: "New", bg: "bg-blue-50", iconColor: "text-blue-500" },
+    { title: "Total Applicants", value: applicantsCount.toString(), icon: Users, trend: "+18%", bg: "bg-orange-50", iconColor: "text-orange-500" },
     { title: "Workshops", value: workshopsCount.toString(), icon: GraduationCap, trend: "+8%", bg: "bg-purple-50", iconColor: "text-purple-500" },
-    { title: "Sponsors", value: sponsorsCount.toString(), icon: Award, trend: "+5%", bg: "bg-amber-50", iconColor: "text-amber-500" },
   ];
 
   return (
