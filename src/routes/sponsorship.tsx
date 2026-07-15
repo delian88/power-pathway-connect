@@ -22,7 +22,7 @@ function SponsorshipSkeleton() {
   );
 }
 
-import { getSiteSettingsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 export const Route = createFileRoute("/sponsorship")({
   head: () => ({
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/sponsorship")({
       { name: "description", content: "Partner With Us to Drive Energy Innovation" },
     ],
   }),
-  loader: async () => await getSiteSettingsFn(),
+  loader: async () => await api.getSiteSettings(),
   pendingComponent: SponsorshipSkeleton,
   component: SponsorshipPage,
 });
@@ -136,25 +136,30 @@ function SponsorshipPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-[#0F1A1C] mb-4">{settings?.sponsorshipPartnersTitle || "Our Sponsors & Partners"}</h2>
             <p className="text-gray-500 font-poppins max-w-2xl mx-auto">{settings?.sponsorshipPartnersDesc || "Leading organizations driving Africa's energy transformation through strategic partnerships."}</p>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-center transition-all duration-500">
-             {partners.length > 0 ? (
-               partners.map((p: any, i: number) => (
-                 <div key={i} className="flex items-center justify-center p-4 h-24 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all grayscale hover:grayscale-0">
-                   {p.logoUrl ? (
-                     <img src={p.logoUrl} alt={p.name} className="max-h-16 max-w-full object-contain" />
-                   ) : (
-                     <span className="font-bold text-gray-400 text-sm">{p.name || `PARTNER ${i+1}`}</span>
-                   )}
-                 </div>
-               ))
-             ) : (
-               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
-                  <div key={i} className="flex items-center justify-center p-4 h-24 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer opacity-60 grayscale hover:grayscale-0">
-                    <span className="font-bold text-gray-400 text-sm">PARTNER {i}</span>
+          <div className="w-full overflow-hidden mt-8 relative">
+            {/* Fade gradients for smooth edge transition */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+            
+            <motion.div 
+              className="flex w-max items-center gap-16 pr-16"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+            >
+              {(() => {
+                const baseLogos = [
+                  "/sponsor-1.png", "/sponsor-2.png", "/sponsor-3.png", "/sponsor-4.png", "/sponsor-5.png",
+                  "/sponsor-6.png", "/sponsor-7.png", "/sponsor-8.png", "/sponsor-9.png", "/sponsor-10.png",
+                  "/sponsor-11.png", "/sponsor-12.png", "/sponsor-13.png", "/sponsor-14.png"
+                ];
+                const duplicatedLogos = [...baseLogos, ...baseLogos];
+                return duplicatedLogos.map((url, i) => (
+                  <div key={i} className="flex-shrink-0 flex items-center justify-center p-4 h-28 w-48 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer">
+                    <img src={url} alt={`Partner ${i+1}`} className="max-h-20 max-w-full object-contain" />
                   </div>
-               ))
-             )}
+                ));
+              })()}
+            </motion.div>
           </div>
         </div>
       </section>

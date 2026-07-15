@@ -8,9 +8,22 @@ export const getLandingDataFn = createServerFn({ method: "GET" }).handler(async 
   return JSON.parse(JSON.stringify({ settings, events, scheduleItems }));
 });
 
+let siteSettingsPromise: Promise<any> | null = null;
+let siteSettingsCacheTime = 0;
+
 export const getSiteSettingsFn = createServerFn({ method: "GET" }).handler(async () => {
-  const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
-  return settings ? JSON.parse(JSON.stringify(settings)) : null;
+  const now = Date.now();
+  if (siteSettingsPromise && (now - siteSettingsCacheTime < 2000)) {
+    return siteSettingsPromise;
+  }
+  
+  siteSettingsPromise = (async () => {
+    const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
+    return settings ? JSON.parse(JSON.stringify(settings)) : null;
+  })();
+  siteSettingsCacheTime = now;
+  
+  return siteSettingsPromise;
 });
 
 export const submitRegistrationFn = createServerFn({ method: "POST" })

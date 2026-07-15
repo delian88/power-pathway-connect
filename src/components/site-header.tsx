@@ -44,13 +44,14 @@ export function SiteHeader() {
         <div className="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
           
           {/* Left: Logo */}
-          <div className="flex items-center gap-4 w-[300px]">
+          <div className="flex flex-col items-start justify-center w-[300px]">
+            <span className="text-[#0F1A1C] font-bold text-[11px] uppercase mb-1 tracking-wider">{settings.convenerTitle || "CONVENER"}</span>
             <Link to="/">
-              <div className="flex items-center gap-3">
-                <img src="/nerc-logo.png" alt="NERC Logo" className="w-16 h-16 object-contain" />
+              <div className="flex items-center gap-4 mt-1">
+                <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-24 h-24 object-contain" />
                 <div className="flex flex-col">
-                  <span className="text-[#0F1A1C] font-bold text-lg leading-tight tracking-tight uppercase">National Electricity</span>
-                  <span className="text-[#0F1A1C] font-bold text-lg leading-tight tracking-tight uppercase">Workshop</span>
+                  <span className="text-[#0F1A1C] font-bold text-[16px] leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "National Electricity"}</span>
+                  <span className="text-[#0F1A1C] font-bold text-[16px] leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "Workshop"}</span>
                 </div>
               </div>
             </Link>
@@ -60,21 +61,16 @@ export function SiteHeader() {
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPresidentText || "President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria"}</span>
-            <span className="text-[#008753] font-bold mt-1 text-[15px]">{settings.headerLocationText || "PRESIDENTIAL BANQUET HALL - ASO VILLA"}</span>
-            <span className="text-gray-600 text-[13px] mb-2">{settings.headerLocationSubText || "Bola Ahmed Tinubu International Conference Centre (BAT ICC), Abuja"}</span>
+            <span className="text-[#008753] font-bold mt-1 mb-2 text-[15px]">PRESIDENTIAL BANQUET HALL - ASO VILLA, FCT</span>
             
             <div className="bg-[#E6F3EE] text-[#008753] px-6 py-1.5 rounded-full text-sm font-bold tracking-wide">
               {settings.headerDateText || "15TH – 18TH MARCH 2027"}
             </div>
           </div>
 
-          {/* Right: Convener / Logos */}
-          <div className="flex flex-col items-center justify-center w-[300px]">
-            <span className="text-[#0F1A1C] font-bold text-[11px] uppercase mb-1 tracking-wider">CONVENER</span>
-            <div className="flex items-center gap-3">
-              <img src="/vp-seal.png" alt="VP Seal" className="w-16 h-16 object-contain" />
-              <img src="/fmoj-logo.png" alt="Ministry of Justice" className="w-16 h-16 object-contain" />
-            </div>
+          {/* Right: Logos */}
+          <div className="flex flex-col items-end justify-center w-[300px]">
+            <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-48 h-auto object-contain" />
           </div>
 
         </div>
@@ -86,10 +82,12 @@ export function SiteHeader() {
           
           {/* Mobile Logo (only shows when Top Header is hidden or on mobile) */}
           <Link to="/" className={`flex items-center gap-2 md:${isScrolled ? 'flex' : 'hidden'}`}>
-             <div className="w-8 h-8 bg-white rounded border border-[#D4AF37] flex items-center justify-center font-bold text-[#008753]">N</div>
+             <div className="w-8 h-8 bg-white rounded border border-[#D4AF37] flex items-center justify-center font-bold text-[#008753] overflow-hidden">
+               {settings.logoUrl ? <img src={settings.logoUrl} className="w-full h-full object-contain p-0.5" alt="Logo" /> : "N"}
+             </div>
              <div className="text-white font-bold leading-tight flex flex-col">
-               <span className="text-sm">National Electricity</span>
-               <span className="text-[10px] text-[#D4AF37]">Workshop</span>
+               <span className="text-sm">{settings.appNameFirstPart || "National Electricity"}</span>
+               <span className="text-[10px] text-[#D4AF37]">{settings.appNameSecondPart || "Workshop"}</span>
              </div>
           </Link>
 

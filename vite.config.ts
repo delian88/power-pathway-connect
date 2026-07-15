@@ -13,5 +13,22 @@ export default defineConfig({
   },
   nitro: {
     preset: process.env.VERCEL ? 'vercel' : 'node-server',
+    prerender: {
+      routes: ['/'],
+      crawlLinks: true
+    }
   },
+  vite: {
+    build: {
+      cssCodeSplit: false,
+      rollupOptions: {
+        output: {
+          inlineDynamicImports: true,
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]'
+        }
+      }
+    }
+  }
 });

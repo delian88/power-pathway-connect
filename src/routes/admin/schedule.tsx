@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Trash2, Plus, Calendar as CalendarIcon } from "lucide-react";
 
@@ -29,6 +30,7 @@ export const createScheduleItemFn = createServerFn({ method: "POST" })
         title: data.title,
         location: data.location || null,
         speaker: data.speaker || null,
+        description: data.description || null,
       }
     });
     return JSON.parse(JSON.stringify(item));
@@ -56,6 +58,7 @@ function SchedulePage() {
     title: "",
     location: "",
     speaker: "",
+    description: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,7 +73,7 @@ function SchedulePage() {
     try {
       await createScheduleItemFn({ data: { ...formData, day: activeDay } });
       toast.success("Schedule item added!");
-      setFormData({ timeRange: "", title: "", location: "", speaker: "" });
+      setFormData({ timeRange: "", title: "", location: "", speaker: "", description: "" });
       router.invalidate();
     } catch (err) {
       toast.error("Failed to add item");
@@ -195,6 +198,15 @@ function SchedulePage() {
                   value={formData.speaker} 
                   onChange={e => setFormData({...formData, speaker: e.target.value})} 
                   placeholder="e.g. John Doe" 
+                />
+              </div>
+              <div>
+                <Label>Detailed Description / HTML (Optional)</Label>
+                <Textarea 
+                  value={formData.description} 
+                  onChange={e => setFormData({...formData, description: e.target.value})} 
+                  placeholder="Add HTML or text for panels, discussion areas, etc." 
+                  rows={4}
                 />
               </div>
               <Button type="submit" className="w-full bg-[#008753] hover:bg-[#006e43]" disabled={isSubmitting}>

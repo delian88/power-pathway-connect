@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { getSiteSettingsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:description", content: "Reach the team behind the National Electricity Workshop." },
     ],
   }),
-  loader: async () => await getSiteSettingsFn(),
+  loader: async () => await api.getSiteSettings(),
   component: Contact,
 });
 

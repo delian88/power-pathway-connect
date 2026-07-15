@@ -19,6 +19,12 @@ model User {
 
 model SiteSettings {
   id           Int      @id @default(1)
+  appNameFirstPart String?
+  appNameSecondPart String?
+  faviconUrl   String?
+  convenerTitle String?
+  convenerLogo1Url String?
+  convenerLogo2Url String?
   heroBadgeText String?  @db.Text
   heroText     String   @db.Text
   heroSubText  String   @db.Text
@@ -125,6 +131,14 @@ model SiteSettings {
   aboutVenues                Json?
   aboutVenuesWarningText     String? @db.Text
 
+  aboutWorkshopText              String? @db.Text
+  aboutTargetParticipantsText    String? @db.Text
+  aboutWhySponsorText            String? @db.Text
+  aboutSponsorshipPackagesText   String? @db.Text
+  aboutBrandingOpportunitiesText String? @db.Text
+  aboutExpectedOutcomesText      String? @db.Text
+  aboutPartnerWithUsText         String? @db.Text
+
   aboutCtaTitle              String?
   aboutCtaSubtitle           String? @db.Text
 
@@ -161,14 +175,15 @@ model SiteSettings {
 }
 
 model ScheduleItem {
-  id        String   @id @default(uuid())
-  day       Int
-  timeRange String
-  title     String
-  location  String?
-  speaker   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  day         Int
+  timeRange   String
+  title       String
+  location    String?
+  speaker     String?
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Notification {

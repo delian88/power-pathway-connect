@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { api } from "@/lib/api-client";
+
 export const Route = createFileRoute("/registration")({
   component: RegistrationPage,
 });
@@ -67,8 +69,7 @@ function RegistrationForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      const { submitRegistrationFn } = await import("@/lib/server-functions");
-      await submitRegistrationFn({ data: formData });
+      await api.submitRegistration(formData);
       setSuccess(true);
     } catch (error) {
       console.error("Failed to submit registration", error);

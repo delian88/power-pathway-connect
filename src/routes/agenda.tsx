@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { getSiteSettingsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 function AgendaSkeleton() {
   return (
@@ -33,15 +33,13 @@ export const Route = createFileRoute("/agenda")({
       { name: "description", content: "Explore the comprehensive agenda for NIES 2027." },
     ],
   }),
-  loader: async () => {
-    return await getSiteSettingsFn();
-  },
+  loader: async () => await api.getLandingData(),
   pendingComponent: AgendaSkeleton,
   component: AgendaPage,
 });
 
 function AgendaPage() {
-  const settings = Route.useLoaderData();
+  const { settings, scheduleItems } = Route.useLoaderData();
   const [activeDay, setActiveDay] = useState(1);
 
   return (
@@ -147,13 +145,8 @@ function AgendaPage() {
           >
             {/* Tabs */}
             <div className="flex bg-[#008753] text-white overflow-x-auto">
-              {(settings?.agendaDays?.length ? settings.agendaDays : [
-                { day: 1, date: "Feb 2", title: "Policy & Diplomacy" },
-                { day: 2, date: "Feb 3", title: "Investment & Strategy" },
-                { day: 3, date: "Feb 4", title: "Technology & Innovation" },
-                { day: 4, date: "Feb 5", title: "Closing & Site Visits" }
-              ]).map((tab: any, idx: number) => {
-                const dayNum = tab.day || (idx + 1);
+              {Array.from({ length: settings?.scheduleDaysCount || 2 }).map((_, idx) => {
+                const dayNum = idx + 1;
                 return (
                   <button
                     key={dayNum}
@@ -164,8 +157,8 @@ function AgendaPage() {
                         : "hover:bg-[#00A86B]/50 border-b-[5px] border-transparent"
                     }`}
                   >
-                    <span className="font-bold text-lg whitespace-nowrap">Day {dayNum} - {tab.date}</span>
-                    <span className="text-xs font-semibold opacity-90 mt-1 uppercase tracking-wider text-center">{tab.title}</span>
+                    <span className="font-bold text-lg whitespace-nowrap">Day {dayNum}</span>
+                    <span className="text-xs font-semibold opacity-90 mt-1 uppercase tracking-wider text-center">Agenda</span>
                   </button>
                 );
               })}
@@ -182,35 +175,35 @@ function AgendaPage() {
                   transition={{ duration: 0.3 }}
                 >
                   {(() => {
-                    const activeDayData = (settings?.agendaDays || []).find((d: any, idx: number) => (d.day || (idx + 1)) === activeDay);
+                    const currentItems = (scheduleItems || []).filter((item: any) => item.day === activeDay);
                     
-                    if (activeDayData && activeDayData.sessions && activeDayData.sessions.length > 0) {
+                    if (currentItems.length > 0) {
                       return (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                           <div className="bg-[#1A2A2E] text-white p-6 border-b border-gray-200">
                             <h3 className="font-bold text-xl text-[#D4AF37] uppercase tracking-wide mb-2">
-                              {activeDayData.longTitle || `Day ${activeDay} Agenda`}
+                              Day {activeDay} Agenda
                             </h3>
-                            {activeDayData.location && (
-                              <p className="text-sm font-semibold opacity-80 flex items-center gap-2">
-                                <span className="text-[#008753]">📍</span> {activeDayData.location}
-                              </p>
-                            )}
                           </div>
 
-                          {activeDayData.sessions.map((session: any, sIdx: number) => (
+                          {currentItems.map((session: any, sIdx: number) => (
                             <div key={sIdx} className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
                               <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
-                                <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">{session.time}</span>
+                                <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">{session.timeRange}</span>
                               </div>
                               <div className="flex-1">
                                 <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-4 leading-snug">
                                   {session.title}
                                 </h4>
-                                {session.contentHtml && (
+                                {session.speaker && (
+                                  <div className="text-sm font-semibold text-gray-500 mb-4 flex items-center gap-2">
+                                    <span className="text-[#D4AF37]">👥</span> {session.speaker}
+                                  </div>
+                                )}
+                                {session.description && (
                                   <div 
-                                    className="space-y-4 text-gray-600 text-sm prose max-w-none prose-ul:my-1 prose-li:my-0 prose-h5:text-[#D4AF37] prose-h5:uppercase prose-h5:font-bold prose-h5:mb-1"
-                                    dangerouslySetInnerHTML={{ __html: session.contentHtml }}
+                                    className="space-y-4 text-gray-600 text-sm prose max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-[#0F1A1C]"
+                                    dangerouslySetInnerHTML={{ __html: session.description }}
                                   />
                                 )}
                               </div>

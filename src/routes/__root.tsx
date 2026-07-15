@@ -80,33 +80,37 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 import { getSessionFn } from "@/routes/admin/route";
-import { getSiteSettingsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient, session: any, settings: any }>()({
   beforeLoad: async () => {
     const session = await getSessionFn();
-    const settings = await getSiteSettingsFn();
+    const settings = await api.getSiteSettings();
     return { session, settings };
   },
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "National Electricity Workshop — Powering the future together" },
-      { name: "description", content: "Premier events and workshops for utility leaders, grid engineers, and energy innovators shaping the national electricity landscape." },
-      { property: "og:title", content: "National Electricity Workshop" },
-      { property: "og:description", content: "Premier events and workshops for the leaders of the national electricity ecosystem." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-    ],
-  }),
+  head: (ctx) => {
+    const settings = (ctx as any).routeContext?.settings || (ctx as any).context?.settings || {};
+    const appName = `${settings.appNameFirstPart || "National Electricity"} ${settings.appNameSecondPart || "Workshop"}`.trim();
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: `${appName} — Powering the future together` },
+        { name: "description", content: "Premier events and workshops for utility leaders, grid engineers, and energy innovators shaping the national electricity landscape." },
+        { property: "og:title", content: appName },
+        { property: "og:description", content: "Premier events and workshops for the leaders of the national electricity ecosystem." },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [
+        {
+          rel: "stylesheet",
+          href: appCss,
+        },
+        { rel: "icon", href: settings.faviconUrl || "/favicon.ico", type: "image/x-icon" },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

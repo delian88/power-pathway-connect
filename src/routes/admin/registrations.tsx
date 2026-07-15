@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { getRegistrationsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 import { format } from "date-fns";
 import { Users, Mail, Phone, Briefcase, Download, Search, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export const Route = createFileRoute("/admin/registrations")({
   loader: async () => {
-    return await getRegistrationsFn();
+    return await api.getRegistrations();
   },
   component: RegistrationsPage,
 });
@@ -22,8 +22,7 @@ function RegistrationsPage() {
   const handleApprove = async (id: string) => {
     setUpdatingId(id);
     try {
-      const { updateRegistrationStatusFn } = await import("@/lib/server-functions");
-      await updateRegistrationStatusFn({ data: { id, status: "APPROVED" } });
+      await api.updateRegistrationStatus({ id, status: "APPROVED" });
       router.invalidate();
     } catch (e) {
       console.error(e);

@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { getSiteSettingsFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 function AboutSkeleton() {
   return (
@@ -27,13 +27,22 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Learn about the mission behind the Nigeria International Energy Summit (NIES)." },
     ],
   }),
-  loader: async () => await getSiteSettingsFn(),
+  loader: async () => await api.getSiteSettings(),
   pendingComponent: AboutSkeleton,
   component: About,
 });
 
 function About() {
   const settings = Route.useLoaderData();
+  
+  const renderSection = (title: string, text: string | undefined | null, defaultText: string) => (
+    <div className="mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold font-sans text-[#0F1A1C] mb-6 border-b-2 border-[#D4AF37] pb-4 inline-block">{title}</h2>
+      <div className="text-gray-700 font-poppins leading-relaxed whitespace-pre-wrap text-lg">
+        {text || defaultText}
+      </div>
+    </div>
+  );
   
   return (
     <div className="min-h-screen bg-white">
@@ -91,6 +100,47 @@ function About() {
               </Button>
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Extra Workshop Details */}
+      <section className="py-24 bg-[#FAFAFA] border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-6">
+          {renderSection(
+            "About the Workshop",
+            settings?.aboutWorkshopText,
+            "The Electricity Act 2023 has fundamentally transformed Nigeria's electricity sector by empowering State Governments to establish, regulate and operate electricity markets within their respective jurisdictions. This landmark legislation presents unprecedented opportunities for investment, infrastructure development, public-private partnerships, renewable energy deployment and improved electricity access across Nigeria.\n\nThe 2-Day National Workshop on the Electricity Act 2023 (As Amended) has been designed as a high-level national capacity-building platform to provide practical guidance to States on implementing the provisions of the Act and developing viable electricity markets.\n\nThe Workshop will convene policymakers, regulators, investors, development partners, electricity companies, financial institutions and industry experts to share knowledge, explore investment opportunities and develop practical implementation roadmaps for State electricity markets."
+          )}
+          {renderSection(
+            "Target Participants",
+            settings?.aboutTargetParticipantsText,
+            "The Workshop is expected to attract over 300 high-level participants, including:\n• The Presidency\n• Federal Ministry of Power\n• Nigerian Governors' Forum\n• Governors and Deputy Governors\n• Commissioners responsible for Energy, Power and Infrastructure\n• State Electricity Regulatory Commissions\n• Nigerian Electricity Regulatory Commission (NERC)\n• Nigerian Independent System Operator (NISO)\n• Rural Electrification Agency (REA)\n• Generation Companies (GenCos)\n• Distribution Companies (DisCos)\n• Renewable Energy Developers\n• Commercial Banks\n• Development Finance Institutions\n• International Development Partners\n• Energy Investors\n• Manufacturing Companies\n• Legal and Regulatory Experts\n• Academia and Industry Associations"
+          )}
+          {renderSection(
+            "Why Sponsor the Workshop?",
+            settings?.aboutWhySponsorText,
+            "Your organisation will have the opportunity to:\n• Position itself as a leading partner in Nigeria's electricity sector reforms.\n• Engage directly with Federal and State Government decision-makers.\n• Showcase products, services and innovative energy solutions.\n• Build relationships with investors and development partners.\n• Generate high-value business leads.\n• Enhance corporate visibility through national media exposure.\n• Demonstrate commitment to sustainable energy development."
+          )}
+          {renderSection(
+            "Sponsorship Packages",
+            settings?.aboutSponsorshipPackagesText,
+            "PLATINUM SPONSOR\nBenefits\n• Recognition as Platinum Sponsor\n• Opportunity to deliver a goodwill address during the Opening Ceremony\n• Executive speaking opportunity during a technical session (subject to programme approval)\n• Premium exhibition space\n• Corporate logo on all event branding and publicity materials\n• Logo on participant bags, banners and backdrop\n• Full-page advertisement in the Workshop Brochure\n• Branding on delegate materials and certificates\n• Corporate promotional video played during breaks\n• Opportunity to distribute promotional materials\n• Recognition in all press releases\n• Featured interview during media engagements\n• Five (5) complimentary delegate passes\n• VIP seating for senior executives\n• Post-event recognition in the Workshop Report\n\nGOLD SPONSOR\nBenefits\n• Recognition as Gold Sponsor\n• Premium exhibition booth\n• Logo on all major event branding materials\n• Half-page advertisement in the Workshop Brochure\n• Opportunity to distribute corporate materials\n• Recognition during Opening and Closing Ceremonies\n• Logo on Workshop website and digital platforms\n• Corporate branding on selected Workshop materials\n• Three (3) complimentary delegate passes\n• VIP seating for senior representatives\n• Recognition in the Workshop Report\n\nSILVER SPONSOR\nBenefits\n• Recognition as Silver Sponsor\n• Standard exhibition booth\n• Logo on event banners and promotional materials\n• Quarter-page advertisement in the Workshop Brochure\n• Opportunity to display corporate promotional materials\n• Recognition during the Closing Ceremony\n• Corporate logo on Workshop website\n• Two (2) complimentary delegate passes\n• Inclusion in the Workshop Report"
+          )}
+          {renderSection(
+            "Branding Opportunities",
+            settings?.aboutBrandingOpportunitiesText,
+            "Sponsors will enjoy visibility through:\n• National Media Coverage\n• Television Interviews\n• Newspaper Publications\n• Digital Media Campaigns\n• Social Media Promotions\n• Event Backdrops\n• Conference Brochure\n• Delegate Packs\n• Exhibition Area\n• Workshop Website\n• Event Photography and Video Documentation\n• Post-event Report"
+          )}
+          {renderSection(
+            "Expected Outcomes",
+            settings?.aboutExpectedOutcomesText,
+            "The Workshop will produce:\n• Improved understanding of the Electricity Act 2023.\n• Practical implementation roadmaps for State electricity markets.\n• Enhanced collaboration between Federal and State Governments.\n• Increased private sector participation.\n• New investment partnerships.\n• Strengthened policy dialogue.\n• National Communiqué with actionable recommendations."
+          )}
+          {renderSection(
+            "Partner With Us",
+            settings?.aboutPartnerWithUsText,
+            "This Workshop presents a unique opportunity for your organisation to contribute to the transformation of Nigeria's electricity sector while positioning your brand at the forefront of one of the country's most significant policy reforms.\n\nWe invite your organisation to become a strategic partner in this landmark national initiative under the auspices of the Office of the Vice President.\n\nAll payments should be made to the following account details\n................................................................\n................................................................\n\nFor Sponsorship Enquiries\nAllstates Management Partners Solutions Limited\nOffice of the Vice President\n................................................................\n\nWe look forward to partnering with you in empowering States and accelerating sustainable electricity sector development in Nigeria."
+          )}
         </div>
       </section>
 

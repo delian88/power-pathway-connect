@@ -108,6 +108,19 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       }
     }
 
+    if (data.faviconBase64) {
+      const url = await saveImg(data.faviconBase64, data.faviconFileName);
+      if (url) data.faviconUrl = url;
+    }
+    if (data.convenerLogo1Base64) {
+      const url = await saveImg(data.convenerLogo1Base64, data.convenerLogo1FileName);
+      if (url) data.convenerLogo1Url = url;
+    }
+    if (data.convenerLogo2Base64) {
+      const url = await saveImg(data.convenerLogo2Base64, data.convenerLogo2FileName);
+      if (url) data.convenerLogo2Url = url;
+    }
+
     let finalSliderImages = data.heroSliderImages;
 
     // Handle new slider images uploads
@@ -213,6 +226,16 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
     }
 
     const payload = {
+      appNameFirstPart: data.appNameFirstPart,
+      appNameSecondPart: data.appNameSecondPart,
+      convenerTitle: data.convenerTitle,
+      aboutWorkshopText: data.aboutWorkshopText,
+      aboutTargetParticipantsText: data.aboutTargetParticipantsText,
+      aboutWhySponsorText: data.aboutWhySponsorText,
+      aboutSponsorshipPackagesText: data.aboutSponsorshipPackagesText,
+      aboutBrandingOpportunitiesText: data.aboutBrandingOpportunitiesText,
+      aboutExpectedOutcomesText: data.aboutExpectedOutcomesText,
+      aboutPartnerWithUsText: data.aboutPartnerWithUsText,
       heroText: data.heroText,
       heroSubText: data.heroSubText,
       heroBadgeText: data.heroBadgeText,
@@ -335,6 +358,9 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
       ...(data.aboutHeroImgUrl && { aboutHeroImgUrl: data.aboutHeroImgUrl }),
       ...(data.agendaHeroImgUrl && { agendaHeroImgUrl: data.agendaHeroImgUrl }),
       ...(data.agendaBrochureUrl && { agendaBrochureUrl: data.agendaBrochureUrl }),
+      ...(data.faviconUrl && { faviconUrl: data.faviconUrl }),
+      ...(data.convenerLogo1Url && { convenerLogo1Url: data.convenerLogo1Url }),
+      ...(data.convenerLogo2Url && { convenerLogo2Url: data.convenerLogo2Url }),
     };
 
     const updated = await db.siteSettings.upsert({
@@ -356,6 +382,16 @@ function SettingsPage() {
   const router = useRouter();
   
   const [formData, setFormData] = useState({
+    appNameFirstPart: settings?.appNameFirstPart || "National Electricity",
+    appNameSecondPart: settings?.appNameSecondPart || "Workshop",
+    convenerTitle: settings?.convenerTitle || "CONVENER",
+    aboutWorkshopText: settings?.aboutWorkshopText || "",
+    aboutTargetParticipantsText: settings?.aboutTargetParticipantsText || "",
+    aboutWhySponsorText: settings?.aboutWhySponsorText || "",
+    aboutSponsorshipPackagesText: settings?.aboutSponsorshipPackagesText || "",
+    aboutBrandingOpportunitiesText: settings?.aboutBrandingOpportunitiesText || "",
+    aboutExpectedOutcomesText: settings?.aboutExpectedOutcomesText || "",
+    aboutPartnerWithUsText: settings?.aboutPartnerWithUsText || "",
     heroText: settings?.heroText || "",
     heroSubText: settings?.heroSubText || "",
     logoUrl: settings?.logoUrl || "",
@@ -469,6 +505,9 @@ function SettingsPage() {
   });
 
   const [file, setFile] = useState<File | null>(null);
+  const [faviconFile, setFaviconFile] = useState<File | null>(null);
+  const [convenerLogo1File, setConvenerLogo1File] = useState<File | null>(null);
+  const [convenerLogo2File, setConvenerLogo2File] = useState<File | null>(null);
   const [sliderFiles, setSliderFiles] = useState<FileList | null>(null);
   const [featuredSpeakerFiles, setFeaturedSpeakerFiles] = useState<{ [key: number]: File }>({});
   const [aboutVenueFiles, setAboutVenueFiles] = useState<{ [key: number]: File }>({});
@@ -617,6 +656,24 @@ function SettingsPage() {
               const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(agendaBrochureFile);
             })
           }),
+          ...(faviconFile && {
+            faviconFileName: faviconFile.name,
+            faviconBase64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(faviconFile);
+            })
+          }),
+          ...(convenerLogo1File && {
+            convenerLogo1FileName: convenerLogo1File.name,
+            convenerLogo1Base64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(convenerLogo1File);
+            })
+          }),
+          ...(convenerLogo2File && {
+            convenerLogo2FileName: convenerLogo2File.name,
+            convenerLogo2Base64: await new Promise((resolve) => {
+              const r = new FileReader(); r.onload = () => resolve(r.result); r.readAsDataURL(convenerLogo2File);
+            })
+          }),
         }
       });
 
@@ -636,6 +693,70 @@ function SettingsPage() {
       <form onSubmit={handleSave} className="space-y-6 bg-white p-6 rounded-xl shadow-sm border border-border/60">
         
         <div className="space-y-4">
+          <h2 className="text-xl font-semibold border-b pb-2">General App Settings</h2>
+          <div>
+            <Label>App Name (Line 1)</Label>
+            <Input value={formData.appNameFirstPart} onChange={e => setFormData({...formData, appNameFirstPart: e.target.value})} placeholder="National Electricity" />
+          </div>
+          <div>
+            <Label>App Name (Line 2)</Label>
+            <Input value={formData.appNameSecondPart} onChange={e => setFormData({...formData, appNameSecondPart: e.target.value})} placeholder="Workshop" />
+          </div>
+          <div>
+            <Label>Main Logo</Label>
+            <Input type="file" accept="image/*" onChange={handleFileChange} />
+          </div>
+          <div>
+            <Label>Favicon</Label>
+            <Input type="file" accept="image/*" onChange={(e) => { if (e.target.files && e.target.files[0]) setFaviconFile(e.target.files[0]); }} />
+          </div>
+          <div>
+            <Label>Right Side Title (Convener)</Label>
+            <Input value={formData.convenerTitle} onChange={e => setFormData({...formData, convenerTitle: e.target.value})} placeholder="CONVENER" />
+          </div>
+          <div>
+            <Label>Right Side Logo 1</Label>
+            <Input type="file" accept="image/*" onChange={(e) => { if (e.target.files && e.target.files[0]) setConvenerLogo1File(e.target.files[0]); }} />
+          </div>
+          <div>
+            <Label>Right Side Logo 2</Label>
+            <Input type="file" accept="image/*" onChange={(e) => { if (e.target.files && e.target.files[0]) setConvenerLogo2File(e.target.files[0]); }} />
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold border-b pb-2">About Page Extra Content</h2>
+          <div>
+            <Label>About the Workshop</Label>
+            <Textarea value={formData.aboutWorkshopText || ""} onChange={e => setFormData({...formData, aboutWorkshopText: e.target.value})} rows={5} />
+          </div>
+          <div>
+            <Label>Target Participants</Label>
+            <Textarea value={formData.aboutTargetParticipantsText || ""} onChange={e => setFormData({...formData, aboutTargetParticipantsText: e.target.value})} rows={8} />
+          </div>
+          <div>
+            <Label>Why Sponsor</Label>
+            <Textarea value={formData.aboutWhySponsorText || ""} onChange={e => setFormData({...formData, aboutWhySponsorText: e.target.value})} rows={5} />
+          </div>
+          <div>
+            <Label>Sponsorship Packages</Label>
+            <Textarea value={formData.aboutSponsorshipPackagesText || ""} onChange={e => setFormData({...formData, aboutSponsorshipPackagesText: e.target.value})} rows={10} />
+          </div>
+          <div>
+            <Label>Branding Opportunities</Label>
+            <Textarea value={formData.aboutBrandingOpportunitiesText || ""} onChange={e => setFormData({...formData, aboutBrandingOpportunitiesText: e.target.value})} rows={5} />
+          </div>
+          <div>
+            <Label>Expected Outcomes</Label>
+            <Textarea value={formData.aboutExpectedOutcomesText || ""} onChange={e => setFormData({...formData, aboutExpectedOutcomesText: e.target.value})} rows={5} />
+          </div>
+          <div>
+            <Label>Partner With Us</Label>
+            <Textarea value={formData.aboutPartnerWithUsText || ""} onChange={e => setFormData({...formData, aboutPartnerWithUsText: e.target.value})} rows={5} />
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-4">
           <h2 className="text-xl font-semibold border-b pb-2">Header Banner</h2>
           <div>
             <Label>Patronage Text</Label>

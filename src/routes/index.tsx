@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getLandingDataFn } from "@/lib/server-functions";
+import { api } from "@/lib/api-client";
 
 function IndexSkeleton() {
   return (
@@ -29,7 +29,7 @@ function IndexSkeleton() {
 }
 
 export const Route = createFileRoute("/")({
-  loader: async () => await getLandingDataFn(),
+  loader: async () => await api.getLandingData(),
   pendingComponent: IndexSkeleton,
   component: Index,
 });
@@ -223,20 +223,24 @@ function Index() {
       </div>
 
       {/* Partner Strip */}
-      <div className="w-full bg-white py-10 border-b border-gray-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto flex">
+      <div className="w-full bg-white py-10 border-b border-gray-100 overflow-hidden flex flex-col md:flex-row items-center">
+        <div className="max-w-7xl mx-auto flex items-center w-full px-6">
+          <div className="shrink-0 mr-12 text-sm font-bold text-gray-400 uppercase tracking-widest border-r border-gray-200 pr-8 py-2">
+            Key Strategic<br/>Institutional Partners
+          </div>
           <motion.div 
-            className="flex w-max items-center gap-16 pr-16 text-gray-500 uppercase tracking-widest text-sm font-bold opacity-80 hover:opacity-100 transition-opacity"
+            className="flex w-max items-center gap-24 pr-24 opacity-80 hover:opacity-100 transition-opacity"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ ease: "linear", duration: 25, repeat: Infinity }}
           >
             {(() => {
-              const basePartners = settings?.partnerNames ? settings.partnerNames.split(',').map(p => p.trim()).filter(Boolean) : ["HEOSL", "Africa Oil & Gas", "Energy Republic", "ICRC", "ECOWAS", "GIZ"];
+              const baseLogos = ["/slider-1.png", "/slider-2.png", "/slider-3.png", "/slider-4.png"];
+              
               // Duplicate the array to create a seamless loop
-              const duplicatedPartners = [...basePartners, ...basePartners, ...basePartners, ...basePartners];
-              return duplicatedPartners.map((partner, i) => (
-                <div key={i} className="flex flex-col items-center whitespace-nowrap">
-                  {partner}
+              const duplicatedLogos = [...baseLogos, ...baseLogos, ...baseLogos, ...baseLogos];
+              return duplicatedLogos.map((logoUrl, i) => (
+                <div key={i} className="flex flex-col items-center justify-center w-32 h-20">
+                  <img src={logoUrl} alt="Partner Logo" className="max-w-full max-h-full object-contain transition-all duration-300" />
                 </div>
               ));
             })()}
@@ -415,10 +419,18 @@ function Index() {
                       <span className="text-[#008753] font-bold text-lg tracking-wide">{item.timeRange}</span>
                     </div>
                     <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
-                      <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
-                        {item.title}
-                      </h4>
-                      <div className="flex flex-col gap-2 md:text-right">
+                      <div className="flex-1">
+                        <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">
+                          {item.title}
+                        </h4>
+                        {item.description && (
+                          <div 
+                            className="mt-4 prose prose-sm text-gray-600 max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-[#0F1A1C]" 
+                            dangerouslySetInnerHTML={{ __html: item.description }} 
+                          />
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2 md:text-right shrink-0">
                         {item.location && (
                           <div className="flex items-center md:justify-end gap-2 text-gray-400 text-xs font-semibold">
                             <span className="text-[#D4AF37] text-base">📍</span> {item.location}
