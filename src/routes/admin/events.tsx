@@ -120,7 +120,7 @@ export const Route = createFileRoute("/admin/events")({
 });
 
 function EventsAdminPage() {
-  const events = Route.useLoaderData();
+  const events = Route.useLoaderData() || [];
   const router = useRouter();
 
   const emptyForm = {

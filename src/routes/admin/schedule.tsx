@@ -49,7 +49,7 @@ export const Route = createFileRoute("/admin/schedule")({
 });
 
 function SchedulePage() {
-  const { items, settings } = Route.useLoaderData();
+  const { items = [], settings = {} } = Route.useLoaderData() || {};
   const router = useRouter();
   
   const [activeDay, setActiveDay] = useState(1);

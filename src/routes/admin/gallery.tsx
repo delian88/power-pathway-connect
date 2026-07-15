@@ -90,7 +90,7 @@ export const Route = createFileRoute("/admin/gallery")({
 });
 
 function GalleryPage() {
-  const initialImages = Route.useLoaderData();
+  const initialImages = Route.useLoaderData() || [];
   const router = useRouter();
   
   const [file, setFile] = useState<File | null>(null);

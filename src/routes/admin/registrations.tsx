@@ -14,7 +14,7 @@ export const Route = createFileRoute("/admin/registrations")({
 });
 
 function RegistrationsPage() {
-  const registrations = Route.useLoaderData();
+  const registrations = Route.useLoaderData() || [];
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);

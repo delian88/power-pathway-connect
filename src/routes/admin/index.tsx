@@ -71,7 +71,15 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function AdminDashboard() {
-  const { eventsCount, applicantsCount, workshopsCount, registrationsCount, sponsorsCount, events } = Route.useLoaderData();
+  const data: any = Route.useLoaderData() || {};
+  const { 
+    eventsCount = 0, 
+    applicantsCount = 0, 
+    workshopsCount = 0, 
+    registrationsCount = 0, 
+    sponsorsCount = 0, 
+    events = [] 
+  } = data;
   const router = useRouter();
 
   const [formData, setFormData] = useState({

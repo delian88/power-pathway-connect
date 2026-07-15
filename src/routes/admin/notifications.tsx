@@ -59,7 +59,7 @@ export const Route = createFileRoute("/admin/notifications")({
 });
 
 function NotificationsPage() {
-  const history = Route.useLoaderData();
+  const history = Route.useLoaderData() || [];
   const router = useRouter();
   
   const [subject, setSubject] = useState("");

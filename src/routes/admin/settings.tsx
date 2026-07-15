@@ -378,7 +378,7 @@ export const Route = createFileRoute("/admin/settings")({
 });
 
 function SettingsPage() {
-  const settings = Route.useLoaderData();
+  const settings = Route.useLoaderData() || {};
   const router = useRouter();
   
   const [formData, setFormData] = useState({

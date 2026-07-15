@@ -22,7 +22,7 @@ export const Route = createFileRoute("/admin/applicants")({
 });
 
 function ApplicantsPage() {
-  const applicants = Route.useLoaderData();
+  const applicants = Route.useLoaderData() || [];
 
   return (
     <div className="max-w-[1200px] mx-auto pb-10">
