@@ -195,7 +195,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">Date & Time</label>
                 <div className="relative">
@@ -222,7 +222,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">Location</label>
                 <input 
@@ -245,7 +245,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">Status</label>
                 <select 
@@ -271,7 +271,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">Cover Image</label>
                 <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#00A86B]/50 transition-colors">

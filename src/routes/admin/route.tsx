@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect, useRouter, Link, useLocation } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { verifySession, destroySession } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { 
@@ -44,6 +45,7 @@ function AdminLayout() {
   const router = useRouter();
   const location = useLocation();
   const pathname = location.pathname;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logoutFn();
@@ -65,8 +67,16 @@ function AdminLayout() {
 
   return (
     <div className="min-h-screen flex bg-[#F4F7F6] font-sans">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
       {/* Dark Sidebar */}
-      <aside className="w-64 bg-[#1B2531] text-white flex flex-col h-screen sticky top-0 shadow-xl hidden lg:flex z-20">
+      <aside className={`w-64 bg-[#1B2531] text-white flex flex-col h-screen fixed lg:sticky top-0 shadow-xl z-50 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         <div className="p-6">
           <div className="flex items-center gap-3 bg-white rounded-lg p-2 px-3 shadow-sm mb-8 mt-2">
             <div className="w-8 h-8 bg-[#00A86B] text-white font-bold rounded flex items-center justify-center text-lg">
@@ -86,6 +96,7 @@ function AdminLayout() {
                 <Link
                   key={item.name}
                   to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
                     isActive 
                       ? "bg-[#00A86B] text-white shadow-md" 
@@ -115,9 +126,12 @@ function AdminLayout() {
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Top Navbar */}
-        <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-10">
+        <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-8 sticky top-0 z-10">
           <div className="flex items-center gap-6">
-            <button className="lg:hidden text-gray-500 hover:text-gray-900">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden text-gray-500 hover:text-gray-900"
+            >
               <Menu className="w-6 h-6" />
             </button>
             <div className="relative hidden md:block w-96">
@@ -131,12 +145,12 @@ function AdminLayout() {
           </div>
           
           <div className="flex items-center gap-6">
-            <button className="relative text-gray-500 hover:text-gray-900 transition-colors">
+            <Link to="/admin/notifications" className="relative text-gray-500 hover:text-gray-900 transition-colors">
               <Bell className="w-6 h-6" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#00A86B] text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                 3
               </span>
-            </button>
+            </Link>
             
             <div className="flex items-center gap-3 border-l border-gray-100 pl-6 cursor-pointer group">
               <div className="w-10 h-10 rounded-full bg-[#00A86B]/10 overflow-hidden border border-[#00A86B]/20">
