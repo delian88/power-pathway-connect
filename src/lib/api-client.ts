@@ -13,16 +13,28 @@ const shouldUsePhp = import.meta.env.PROD && typeof window !== 'undefined';
 export const api = {
   getSiteSettings: async () => {
     if (shouldUsePhp) {
-      const res = await fetch('/api/get-settings.php');
-      return res.json();
+      try {
+        const res = await fetch('/api/get-settings.php');
+        const text = await res.text();
+        return JSON.parse(text);
+      } catch (e) {
+        console.error("Failed to load settings:", e);
+        return null;
+      }
     }
     return getSiteSettingsFn();
   },
   
   getLandingData: async () => {
     if (shouldUsePhp) {
-      const res = await fetch('/api/get-landing-data.php');
-      return res.json();
+      try {
+        const res = await fetch('/api/get-landing-data.php');
+        const text = await res.text();
+        return JSON.parse(text);
+      } catch (e) {
+        console.error("Failed to load landing data:", e);
+        return null;
+      }
     }
     return getLandingDataFn();
   },

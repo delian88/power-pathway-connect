@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -40,7 +44,6 @@ $dbUrl = getenv('DATABASE_URL') ?: $_ENV['DATABASE_URL'] ?? null;
 $dbConfig = parseDatabaseUrl($dbUrl);
 
 if (!$dbConfig) {
-    http_response_code(500);
     echo json_encode(['error' => 'DATABASE_URL not found in .env']);
     exit;
 }
@@ -55,7 +58,6 @@ $options = [
 try {
     $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass'], $options);
 } catch (\PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Database connection failed']);
+    echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
     exit;
 }

@@ -134,6 +134,6 @@ try {
     
     echo json_encode(['success' => true]);
 } catch (\PDOException $e) {
-    http_response_code(500);
+    // http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
