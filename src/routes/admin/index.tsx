@@ -111,10 +111,10 @@ function AdminDashboard() {
   };
 
   const stats = [
-    { title: "Total Events", value: eventsCount.toString(), icon: Calendar, trend: "+12%", bg: "bg-green-50", iconColor: "text-green-600" },
-    { title: "Registrations", value: registrationsCount.toString(), icon: Users, trend: "New", bg: "bg-blue-50", iconColor: "text-blue-500" },
-    { title: "Total Applicants", value: applicantsCount.toString(), icon: Users, trend: "+18%", bg: "bg-orange-50", iconColor: "text-orange-500" },
-    { title: "Workshops", value: workshopsCount.toString(), icon: GraduationCap, trend: "+8%", bg: "bg-purple-50", iconColor: "text-purple-500" },
+    { title: "Total Events", value: eventsCount?.toString() || "0", icon: Calendar, trend: "+12%", bg: "bg-green-50", iconColor: "text-green-600" },
+    { title: "Registrations", value: registrationsCount?.toString() || "0", icon: Users, trend: "New", bg: "bg-blue-50", iconColor: "text-blue-500" },
+    { title: "Total Applicants", value: applicantsCount?.toString() || "0", icon: Users, trend: "+18%", bg: "bg-orange-50", iconColor: "text-orange-500" },
+    { title: "Workshops", value: workshopsCount?.toString() || "0", icon: GraduationCap, trend: "+8%", bg: "bg-purple-50", iconColor: "text-purple-500" },
   ];
 
   return (
