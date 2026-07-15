@@ -1,0 +1,28 @@
+INSERT INTO `SiteSettings` (`id`, `heroText`, `heroSubText`, `updatedAt`) VALUES (1, '2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 (AS AMENDED', 'organised by Allstates Management Partners Solutions Limited ', NOW()) ON DUPLICATE KEY UPDATE `heroText` = VALUES(`heroText`), `heroSubText` = VALUES(`heroSubText`), `updatedAt` = NOW();
+
+INSERT INTO `ScheduleItem` (`id`, `day`, `timeRange`, `title`, `location`, `speaker`, `createdAt`, `updatedAt`) VALUES
+('0167c06d-2f66-46b7-806a-c460107f6d77', 1, '3:00 PM – 3:15 PM', 'Tea Break', NULL, NULL, NOW(), NOW()),
+('06bf8beb-46bf-4596-bed4-8d8085bc04eb', 2, '2:45 PM – 3:00 PM', 'Tea Break', NULL, NULL, NOW(), NOW()),
+('1884a6bd-d758-4e14-8813-4cde91f48142', 2, '10:45 AM – 12:15 PM', 'Panel 4', NULL, NULL, NOW(), NOW()),
+('1a07e86f-8439-4678-9f30-d01191ad19a0', 2, '4:45 PM – 5:15 PM', 'Closing Ceremony', NULL, NULL, NOW(), NOW()),
+('2059096d-6c27-499e-8e87-43eeb19e20b7', 1, '9:40 AM – 10:10 AM', 'Keynote Address', NULL, 'Honourable Minister of Power', NOW(), NOW()),
+('279708ae-2847-4149-bbd6-b2a818737c5b', 1, '7:00 PM – 9:00 PM', 'Networking Dinner', NULL, 'Distinguished Energy Sector Leader', NOW(), NOW()),
+('39e4f943-7481-4533-8677-7a54ff4d84c3', 1, '8:00 AM – 9:00 AM', 'Registration and Networking Breakfast', NULL, NULL, NOW(), NOW()),
+('49e2d5d3-087b-4c02-8eac-2f5717d98db5', 1, '5:15 PM', 'Close of Day One', NULL, NULL, NOW(), NOW()),
+('50a006ba-e504-427f-a660-89882fba5561', 2, '9:00 AM – 10:30 AM', 'Panel 3', NULL, NULL, NOW(), NOW()),
+('5820f7f8-2533-493d-b055-bdc670ac9799', 1, '10:10 AM – 10:40 AM', 'Special Address', NULL, 'His Excellency, The Vice President of the Federal Republic of Nigeria', NOW(), NOW()),
+('72142412-cd00-4e68-a028-666c7ca38e4c', 1, '10:40 AM – 11:00 AM', 'Coffee Break', NULL, NULL, NOW(), NOW()),
+('8038e0b9-f6e7-4fcc-b5da-e8d62a115eb1', 1, '12:30 PM – 1:30 PM', 'Lunch', NULL, NULL, NOW(), NOW()),
+('8a7bc933-9540-4581-94aa-0a12f35b448c', 2, '12:15 PM – 1:15 PM', 'Lunch', NULL, NULL, NOW(), NOW()),
+('9ad709db-e591-4504-b4bd-ee02fdf903ca', 2, '3:00 PM – 4:00 PM', 'Presentation and Validation of Plenary Outcomes', NULL, NULL, NOW(), NOW()),
+('a5d32783-5b5f-43da-9df2-979edcb05edc', 1, '11:00 AM – 12:30 PM', 'Panel 1', NULL, NULL, NOW(), NOW()),
+('a609e49e-cb7a-4ebb-9037-cc79909f3a87', 2, '1:15 PM – 2:45 PM', 'Facilitated State Implementation Workshop (Plenary Session)', NULL, NULL, NOW(), NOW()),
+('a8454502-2b0b-4e0d-b705-5ff423c2c0df', 1, '4:45 PM – 5:15 PM', 'Fireside Chat', NULL, NULL, NOW(), NOW()),
+('c51070dc-0058-494b-9c04-6ab8ede84162', 1, '9:00 AM – 9:20 AM', 'Opening Ceremony', NULL, NULL, NOW(), NOW()),
+('d1e8f347-74df-4316-b667-8aaf0ceb64af', 2, '5:15 PM – 5:30 PM', 'Closing Address', NULL, 'His Excellency, The Vice President of the Federal Republic of Nigeria', NOW(), NOW()),
+('d79a0d28-9317-4ab4-9a96-62282a57891a', 1, '3:15 PM – 4:45 PM', 'Governors’ Roundtable', NULL, NULL, NOW(), NOW()),
+('d9160019-149b-4bec-bbc2-5ae9967c279d', 2, '8:30 AM – 9:00 AM', 'Arrival and Networking', NULL, NULL, NOW(), NOW()),
+('da2afa49-060a-4362-81f1-c9e62ced8adc', 2, '10:30 AM – 10:45 AM', 'Coffee Break', NULL, NULL, NOW(), NOW()),
+('e2f32a3d-4aba-4e90-aa23-d4abb80d2814', 1, '1:30 PM – 3:00 PM', 'Panel 2', NULL, NULL, NOW(), NOW()),
+('fb99af89-c80e-461a-a79c-542ce29e3d38', 2, '4:00 PM – 4:45 PM', 'Adoption of Communiqué', NULL, NULL, NOW(), NOW()),
+('fde2409b-18a3-470d-b46b-aa118076e31e', 1, '9:20 AM – 9:40 AM', 'Goodwill Messages', NULL, NULL, NOW(), NOW());
