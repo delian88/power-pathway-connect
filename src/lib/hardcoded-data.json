@@ -162,43 +162,93 @@
     "sponsorshipPartnersDesc": "",
     "sponsorshipPartners": [
       {
+        "logo": "",
         "name": "the Federal Ministry of Power",
-        "logoUrl": "/images.jpg",
-        "category": "Platinum"
+        "category": "PLATINUM"
       },
       {
+        "logo": "",
         "name": "Federal Ministry of Justice",
-        "logoUrl": "/images (1).jpg",
-        "category": "Platinum"
-      },
-      {
-        "name": "Nigerian Electricity Regulatory Commission ",
-        "logoUrl": "/images (2).jpg",
-        "category": "Platinum"
-      },
-      {
-        "name": "Nigeria Governors' Forum ",
-        "logoUrl": "/images (3).jpg",
-        "category": "Platinum"
+        "category": "PLATINUM"
       },
       {
         "logo": "",
-        "name": "Gold Sponsor 1",
+        "name": "Nigerian Electricity Regulatory Commission",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Nigeria Governors' Forum",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Nigeria Delta Power Holding Company (NDPHC)",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Nigeria Sovereign Investment Authority (NSIA)",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Bureau for Public Enterprises (BPE)",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Lagos State Government",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Akwa Ibom State Government",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Delta State Government",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Rivers State Government",
+        "category": "PLATINUM"
+      },
+      {
+        "logo": "",
+        "name": "Transcorp Power",
         "category": "GOLD"
       },
       {
         "logo": "",
-        "name": "Gold Sponsor 2",
+        "name": "Geregu Power",
         "category": "GOLD"
       },
       {
         "logo": "",
-        "name": "Silver Sponsor 1",
+        "name": "Dangote Group",
+        "category": "GOLD"
+      },
+      {
+        "logo": "",
+        "name": "BUA Group",
+        "category": "GOLD"
+      },
+      {
+        "logo": "",
+        "name": "Bank of Industry",
         "category": "SILVER"
       },
       {
         "logo": "",
-        "name": "Silver Sponsor 2",
+        "name": "Ikeja Electricity Transmission Company Limited",
+        "category": "SILVER"
+      },
+      {
+        "logo": "",
+        "name": "Rural Electrification Agency (REA)",
         "category": "SILVER"
       }
     ],
@@ -232,7 +282,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T15:13:50.146Z"
+    "updatedAt": "2026-07-16T15:20:19.633Z"
   },
   "events": [
     {
@@ -410,5 +460,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T15:13:54.005Z"
+  "timestamp": "2026-07-16T15:20:26.592Z"
 }
