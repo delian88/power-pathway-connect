@@ -9,18 +9,15 @@ import {
 // Determine if we should use the PHP API (only in production browser)
 const shouldUsePhp = import.meta.env.PROD && typeof window !== 'undefined';
 
-// Wrapper that uses PHP fetch in production browser, and Node server functions during build/dev
+// Import hardcoded data generated during build
+import hardcodedData from './hardcoded-data.json' assert { type: 'json' };
+
+// Wrapper that uses Node server functions during dev, and hardcoded data in production
 export const api = {
   getSiteSettings: async () => {
-    if (shouldUsePhp) {
-      try {
-        const res = await fetch('/api/get-settings.php');
-        const text = await res.text();
-        return JSON.parse(text);
-      } catch (e) {
-        console.error("Failed to load settings:", e);
-        return null;
-      }
+    // In production, always return the data that was hardcoded during the build process
+    if (import.meta.env.PROD) {
+      return hardcodedData.settings || null;
     }
     return getSiteSettingsFn();
   },

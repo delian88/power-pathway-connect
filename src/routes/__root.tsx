@@ -133,15 +133,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    // Force a fresh data fetch on initial load in production so we don't
-    // get stuck looking at stale data baked into the static HTML build
-    if (import.meta.env.PROD && typeof window !== 'undefined') {
-      router.invalidate();
-    }
-  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
