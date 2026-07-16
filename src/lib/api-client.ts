@@ -10,7 +10,7 @@ import {
 const shouldUsePhp = import.meta.env.PROD && typeof window !== 'undefined';
 
 // Import hardcoded data generated during build
-import hardcodedData from './hardcoded-data.json' assert { type: 'json' };
+import hardcodedData from './hardcoded-data.json';
 
 // Wrapper that uses Node server functions during dev, and hardcoded data in production
 export const api = {
