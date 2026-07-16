@@ -29,7 +29,7 @@ const scheduleData = [
   },
   {
     day: 1,
-    timeRange: "Afternoon",
+    timeRange: "Morning",
     title: "SESSION I - Panel 1",
     description: "Understanding State Electricity Autonomy under the Electricity Act"
   },
