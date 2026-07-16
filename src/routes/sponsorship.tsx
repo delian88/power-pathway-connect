@@ -188,15 +188,6 @@ function SponsorshipPage() {
 
               We invite your organisation to become a strategic partner in this landmark national initiative under the auspices of the Office of the Vice President.
 
-              <span className="font-bold block mt-6">All payments should be made to the following account details</span>
-              ................................................................
-              <br/>................................................................
-
-              <span className="font-bold block mt-6">For Sponsorship Enquiries</span>
-              Allstates Management Partners Solutions Limited
-              <br/>Office of the Vice President
-              <br/>................................................................
-
               <span className="block mt-6">We look forward to partnering with you in empowering States and accelerating sustainable electricity sector development in Nigeria.</span>
             </div>
           </div>
