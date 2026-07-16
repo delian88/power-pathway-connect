@@ -45,16 +45,12 @@ export function SiteHeader() {
           
           {/* Left: Logo */}
           <div className="flex items-center justify-start w-[400px]">
-            <Link to="/">
-              <div className="flex items-center gap-6 mt-1">
+            <div className="flex flex-col items-center">
+              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase tracking-wider mb-2">{settings.convenerTitle || "CONVENER"}</span>
+              <Link to="/">
                 <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
-                <div className="flex flex-col">
-                  <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider">{settings.convenerTitle || "CONVENER"}</span>
-                  <span className="text-[#0F1A1C] font-bold text-lg md:text-xl leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "NATIONAL WORKSHOP"}</span>
-                  <span className="text-[#0F1A1C] font-bold text-lg md:text-xl leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "ON ELECTRICITY ACT"}</span>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
 
           {/* Center: Details */}
