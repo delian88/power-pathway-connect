@@ -77,8 +77,8 @@ function AdminLayout() {
       
       {/* Dark Sidebar */}
       <aside className={`w-64 bg-[#1B2531] text-white flex flex-col h-screen fixed lg:sticky top-0 shadow-xl z-50 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
-        <div className="p-6">
-          <div className="flex items-center gap-3 bg-white rounded-lg p-2 px-3 shadow-sm mb-8 mt-2">
+        <div className="p-6 pb-4">
+          <div className="flex items-center gap-3 bg-white rounded-lg p-2 px-3 shadow-sm mb-2 mt-2">
             <div className="w-8 h-8 bg-[#00A86B] text-white font-bold rounded flex items-center justify-center text-lg">
               N
             </div>
@@ -87,8 +87,10 @@ function AdminLayout() {
               <div className="text-[#00A86B] font-semibold text-xs">Workshop</div>
             </div>
           </div>
-          
-          <nav className="space-y-2 flex-1">
+        </div>
+        
+        <div className="flex-1 overflow-y-auto px-6 pb-4 scrollbar-thin">
+          <nav className="space-y-2">
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
               const Icon = item.icon;
@@ -111,7 +113,7 @@ function AdminLayout() {
           </nav>
         </div>
         
-        <div className="p-6 mt-auto border-t border-white/10">
+        <div className="p-6 mt-auto border-t border-white/10 shrink-0">
           <button 
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all w-full text-left"
