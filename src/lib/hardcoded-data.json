@@ -33,13 +33,13 @@
     "infoBarLocationText": "the State House Banquet Hall, Presidential Villa, Abuja",
     "infoBarThemeText": "Empowering the States: Reviewing the Electricity Act 2023",
     "transformationHubFeature1Title": "",
-    "transformationHubFeature1Desc": "",
+    "transformationHubFeature1Desc": "Direct access to ministers, governors, regulators, and industry CEOs driving Nigeria's electricity agenda.",
     "transformationHubFeature2Title": "",
     "transformationHubFeature2Desc": "",
     "transformationHubFeature3Title": "",
     "transformationHubFeature3Desc": "",
     "transformationHubFeature4Title": "join ministers, CEOs, and experts representing over 36 states in Nigeria",
-    "transformationHubFeature4Desc": "",
+    "transformationHubFeature4Desc": "Join ministers, governors, CEOs, and experts representing 36 states in Nigeria and FCT.",
     "scheduleTitle": "",
     "scheduleDescription": "the 2-Day National Workshop on the Electricity Act 2023 (As Amended)",
     "whyAttendTitle": "THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 (AS AMENDED)",
@@ -62,13 +62,13 @@
     ],
     "confGuideTitle": "Workshop Guide",
     "confGuideSubtitle": "",
-    "confGuideTrack1Title": "",
-    "confGuideTrack1Subtitle": "",
+    "confGuideTrack1Title": "Plenary Session",
+    "confGuideTrack1Subtitle": "Facilitated State implementation workshop",
     "confGuideTrack1Date": "Wednesday, 7 October",
     "confGuideTrack1EventTitle": "",
     "confGuideTrack1EventDesc": "",
-    "confGuideTrack2Title": "",
-    "confGuideTrack2Subtitle": "",
+    "confGuideTrack2Title": "Technical Sessions",
+    "confGuideTrack2Subtitle": "Sessions I, II, III, IV, V",
     "confGuideTrack2Date": "Wednesday, 7 October",
     "confGuideTrack2EventTitle": "",
     "confGuideTrack2EventDesc": "",
@@ -97,13 +97,13 @@
     "ourApproachTitle": "",
     "ourApproachCard1Title": "",
     "ourApproachCard1Desc": "",
-    "ourApproachCard1ImgUrl": null,
+    "ourApproachCard1ImgUrl": "https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&w=800&q=80",
     "ourApproachCard2Title": null,
     "ourApproachCard2Desc": "",
-    "ourApproachCard2ImgUrl": null,
+    "ourApproachCard2ImgUrl": "https://images.unsplash.com/photo-1586528116311-ad8ed7c83a7f?auto=format&fit=crop&w=800&q=80",
     "ourApproachCard3Title": "",
     "ourApproachCard3Desc": "",
-    "ourApproachCard3ImgUrl": null,
+    "ourApproachCard3ImgUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     "aboutHeroBadgeText": "THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 ",
     "aboutHeroTitle": "About THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 ",
     "aboutHeroSubtitle": "The Electricity Act 2023 marks a historic milestone in Nigeria's power sector by empowering State Governments to establish, regulate and develop electricity markets within their jurisdictions. The Act creates significant opportunities to expand energy access, attract investment, stimulate industrial development and drive sustainable economic growth. Realising these opportunities, however, requires effective policy implementation, institutional preparedness and strong collaboration among governments, regulators, investors and development partners.",
@@ -163,19 +163,23 @@
     "sponsorshipPartners": [
       {
         "name": "the Federal Ministry of Power",
-        "logoUrl": "/images.jpg"
+        "logoUrl": "/images.jpg",
+        "category": "Platinum"
       },
       {
         "name": "Federal Ministry of Justice",
-        "logoUrl": "/images (1).jpg"
+        "logoUrl": "/images (1).jpg",
+        "category": "Platinum"
       },
       {
         "name": "Nigerian Electricity Regulatory Commission ",
-        "logoUrl": "/images (2).jpg"
+        "logoUrl": "/images (2).jpg",
+        "category": "Platinum"
       },
       {
         "name": "Nigeria Governors' Forum ",
-        "logoUrl": "/images (3).jpg"
+        "logoUrl": "/images (3).jpg",
+        "category": "Platinum"
       }
     ],
     "sponsorshipPackagesTitle": "",
@@ -186,7 +190,172 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-15T15:10:41.165Z"
+    "updatedAt": "2026-07-16T12:13:45.299Z"
   },
-  "timestamp": "2026-07-16T12:02:42.194Z"
+  "events": [
+    {
+      "id": "4b847eb6-d2e5-4836-a57b-04f33c8eb596",
+      "title": "2-Day National Workshop on the Electricity Act 2023 (As Amended)",
+      "slug": "2-day-national-workshop-on-the-electricity-act-2023-as-amended",
+      "description": "Workshop Concept and Objectives:\n- Deep dive into the decentralisation and autonomy provisions of the Electricity Act 2023, with a strong focus on helping each State understand that they now have full autonomy on electricity matters within their jurisdiction by virtue of the law.\n- Educate, enlighten, and teach participants on the practical implications of the Act for electricity generation, transmission, distribution, and regulation at the state level.\n- Provide clear guidance on how States can establish and implement their own electricity markets, regulatory frameworks, and infrastructure development strategies using the full autonomy granted by the Electricity Act 2023 (as amended).\n- Facilitate knowledge exchange on the provisions of the Act, regulatory alignment, and the practical steps required for States to fully exercise their autonomy on electricity matters.",
+      "content": "Deep dive into the decentralisation and autonomy provisions of the Electricity Act 2023, with a strong focus on helping each State understand that they now have full autonomy on electricity matters within their jurisdiction by virtue of the law.\n\nEducate, enlighten, and teach participants on the practical implications of the Act for electricity generation, transmission, distribution, and regulation at the state level.\n\nProvide clear guidance on how States can establish and implement their own electricity markets, regulatory frameworks, and infrastructure development strategies using the full autonomy granted by the Electricity Act 2023 (as amended).\n\nFacilitate knowledge exchange on the provisions of the Act, regulatory alignment, and the practical steps required for States to fully exercise their autonomy on electricity matters.",
+      "date": "2026-08-15T09:00:00.000Z",
+      "imageUrl": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1000&q=80",
+      "sponsorImageUrl": null,
+      "type": "workshop",
+      "location": null,
+      "capacity": null,
+      "status": "Draft",
+      "category": null,
+      "userId": null,
+      "createdAt": "2026-07-08T07:02:13.365Z",
+      "updatedAt": "2026-07-08T09:47:27.050Z"
+    }
+  ],
+  "scheduleItems": [
+    {
+      "id": "0ac00e9a-ba7a-4201-b05e-22fd4f51d5a8",
+      "day": 1,
+      "timeRange": "Morning",
+      "title": "Special Address",
+      "location": null,
+      "speaker": null,
+      "description": "The Strategic Vision for State Electricity Markets in Nigeria\nSpeaker: His Excellency, The Vice President of the Federal Republic of Nigeria",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "2ab81f21-389c-4055-bc47-5873fe5cce66",
+      "day": 1,
+      "timeRange": "Morning",
+      "title": "Opening Ceremony",
+      "location": null,
+      "speaker": null,
+      "description": "Goodwill Messages",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "410391bb-f0a2-49b8-82eb-89becec70014",
+      "day": 1,
+      "timeRange": "Afternoon",
+      "title": "SESSION I - Panel 1",
+      "location": null,
+      "speaker": null,
+      "description": "Understanding State Electricity Autonomy under the Electricity Act",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "6718c1e7-44e8-41d3-9d81-632cf01d113f",
+      "day": 1,
+      "timeRange": "Late Afternoon",
+      "title": "SESSION III - Governors' Roundtable",
+      "location": null,
+      "speaker": null,
+      "description": "Theme: State Perspectives on Electricity Sector Reform",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "8fd6013e-56f9-4628-8b92-d941e0997a56",
+      "day": 1,
+      "timeRange": "Evening",
+      "title": "Fireside Chat",
+      "location": null,
+      "speaker": null,
+      "description": "Lessons from Early Movers: Experiences of States Implementing Electricity Reforms",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "b064d731-4375-462f-9965-5862c4fa3f42",
+      "day": 1,
+      "timeRange": "Morning",
+      "title": "Keynote Address: The Electricity Act 2023",
+      "location": null,
+      "speaker": null,
+      "description": "A New Era of State-Led Electricity Development\nSpeaker: Honourable Minister of Power",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "edf3fe7a-f3b8-460b-ad2b-63c6f19343a0",
+      "day": 1,
+      "timeRange": "Afternoon",
+      "title": "SESSION II - Panel 2",
+      "location": null,
+      "speaker": null,
+      "description": "Building Functional State Electricity Markets",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "70349aee-2342-406a-8cf0-eccf82297585",
+      "day": 2,
+      "timeRange": "Morning",
+      "title": "SESSION IV - Panel 3",
+      "location": null,
+      "speaker": null,
+      "description": "Financing State Electricity Development",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "71264031-3acf-40a0-9dc2-487682b8b602",
+      "day": 2,
+      "timeRange": "Morning",
+      "title": "SESSION V - Panel 4",
+      "location": null,
+      "speaker": null,
+      "description": "Unlocking Investment Opportunities in State Electricity Markets",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "83476075-f9eb-4e6e-aca6-cd7bb2596790",
+      "day": 2,
+      "timeRange": "Evening",
+      "title": "Closing Ceremony",
+      "location": null,
+      "speaker": null,
+      "description": "Closing Address",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "9698eca9-8882-466a-81ac-2e555cffc38e",
+      "day": 2,
+      "timeRange": "Afternoon",
+      "title": "SESSION VII",
+      "location": null,
+      "speaker": null,
+      "description": "Presentation and Validation of Plenary Outcomes",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "9bd31d21-ef03-4166-a6a5-231f49281c19",
+      "day": 2,
+      "timeRange": "Afternoon",
+      "title": "SESSION VI - Facilitated State Implementation Workshop (Plenary Session)",
+      "location": null,
+      "speaker": null,
+      "description": "Theme: Developing Practical Roadmaps for State Electricity Market Implementation",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    },
+    {
+      "id": "f6fd6793-4eb5-457e-95b0-22efea35af30",
+      "day": 2,
+      "timeRange": "Late Afternoon",
+      "title": "SESSION VIII",
+      "location": null,
+      "speaker": null,
+      "description": "Adoption of Communiqué",
+      "createdAt": "2026-07-16T12:13:47.089Z",
+      "updatedAt": "2026-07-16T12:13:47.089Z"
+    }
+  ],
+  "timestamp": "2026-07-16T13:41:25.793Z"
 }

@@ -9,7 +9,7 @@ async function main() {
   try {
     const settings = await prisma.siteSettings.findFirst();
     const events = await prisma.event.findMany({ orderBy: { date: 'desc' }, take: 10 });
-    const scheduleItems = await prisma.scheduleItem.findMany({ orderBy: [{ day: 'asc' }, { timeRange: 'asc' }] });
+    const scheduleItems = await prisma.scheduleItem.findMany({ orderBy: [{ day: 'asc' }, { id: 'asc' }] });
 
     const data = {
       settings: settings || null,
