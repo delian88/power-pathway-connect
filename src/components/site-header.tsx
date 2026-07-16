@@ -55,9 +55,10 @@ export function SiteHeader() {
 
           {/* Center: Details */}
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
-            <div className="flex flex-col mb-3 text-center">
-              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "NATIONAL WORKSHOP"}</span>
-              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "ON ELECTRICITY ACT"}</span>
+            <div className="flex mb-3 text-center gap-2">
+              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">
+                {settings.appNameFirstPart || "NATIONAL WORKSHOP"} {settings.appNameSecondPart || "ON THE ELECTRICITY ACT 2023"}
+              </span>
             </div>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPresidentText || "President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria"}</span>
