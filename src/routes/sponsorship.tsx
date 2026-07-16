@@ -318,7 +318,7 @@ function SponsorshipPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold font-sans text-white mb-6" dangerouslySetInnerHTML={{ __html: settings?.sponsorshipCtaTitle || `Become a <span class="text-[#D4AF37]">Sponsor</span>` }} />
           <p className="text-white/80 text-lg font-poppins mb-10 max-w-2xl mx-auto leading-relaxed">
-            {settings?.sponsorshipCtaDesc || "Join industry leaders in shaping Africa's energy future. Limited sponsorship opportunities available."}
+            {settings?.sponsorshipCtaDesc || "Join industry leaders in shaping Nigeria electricity future. Limited sponsorship opportunities available."}
           </p>
           <a href="mailto:contact@nies.gov.ng">
             <Button size="lg" className="bg-[#008753] hover:bg-[#006B42] text-white rounded-none px-12 py-7 uppercase tracking-wider font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">
