@@ -415,9 +415,6 @@ function Index() {
                 }
                 return currentItems.map((item: any) => (
                   <div key={item.id} className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
-                    <div className="md:w-48 flex-shrink-0 mb-4 md:mb-0">
-                      <span className="text-[#008753] font-bold text-lg tracking-wide">{item.timeRange}</span>
-                    </div>
                     <div className="flex-1 flex flex-col md:flex-row justify-between items-start gap-4">
                       <div className="flex-1">
                         <h4 className="font-bold text-[17px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors">

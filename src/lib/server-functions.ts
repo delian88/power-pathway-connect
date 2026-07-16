@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 export const getLandingDataFn = createServerFn({ method: "GET" }).handler(async () => {
   const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
   const events = await db.event.findMany({ orderBy: { date: 'desc' }, take: 10 });
-  const scheduleItems = await db.scheduleItem.findMany({ orderBy: [{ day: 'asc' }, { timeRange: 'asc' }] });
+  const scheduleItems = await db.scheduleItem.findMany({ orderBy: [{ day: 'asc' }, { createdAt: 'asc' }] });
   return JSON.parse(JSON.stringify({ settings, events, scheduleItems }));
 });
 
