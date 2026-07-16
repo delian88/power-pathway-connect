@@ -57,7 +57,7 @@ export function SiteHeader() {
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
             <div className="flex mb-3 text-center gap-2">
               <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">
-                {settings.appNameFirstPart || "NATIONAL WORKSHOP"} {settings.appNameSecondPart || "ON THE ELECTRICITY ACT 2023"}
+                NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023
               </span>
             </div>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
