@@ -44,7 +44,7 @@ export function SiteHeader() {
         <div className="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
           
           {/* Left: Logo */}
-          <div className="flex items-center justify-start w-[400px]">
+          <div className="flex items-center justify-start w-[300px] xl:w-[400px]">
             <div className="flex flex-col items-center">
               <span className="text-[#0F1A1C] font-bold text-[13px] uppercase tracking-wider mb-2">{settings.convenerTitle || "CONVENER"}</span>
               <Link to="/">
@@ -56,7 +56,7 @@ export function SiteHeader() {
           {/* Center: Details */}
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
             <div className="flex mb-3 text-center gap-2">
-              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">
+              <span className="text-[#0F1A1C] font-bold text-[17px] xl:text-xl leading-tight tracking-tight uppercase whitespace-nowrap">
                 NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023
               </span>
             </div>
@@ -70,7 +70,7 @@ export function SiteHeader() {
           </div>
 
           {/* Right: Logos */}
-          <div className="flex flex-col items-end justify-center w-[400px]">
+          <div className="flex flex-col items-end justify-center w-[300px] xl:w-[400px]">
             <div className="flex flex-col items-start">
               <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider pl-4">ORGANIZER</span>
               <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-56 h-auto object-contain" />
