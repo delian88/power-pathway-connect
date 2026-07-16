@@ -274,15 +274,15 @@ function SponsorshipPage() {
               ).map(([category, items]: [string, any]) => (
                 <div key={category} className="mb-10">
                   <h3 className="text-2xl font-bold text-center text-[#D4AF37] mb-8 uppercase tracking-widest">{category}</h3>
-                  <div className="flex flex-wrap justify-center gap-8">
+                  <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
                     {items.map((partner: any, idx: number) => (
-                      <div key={idx} className="flex-shrink-0 flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-md transition-all w-56 h-40">
+                      <div key={idx} className="flex-shrink-0 flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-md transition-all w-40 sm:w-44 h-36">
                         {partner.logo ? (
-                          <img src={partner.logo} alt={partner.name || `Partner ${idx+1}`} className="max-h-20 max-w-full object-contain mb-4" />
+                          <img src={partner.logo} alt={partner.name || `Partner ${idx+1}`} className="max-h-16 max-w-full object-contain mb-3" />
                         ) : (
-                          <div className="h-16 w-16 bg-gray-200 rounded-full mb-4"></div>
+                          <div className="h-12 w-12 bg-gray-200 rounded-full mb-3"></div>
                         )}
-                        <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
+                        <span className="text-xs sm:text-sm font-semibold text-gray-700 text-center leading-tight">{partner.name}</span>
                       </div>
                     ))}
                   </div>
