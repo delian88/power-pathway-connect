@@ -211,67 +211,6 @@ function SponsorshipPage() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Sponsorship Packages</h2>
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-[#D4AF37] mb-2">PLATINUM SPONSOR</h3>
-                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
-                <div className="text-gray-600 leading-relaxed font-poppins">
-                  • Recognition as Platinum Sponsor
-                  <br/>• Opportunity to deliver a goodwill address during the Opening Ceremony
-                  <br/>• Executive speaking opportunity during a technical session (subject to programme approval)
-                  <br/>• Premium exhibition space
-                  <br/>• Corporate logo on all event branding and publicity materials
-                  <br/>• Logo on participant bags, banners and backdrop
-                  <br/>• Full-page advertisement in the Workshop Brochure
-                  <br/>• Branding on delegate materials and certificates
-                  <br/>• Corporate promotional video played during breaks
-                  <br/>• Opportunity to distribute promotional materials
-                  <br/>• Recognition in all press releases
-                  <br/>• Featured interview during media engagements
-                  <br/>• Five (5) complimentary delegate passes
-                  <br/>• VIP seating for senior executives
-                  <br/>• Post-event recognition in the Workshop Report
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-gray-400 mb-2">GOLD SPONSOR</h3>
-                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
-                <div className="text-gray-600 leading-relaxed font-poppins">
-                  • Recognition as Gold Sponsor
-                  <br/>• Premium exhibition booth
-                  <br/>• Logo on all major event branding materials
-                  <br/>• Half-page advertisement in the Workshop Brochure
-                  <br/>• Opportunity to distribute corporate materials
-                  <br/>• Recognition during Opening and Closing Ceremonies
-                  <br/>• Logo on Workshop website and digital platforms
-                  <br/>• Corporate branding on selected Workshop materials
-                  <br/>• Three (3) complimentary delegate passes
-                  <br/>• VIP seating for senior representatives
-                  <br/>• Recognition in the Workshop Report
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-gray-500 mb-2">SILVER SPONSOR</h3>
-                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
-                <div className="text-gray-600 leading-relaxed font-poppins">
-                  • Recognition as Silver Sponsor
-                  <br/>• Standard exhibition booth
-                  <br/>• Logo on event banners and promotional materials
-                  <br/>• Quarter-page advertisement in the Workshop Brochure
-                  <br/>• Opportunity to display corporate promotional materials
-                  <br/>• Recognition during the Closing Ceremony
-                  <br/>• Corporate logo on Workshop website
-                  <br/>• Two (2) complimentary delegate passes
-                  <br/>• Inclusion in the Workshop Report
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-16">
             <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Branding Opportunities</h2>
             <div className="text-gray-600 leading-relaxed font-poppins space-y-4 whitespace-pre-wrap">
               Sponsors will enjoy visibility through:

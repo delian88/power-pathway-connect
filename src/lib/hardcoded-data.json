@@ -184,13 +184,35 @@
     ],
     "sponsorshipPackagesTitle": "",
     "sponsorshipPackagesDesc": "",
-    "sponsorshipPackages": [],
+    "sponsorshipPackages": [
+      {
+        "name": "PLATINUM SPONSOR",
+        "price": "",
+        "features": "Recognition as Platinum Sponsor, Opportunity to deliver a goodwill address during the Opening Ceremony, Executive speaking opportunity during a technical session (subject to programme approval), Premium exhibition space, Corporate logo on all event branding and publicity materials, Logo on participant bags banners and backdrop, Full-page advertisement in the Workshop Brochure, Branding on delegate materials and certificates, Corporate promotional video played during breaks, Opportunity to distribute promotional materials, Recognition in all press releases, Featured interview during media engagements, Five (5) complimentary delegate passes, VIP seating for senior executives, Post-event recognition in the Workshop Report",
+        "subtitle": "",
+        "isPopular": true
+      },
+      {
+        "name": "GOLD SPONSOR",
+        "price": "",
+        "features": "Recognition as Gold Sponsor, Premium exhibition booth, Logo on all major event branding materials, Half-page advertisement in the Workshop Brochure, Opportunity to distribute corporate materials, Recognition during Opening and Closing Ceremonies, Logo on Workshop website and digital platforms, Corporate branding on selected Workshop materials, Three (3) complimentary delegate passes, VIP seating for senior representatives, Recognition in the Workshop Report",
+        "subtitle": "",
+        "isPopular": false
+      },
+      {
+        "name": "SILVER SPONSOR",
+        "price": "",
+        "features": "Recognition as Silver Sponsor, Standard exhibition booth, Logo on event banners and promotional materials, Quarter-page advertisement in the Workshop Brochure, Opportunity to display corporate promotional materials, Recognition during the Closing Ceremony, Corporate logo on Workshop website, Two (2) complimentary delegate passes, Inclusion in the Workshop Report",
+        "subtitle": "",
+        "isPopular": false
+      }
+    ],
     "sponsorshipCtaTitle": "",
     "sponsorshipCtaDesc": "",
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T14:58:23.020Z"
+    "updatedAt": "2026-07-16T15:06:15.398Z"
   },
   "events": [
     {
@@ -368,5 +390,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T14:58:29.140Z"
+  "timestamp": "2026-07-16T15:06:20.363Z"
 }
