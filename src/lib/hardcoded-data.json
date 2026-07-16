@@ -214,148 +214,159 @@
   ],
   "scheduleItems": [
     {
-      "id": "910b04b5-1862-468b-89d3-5053de1ea259",
+      "id": "a446ba5d-8d46-43fa-ae74-ee3c037dad91",
       "day": 1,
       "timeRange": "Morning",
       "title": "Opening Ceremony",
       "location": null,
       "speaker": null,
-      "description": "Goodwill Messages",
-      "createdAt": "2026-07-16T14:21:31.408Z",
-      "updatedAt": "2026-07-16T14:21:31.408Z"
+      "description": null,
+      "createdAt": "2026-07-16T14:25:32.065Z",
+      "updatedAt": "2026-07-16T14:25:32.065Z"
     },
     {
-      "id": "ed910bcc-5de7-41cd-abad-907f0b722d0e",
+      "id": "a7733928-3e0e-4e92-9680-94c6101971c4",
+      "day": 1,
+      "timeRange": "Morning",
+      "title": "Goodwill Messages",
+      "location": null,
+      "speaker": null,
+      "description": null,
+      "createdAt": "2026-07-16T14:25:33.720Z",
+      "updatedAt": "2026-07-16T14:25:33.720Z"
+    },
+    {
+      "id": "1a34102e-9a84-4d61-92a4-5b5445fcf138",
       "day": 1,
       "timeRange": "Morning",
       "title": "Keynote Address",
       "location": null,
       "speaker": "Honourable Minister of Power",
       "description": "The Electricity Act 2023: A New Era of State-Led Electricity Development",
-      "createdAt": "2026-07-16T14:21:32.935Z",
-      "updatedAt": "2026-07-16T14:21:32.935Z"
+      "createdAt": "2026-07-16T14:25:35.231Z",
+      "updatedAt": "2026-07-16T14:25:35.231Z"
     },
     {
-      "id": "bd0caf54-9acd-4674-ac2b-237fa0e92fd3",
+      "id": "8177ef5d-d4b6-4cd4-9b4d-925c503c3bd3",
       "day": 1,
       "timeRange": "Morning",
       "title": "Special Address",
       "location": null,
       "speaker": "His Excellency, The Vice President of the Federal Republic of Nigeria",
       "description": "The Strategic Vision for State Electricity Markets in Nigeria",
-      "createdAt": "2026-07-16T14:21:33.950Z",
-      "updatedAt": "2026-07-16T14:21:33.950Z"
+      "createdAt": "2026-07-16T14:25:37.172Z",
+      "updatedAt": "2026-07-16T14:25:37.172Z"
     },
     {
-      "id": "3a6eb196-24f1-421e-b3ea-4e0cc6347427",
+      "id": "877d5c41-48ec-4484-9acd-ae41105b1018",
       "day": 1,
       "timeRange": "Afternoon",
       "title": "SESSION I - Panel 1",
       "location": null,
       "speaker": null,
       "description": "Understanding State Electricity Autonomy under the Electricity Act",
-      "createdAt": "2026-07-16T14:21:35.139Z",
-      "updatedAt": "2026-07-16T14:21:35.139Z"
+      "createdAt": "2026-07-16T14:25:38.361Z",
+      "updatedAt": "2026-07-16T14:25:38.361Z"
     },
     {
-      "id": "6efc6a27-d270-485c-b2a6-162e2be196ef",
+      "id": "314468f9-13d9-4db6-b0e3-d7fb83420705",
       "day": 1,
       "timeRange": "Afternoon",
       "title": "SESSION II - Panel 2",
       "location": null,
       "speaker": null,
       "description": "Building Functional State Electricity Markets",
-      "createdAt": "2026-07-16T14:21:36.030Z",
-      "updatedAt": "2026-07-16T14:21:36.030Z"
+      "createdAt": "2026-07-16T14:25:39.919Z",
+      "updatedAt": "2026-07-16T14:25:39.919Z"
     },
     {
-      "id": "5f01d8cf-ac80-4816-9d80-228a493ad361",
+      "id": "f5e5ab82-1df3-4492-b084-f2c7042158ee",
       "day": 1,
       "timeRange": "Afternoon",
       "title": "SESSION III - Governors’ Roundtable",
       "location": null,
       "speaker": null,
       "description": "Theme: State Perspectives on Electricity Sector Reform",
-      "createdAt": "2026-07-16T14:21:37.340Z",
-      "updatedAt": "2026-07-16T14:21:37.340Z"
+      "createdAt": "2026-07-16T14:25:40.911Z",
+      "updatedAt": "2026-07-16T14:25:40.911Z"
     },
     {
-      "id": "92d81265-ff6e-4317-a763-091d89b8cc35",
+      "id": "d2ea855e-dc81-4b14-add5-cf162dafdb96",
       "day": 1,
       "timeRange": "Evening",
       "title": "Fireside Chat",
       "location": null,
       "speaker": null,
       "description": "Lessons from Early Movers: Experiences of States Implementing Electricity Reforms",
-      "createdAt": "2026-07-16T14:21:38.350Z",
-      "updatedAt": "2026-07-16T14:21:38.350Z"
+      "createdAt": "2026-07-16T14:25:41.924Z",
+      "updatedAt": "2026-07-16T14:25:41.924Z"
     },
     {
-      "id": "70baba18-7821-4f16-bf81-7d6ff9de3177",
+      "id": "8b2c94eb-b627-41a6-ba83-210f520ef6c1",
       "day": 2,
       "timeRange": "Morning",
       "title": "SESSION IV - Panel 3",
       "location": null,
       "speaker": null,
       "description": "Financing State Electricity Development",
-      "createdAt": "2026-07-16T14:21:39.649Z",
-      "updatedAt": "2026-07-16T14:21:39.649Z"
+      "createdAt": "2026-07-16T14:25:43.052Z",
+      "updatedAt": "2026-07-16T14:25:43.052Z"
     },
     {
-      "id": "12a8da68-d215-4c0e-af83-0a26cf221cde",
+      "id": "dfea9509-e840-4060-ba7d-370434f82eae",
       "day": 2,
       "timeRange": "Morning",
       "title": "SESSION V - Panel 4",
       "location": null,
       "speaker": null,
       "description": "Unlocking Investment Opportunities in State Electricity Markets",
-      "createdAt": "2026-07-16T14:21:40.654Z",
-      "updatedAt": "2026-07-16T14:21:40.654Z"
+      "createdAt": "2026-07-16T14:25:44.035Z",
+      "updatedAt": "2026-07-16T14:25:44.035Z"
     },
     {
-      "id": "85f0ec2b-108c-4a08-a6d2-fbc7e52901df",
+      "id": "45a4d0d2-2a85-424a-8308-52c59c563890",
       "day": 2,
       "timeRange": "Afternoon",
       "title": "SESSION VI - Facilitated State Implementation Workshop (Plenary Session)",
       "location": null,
       "speaker": null,
       "description": "Theme: Developing Practical Roadmaps for State Electricity Market Implementation",
-      "createdAt": "2026-07-16T14:21:41.773Z",
-      "updatedAt": "2026-07-16T14:21:41.773Z"
+      "createdAt": "2026-07-16T14:25:45.371Z",
+      "updatedAt": "2026-07-16T14:25:45.371Z"
     },
     {
-      "id": "61b4be62-6531-4164-bf90-2f5ab775b3bb",
+      "id": "097a6fac-8d0b-4525-8ad8-4c40d528bf0a",
       "day": 2,
       "timeRange": "Afternoon",
       "title": "SESSION VII",
       "location": null,
       "speaker": null,
       "description": "Presentation and Validation of Plenary Outcomes",
-      "createdAt": "2026-07-16T14:21:42.833Z",
-      "updatedAt": "2026-07-16T14:21:42.833Z"
+      "createdAt": "2026-07-16T14:25:46.845Z",
+      "updatedAt": "2026-07-16T14:25:46.845Z"
     },
     {
-      "id": "e14b2363-e05c-4ed7-a5e3-ea79e677de5b",
+      "id": "b9bf2ba9-a0fd-48c8-9001-9854649e2b34",
       "day": 2,
       "timeRange": "Afternoon",
       "title": "SESSION VIII",
       "location": null,
       "speaker": null,
       "description": "Adoption of Communiqué",
-      "createdAt": "2026-07-16T14:21:43.808Z",
-      "updatedAt": "2026-07-16T14:21:43.808Z"
+      "createdAt": "2026-07-16T14:25:48.511Z",
+      "updatedAt": "2026-07-16T14:25:48.511Z"
     },
     {
-      "id": "07d9912a-301f-49e9-b23b-9b618134d64e",
+      "id": "2b372fb7-8aa0-4f55-9874-36ab8dfb1e11",
       "day": 2,
       "timeRange": "Evening",
       "title": "Closing Ceremony",
       "location": null,
       "speaker": null,
       "description": "Closing Address",
-      "createdAt": "2026-07-16T14:21:44.792Z",
-      "updatedAt": "2026-07-16T14:21:44.792Z"
+      "createdAt": "2026-07-16T14:25:49.799Z",
+      "updatedAt": "2026-07-16T14:25:49.799Z"
     }
   ],
-  "timestamp": "2026-07-16T14:21:48.537Z"
+  "timestamp": "2026-07-16T14:25:55.060Z"
 }

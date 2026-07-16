@@ -6,8 +6,12 @@ const scheduleData = [
   {
     day: 1,
     timeRange: "Morning",
-    title: "Opening Ceremony",
-    description: "Goodwill Messages"
+    title: "Opening Ceremony"
+  },
+  {
+    day: 1,
+    timeRange: "Morning",
+    title: "Goodwill Messages"
   },
   {
     day: 1,
