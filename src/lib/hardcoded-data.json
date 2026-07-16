@@ -49,10 +49,10 @@
     "whyAttendCard1ImgUrl": "/image.png",
     "whyAttendCard2Title": "",
     "whyAttendCard2Desc": "",
-    "whyAttendCard2ImgUrl": null,
+    "whyAttendCard2ImgUrl": "/image copy.png",
     "whyAttendCard3Title": "",
     "whyAttendCard3Desc": "",
-    "whyAttendCard3ImgUrl": null,
+    "whyAttendCard3ImgUrl": "/image copy 2.png",
     "scheduleDaysCount": 2,
     "scheduleDates": [
       "Wednesday, 7 October ",
@@ -282,7 +282,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T16:17:57.866Z"
+    "updatedAt": "2026-07-16T21:36:13.810Z"
   },
   "events": [
     {
@@ -460,5 +460,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T16:18:06.370Z"
+  "timestamp": "2026-07-16T21:36:18.979Z"
 }
