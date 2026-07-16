@@ -1,0 +1,192 @@
+{
+  "settings": {
+    "id": 1,
+    "appNameFirstPart": "NATIONAL WORKSHOP ",
+    "appNameSecondPart": "ON ELECTRICITY ACT",
+    "faviconUrl": "/2eda31a4-51e1-46a0-88f7-ddfa0ce8310e.jpg",
+    "convenerTitle": "CONVENER",
+    "convenerLogo1Url": null,
+    "convenerLogo2Url": null,
+    "heroBadgeText": " NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 ",
+    "heroText": "2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 (AS AMENDED",
+    "heroSubText": "organised by Allstates Management Partners Solutions Limited ",
+    "logoUrl": "/2eda31a4-51e1-46a0-88f7-ddfa0ce8310e.jpg",
+    "contactEmail": "nutech2025@gmail.com",
+    "contactPhone": "+23400554432322",
+    "address": "123 Tech Lane, Innovation City Lagos",
+    "eventFee": 0,
+    "smtpHost": "",
+    "smtpPort": null,
+    "smtpUser": "",
+    "smtpPass": "",
+    "emailEnabled": false,
+    "headerPatronageText": "UNDER THE HIGH PATRONAGE OF H.E Senator  Kashim Shettima Mustapha , GCON,",
+    "headerPresidentText": " Vice President of the Federal Republic of Nigeria.",
+    "headerLocationText": "PRESIDENTIAL BANQUET HALL - ASO VILLA",
+    "headerLocationSubText": "",
+    "headerDateText": "Wednesday, 7 October to Thursday, 8 October 2026 ",
+    "heroSliderImages": null,
+    "transformationHubTitle": "Empowering the States: Reviewing the Electricity Act 2023",
+    "transformationHubDescription": "The Workshop is being organised by Allstates Management Partners Solutions Limited under the auspices of the Office of the Vice President of the Federal Republic of Nigeria, in collaboration with key strategic institutional partners, namely the Federal Ministry of Power, Federal Ministry of Justice, Nigerian Electricity Regulatory Commission (NERC), and the Nigeria Governors' Forum (NGF). This collaboration underscores a shared commitment to supporting the effective implementation of the Electricity Act 2023, strengthening institutional capacity, encouraging public-private collaboration and accelerating the development of competitive, sustainable and investment-ready State electricity markets.",
+    "partnerNames": "the Federal Ministry of Power, Federal Ministry of Justice, Nigerian Electricity Regulatory Commission (NERC), and the Nigeria Governors' Forum (NGF)",
+    "infoBarDateText": "Wednesday, 7 October to Thursday, 8 October 2026 ",
+    "infoBarLocationText": "the State House Banquet Hall, Presidential Villa, Abuja",
+    "infoBarThemeText": "Empowering the States: Reviewing the Electricity Act 2023",
+    "transformationHubFeature1Title": "",
+    "transformationHubFeature1Desc": "",
+    "transformationHubFeature2Title": "",
+    "transformationHubFeature2Desc": "",
+    "transformationHubFeature3Title": "",
+    "transformationHubFeature3Desc": "",
+    "transformationHubFeature4Title": "join ministers, CEOs, and experts representing over 36 states in Nigeria",
+    "transformationHubFeature4Desc": "",
+    "scheduleTitle": "",
+    "scheduleDescription": "the 2-Day National Workshop on the Electricity Act 2023 (As Amended)",
+    "whyAttendTitle": "THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 (AS AMENDED)",
+    "whyAttendSubtitle": "",
+    "whyAttendCard1Title": "",
+    "whyAttendCard1Desc": "",
+    "whyAttendCard1ImgUrl": null,
+    "whyAttendCard2Title": "",
+    "whyAttendCard2Desc": "",
+    "whyAttendCard2ImgUrl": null,
+    "whyAttendCard3Title": "",
+    "whyAttendCard3Desc": "",
+    "whyAttendCard3ImgUrl": null,
+    "scheduleDaysCount": 2,
+    "scheduleDates": [
+      "Wednesday, 7 October ",
+      "Thursday, 8 October 2026 ",
+      "Feb 4",
+      "Feb 5"
+    ],
+    "confGuideTitle": "Workshop Guide",
+    "confGuideSubtitle": "",
+    "confGuideTrack1Title": "",
+    "confGuideTrack1Subtitle": "",
+    "confGuideTrack1Date": "Wednesday, 7 October",
+    "confGuideTrack1EventTitle": "",
+    "confGuideTrack1EventDesc": "",
+    "confGuideTrack2Title": "",
+    "confGuideTrack2Subtitle": "",
+    "confGuideTrack2Date": "Wednesday, 7 October",
+    "confGuideTrack2EventTitle": "",
+    "confGuideTrack2EventDesc": "",
+    "confGuideTrack3Title": "",
+    "confGuideTrack3Subtitle": "",
+    "confGuideTrack3Date": "Thursday, 8 October 2026 ",
+    "confGuideTrack3EventTitle": "",
+    "confGuideTrack3EventDesc": "",
+    "featuredSpeakersTitle": "",
+    "featuredSpeakersSubtitle": "",
+    "featuredSpeakersCount": 4,
+    "featuredSpeakers": [
+      {
+        "name": "Name"
+      },
+      {
+        "name": "Name"
+      },
+      {
+        "name": "Name"
+      },
+      {
+        "name": "Name"
+      }
+    ],
+    "ourApproachTitle": "",
+    "ourApproachCard1Title": "",
+    "ourApproachCard1Desc": "",
+    "ourApproachCard1ImgUrl": null,
+    "ourApproachCard2Title": null,
+    "ourApproachCard2Desc": "",
+    "ourApproachCard2ImgUrl": null,
+    "ourApproachCard3Title": "",
+    "ourApproachCard3Desc": "",
+    "ourApproachCard3ImgUrl": null,
+    "aboutHeroBadgeText": "THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 ",
+    "aboutHeroTitle": "About THE 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 ",
+    "aboutHeroSubtitle": "The Electricity Act 2023 marks a historic milestone in Nigeria's power sector by empowering State Governments to establish, regulate and develop electricity markets within their jurisdictions. The Act creates significant opportunities to expand energy access, attract investment, stimulate industrial development and drive sustainable economic growth. Realising these opportunities, however, requires effective policy implementation, institutional preparedness and strong collaboration among governments, regulators, investors and development partners.",
+    "aboutHeroImgUrl": null,
+    "aboutMissionTitle": "",
+    "aboutMissionSubtitle": "",
+    "aboutMissionCardTitle": "",
+    "aboutMissionCardDesc": "",
+    "aboutVisionCardTitle": "",
+    "aboutVisionCardDesc": "",
+    "aboutVenuesTitle": "",
+    "aboutVenuesSubtitle": "",
+    "aboutVenuesCount": 2,
+    "aboutVenues": [
+      {
+        "desc": "",
+        "title": "",
+        "location": ""
+      },
+      {
+        "desc": "",
+        "title": "",
+        "location": ""
+      }
+    ],
+    "aboutVenuesWarningText": "",
+    "aboutWorkshopText": "",
+    "aboutTargetParticipantsText": "",
+    "aboutWhySponsorText": "",
+    "aboutSponsorshipPackagesText": "",
+    "aboutBrandingOpportunitiesText": "",
+    "aboutExpectedOutcomesText": "",
+    "aboutPartnerWithUsText": "",
+    "aboutCtaTitle": "",
+    "aboutCtaSubtitle": "Connect with ministers, global industry leaders, and innovators shaping the future of African electricity. Registration for Connect with ministers, global industry leaders, and innovators shaping the future of African energy. Registration for NIES 2027 is now open with limited delegate slots available. 2026 is now open.",
+    "agendaHeroTitle": "2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023",
+    "agendaHeroSubtitle": "2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 Agenda",
+    "agendaHeroDesc": "Deep dive into the decentralisation and autonomy provisions of the Electricity Act 2023, with a strong focus on helping each State understand that they now have full autonomy on electricity matters within their jurisdiction by virtue of the law. ",
+    "agendaHeroImgUrl": null,
+    "agendaSectionTitle": "",
+    "agendaSectionSubtitle": "",
+    "agendaDaysCount": 2,
+    "agendaDays": [
+      {
+        "date": "Wednesday, 7 October"
+      },
+      {
+        "date": "Thursday, 8 October 2026 "
+      }
+    ],
+    "agendaBrochureUrl": null,
+    "sponsorshipHeroTagline": "2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 Sponsorship",
+    "sponsorshipHeroTitle": "parner with us to drive Electricity ",
+    "sponsorshipHeroDesc": "",
+    "sponsorshipPartnersTitle": "",
+    "sponsorshipPartnersDesc": "",
+    "sponsorshipPartners": [
+      {
+        "name": "the Federal Ministry of Power",
+        "logoUrl": "/images.jpg"
+      },
+      {
+        "name": "Federal Ministry of Justice",
+        "logoUrl": "/images (1).jpg"
+      },
+      {
+        "name": "Nigerian Electricity Regulatory Commission ",
+        "logoUrl": "/images (2).jpg"
+      },
+      {
+        "name": "Nigeria Governors' Forum ",
+        "logoUrl": "/images (3).jpg"
+      }
+    ],
+    "sponsorshipPackagesTitle": "",
+    "sponsorshipPackagesDesc": "",
+    "sponsorshipPackages": [],
+    "sponsorshipCtaTitle": "",
+    "sponsorshipCtaDesc": "",
+    "contactPageTagline": "",
+    "contactPageTitle": "",
+    "contactPageDesc": "",
+    "updatedAt": "2026-07-15T15:10:41.165Z"
+  },
+  "timestamp": "2026-07-16T12:02:42.194Z"
+}

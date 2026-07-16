@@ -279,7 +279,7 @@ function Index() {
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-[#008753] mb-2">{settings?.transformationHubFeature1Title || "High-Level Engagement"}</h4>
-                  <p className="text-gray-600">{settings?.transformationHubFeature1Desc || "Direct access to ministers, regulators, and industry CEOs driving Africa's energy agenda."}</p>
+                  <p className="text-gray-600">{settings?.transformationHubFeature1Desc || "Direct access to ministers, governors, regulators, and industry CEOs driving Nigeria's electricity agenda."}</p>
                 </div>
               </motion.div>
               
@@ -354,7 +354,7 @@ function Index() {
                 <span className="font-bold text-[#008753] text-lg leading-tight">{settings?.transformationHubFeature4Title || "5,000+ Participants"}</span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed mt-2">
-                {settings?.transformationHubFeature4Desc || "Join ministers, CEOs, and experts representing over 50 countries globally."}
+                {settings?.transformationHubFeature4Desc || "Join ministers, governors, CEOs, and experts representing 36 states in Nigeria and FCT."}
               </p>
             </div>
             

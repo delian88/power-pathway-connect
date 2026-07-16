@@ -23,15 +23,12 @@ export const api = {
   },
   
   getLandingData: async () => {
-    if (shouldUsePhp) {
-      try {
-        const res = await fetch('/api/get-landing-data.php');
-        const text = await res.text();
-        return JSON.parse(text);
-      } catch (e) {
-        console.error("Failed to load landing data:", e);
-        return null;
-      }
+    if (import.meta.env.PROD) {
+      return {
+        settings: hardcodedData.settings || null,
+        events: hardcodedData.events || [],
+        scheduleItems: hardcodedData.scheduleItems || []
+      };
     }
     return getLandingDataFn();
   },

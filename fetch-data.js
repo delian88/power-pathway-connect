@@ -8,12 +8,13 @@ async function main() {
   console.log('Fetching live database content to hardcode into the build...');
   try {
     const settings = await prisma.siteSettings.findFirst();
-    const landingData = {
-      // Add other stuff here if needed, but the main one is settings
-    };
+    const events = await prisma.event.findMany({ orderBy: { date: 'desc' }, take: 10 });
+    const scheduleItems = await prisma.scheduleItem.findMany({ orderBy: [{ day: 'asc' }, { timeRange: 'asc' }] });
 
     const data = {
       settings: settings || null,
+      events: events || [],
+      scheduleItems: scheduleItems || [],
       timestamp: new Date().toISOString()
     };
 
