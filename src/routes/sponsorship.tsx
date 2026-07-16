@@ -188,7 +188,7 @@ function SponsorshipPage() {
 
               We invite your organisation to become a strategic partner in this landmark national initiative under the auspices of the Office of the Vice President.
 
-              <span className="block mt-6">We look forward to partnering with you in empowering States and accelerating sustainable electricity sector development in Nigeria.</span>
+              <span className="block mt-6">We invite you to partner with us in empowering States and accelerating sustainable electricity sector development in Nigeria.</span>
             </div>
           </div>
         </div>
