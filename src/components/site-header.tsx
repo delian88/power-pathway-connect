@@ -55,6 +55,10 @@ export function SiteHeader() {
 
           {/* Center: Details */}
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
+            <div className="flex flex-col mb-3 text-center">
+              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "NATIONAL WORKSHOP"}</span>
+              <span className="text-[#0F1A1C] font-bold text-xl md:text-2xl leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "ON ELECTRICITY ACT"}</span>
+            </div>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
             <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPresidentText || "President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria"}</span>
             <span className="text-[#008753] font-bold mt-1 mb-2 text-[15px]">PRESIDENTIAL BANQUET HALL - ASO VILLA, FCT</span>
