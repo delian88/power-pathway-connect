@@ -15,22 +15,16 @@ import hardcodedData from './hardcoded-data.json';
 // Wrapper that uses Node server functions during dev, and hardcoded data in production
 export const api = {
   getSiteSettings: async () => {
-    // In production, always return the data that was hardcoded during the build process
-    if (import.meta.env.PROD) {
-      return hardcodedData.settings || null;
-    }
-    return getSiteSettingsFn();
+    // Always return the data that was hardcoded during the build process to avoid DB connection limits
+    return hardcodedData.settings || null;
   },
   
   getLandingData: async () => {
-    if (import.meta.env.PROD) {
-      return {
-        settings: hardcodedData.settings || null,
-        events: hardcodedData.events || [],
-        scheduleItems: hardcodedData.scheduleItems || []
-      };
-    }
-    return getLandingDataFn();
+    return {
+      settings: hardcodedData.settings || null,
+      events: hardcodedData.events || [],
+      scheduleItems: hardcodedData.scheduleItems || []
+    };
   },
   
   submitRegistration: async (data: any) => {
