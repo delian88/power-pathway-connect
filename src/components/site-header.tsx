@@ -44,14 +44,14 @@ export function SiteHeader() {
         <div className="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
           
           {/* Left: Logo */}
-          <div className="flex flex-col items-start justify-center w-[300px]">
-            <span className="text-[#0F1A1C] font-bold text-[11px] uppercase mb-1 tracking-wider">{settings.convenerTitle || "CONVENER"}</span>
+          <div className="flex items-center justify-start w-[400px]">
             <Link to="/">
-              <div className="flex items-center gap-4 mt-1">
-                <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-24 h-24 object-contain" />
+              <div className="flex items-center gap-6 mt-1">
+                <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
                 <div className="flex flex-col">
-                  <span className="text-[#0F1A1C] font-bold text-[16px] leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "National Electricity"}</span>
-                  <span className="text-[#0F1A1C] font-bold text-[16px] leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "Workshop"}</span>
+                  <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider">{settings.convenerTitle || "CONVENER"}</span>
+                  <span className="text-[#0F1A1C] font-bold text-lg md:text-xl leading-tight tracking-tight uppercase">{settings.appNameFirstPart || "NATIONAL WORKSHOP"}</span>
+                  <span className="text-[#0F1A1C] font-bold text-lg md:text-xl leading-tight tracking-tight uppercase">{settings.appNameSecondPart || "ON ELECTRICITY ACT"}</span>
                 </div>
               </div>
             </Link>
@@ -86,8 +86,8 @@ export function SiteHeader() {
                {settings.logoUrl ? <img src={settings.logoUrl} className="w-full h-full object-contain p-0.5" alt="Logo" /> : "N"}
              </div>
              <div className="text-white font-bold leading-tight flex flex-col">
-               <span className="text-sm">{settings.appNameFirstPart || "National Electricity"}</span>
-               <span className="text-[10px] text-[#D4AF37]">{settings.appNameSecondPart || "Workshop"}</span>
+               <span className="text-sm">{settings.appNameFirstPart || "NATIONAL WORKSHOP"}</span>
+               <span className="text-[10px] text-[#D4AF37]">{settings.appNameSecondPart || "ON ELECTRICITY ACT"}</span>
              </div>
           </Link>
 
