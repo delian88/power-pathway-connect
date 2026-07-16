@@ -193,6 +193,139 @@ function SponsorshipPage() {
         </div>
       </section>
 
+      {/* Custom Sponsorship Details */}
+      <section className="py-24 bg-white border-y border-gray-100">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Why Sponsor the Workshop?</h2>
+            <div className="text-gray-600 leading-relaxed font-poppins space-y-4 whitespace-pre-wrap">
+              Your organisation will have the opportunity to:
+              <br/>• Position itself as a leading partner in Nigeria's electricity sector reforms.
+              <br/>• Engage directly with Federal and State Government decision-makers.
+              <br/>• Showcase products, services and innovative energy solutions.
+              <br/>• Build relationships with investors and development partners.
+              <br/>• Generate high-value business leads.
+              <br/>• Enhance corporate visibility through national media exposure.
+              <br/>• Demonstrate commitment to sustainable energy development.
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Sponsorship Packages</h2>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl font-bold text-[#D4AF37] mb-2">PLATINUM SPONSOR</h3>
+                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
+                <div className="text-gray-600 leading-relaxed font-poppins">
+                  • Recognition as Platinum Sponsor
+                  <br/>• Opportunity to deliver a goodwill address during the Opening Ceremony
+                  <br/>• Executive speaking opportunity during a technical session (subject to programme approval)
+                  <br/>• Premium exhibition space
+                  <br/>• Corporate logo on all event branding and publicity materials
+                  <br/>• Logo on participant bags, banners and backdrop
+                  <br/>• Full-page advertisement in the Workshop Brochure
+                  <br/>• Branding on delegate materials and certificates
+                  <br/>• Corporate promotional video played during breaks
+                  <br/>• Opportunity to distribute promotional materials
+                  <br/>• Recognition in all press releases
+                  <br/>• Featured interview during media engagements
+                  <br/>• Five (5) complimentary delegate passes
+                  <br/>• VIP seating for senior executives
+                  <br/>• Post-event recognition in the Workshop Report
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-2xl font-bold text-gray-400 mb-2">GOLD SPONSOR</h3>
+                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
+                <div className="text-gray-600 leading-relaxed font-poppins">
+                  • Recognition as Gold Sponsor
+                  <br/>• Premium exhibition booth
+                  <br/>• Logo on all major event branding materials
+                  <br/>• Half-page advertisement in the Workshop Brochure
+                  <br/>• Opportunity to distribute corporate materials
+                  <br/>• Recognition during Opening and Closing Ceremonies
+                  <br/>• Logo on Workshop website and digital platforms
+                  <br/>• Corporate branding on selected Workshop materials
+                  <br/>• Three (3) complimentary delegate passes
+                  <br/>• VIP seating for senior representatives
+                  <br/>• Recognition in the Workshop Report
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-gray-500 mb-2">SILVER SPONSOR</h3>
+                <h4 className="font-bold text-gray-800 mb-2">Benefits</h4>
+                <div className="text-gray-600 leading-relaxed font-poppins">
+                  • Recognition as Silver Sponsor
+                  <br/>• Standard exhibition booth
+                  <br/>• Logo on event banners and promotional materials
+                  <br/>• Quarter-page advertisement in the Workshop Brochure
+                  <br/>• Opportunity to display corporate promotional materials
+                  <br/>• Recognition during the Closing Ceremony
+                  <br/>• Corporate logo on Workshop website
+                  <br/>• Two (2) complimentary delegate passes
+                  <br/>• Inclusion in the Workshop Report
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Branding Opportunities</h2>
+            <div className="text-gray-600 leading-relaxed font-poppins space-y-4 whitespace-pre-wrap">
+              Sponsors will enjoy visibility through:
+              <br/>• National Media Coverage
+              <br/>• Television Interviews
+              <br/>• Newspaper Publications
+              <br/>• Digital Media Campaigns
+              <br/>• Social Media Promotions
+              <br/>• Event Backdrops
+              <br/>• Conference Brochure
+              <br/>• Delegate Packs
+              <br/>• Exhibition Area
+              <br/>• Workshop Website
+              <br/>• Event Photography and Video Documentation
+              <br/>• Post-event Report
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Expected Outcomes</h2>
+            <div className="text-gray-600 leading-relaxed font-poppins space-y-4 whitespace-pre-wrap">
+              The Workshop will produce:
+              <br/>• Improved understanding of the Electricity Act 2023.
+              <br/>• Practical implementation roadmaps for State electricity markets.
+              <br/>• Enhanced collaboration between Federal and State Governments.
+              <br/>• Increased private sector participation.
+              <br/>• New investment partnerships.
+              <br/>• Strengthened policy dialogue.
+              <br/>• National Communiqué with actionable recommendations.
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6 font-sans">Partner With Us</h2>
+            <div className="text-gray-600 leading-relaxed font-poppins space-y-4 whitespace-pre-wrap">
+              This Workshop presents a unique opportunity for your organisation to contribute to the transformation of Nigeria's electricity sector while positioning your brand at the forefront of one of the country's most significant policy reforms.
+
+              We invite your organisation to become a strategic partner in this landmark national initiative under the auspices of the Office of the Vice President.
+
+              <span className="font-bold block mt-6">All payments should be made to the following account details</span>
+              ................................................................
+              <br/>................................................................
+
+              <span className="font-bold block mt-6">For Sponsorship Enquiries</span>
+              Allstates Management Partners Solutions Limited
+              <br/>Office of the Vice President
+              <br/>................................................................
+
+              <span className="block mt-6">We look forward to partnering with you in empowering States and accelerating sustainable electricity sector development in Nigeria.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Sponsorship Packages */}
       <section id="sponsorship-packages" className="py-24 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-6">
