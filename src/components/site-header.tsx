@@ -69,8 +69,11 @@ export function SiteHeader() {
           </div>
 
           {/* Right: Logos */}
-          <div className="flex flex-col items-end justify-center w-[300px]">
-            <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-48 h-auto object-contain" />
+          <div className="flex flex-col items-end justify-center w-[400px]">
+            <div className="flex flex-col items-start">
+              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider pl-4">ORGANIZER</span>
+              <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-56 h-auto object-contain" />
+            </div>
           </div>
 
         </div>
