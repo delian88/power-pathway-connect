@@ -41,10 +41,29 @@ function parseDatabaseUrl($url) {
 }
 
 $dbUrl = getenv('DATABASE_URL') ?: $_ENV['DATABASE_URL'] ?? null;
-$dbConfig = parseDatabaseUrl($dbUrl);
+$dbConfig = null;
+
+// Allow using individual credentials if provided, otherwise fallback to URL parser
+$dbHost = getenv('DB_HOST') ?: $_ENV['DB_HOST'] ?? null;
+$dbUser = getenv('DB_USER') ?: $_ENV['DB_USER'] ?? null;
+$dbPass = getenv('DB_PASS') ?: $_ENV['DB_PASS'] ?? null;
+$dbName = getenv('DB_NAME') ?: $_ENV['DB_NAME'] ?? null;
+$dbPort = getenv('DB_PORT') ?: $_ENV['DB_PORT'] ?? '3306';
+
+if ($dbHost && $dbUser && $dbName) {
+    $dbConfig = [
+        'host' => $dbHost,
+        'port' => $dbPort,
+        'user' => $dbUser,
+        'pass' => $dbPass ?? '',
+        'db'   => ltrim($dbName, '/')
+    ];
+} else if ($dbUrl) {
+    $dbConfig = parseDatabaseUrl($dbUrl);
+}
 
 if (!$dbConfig) {
-    echo json_encode(['error' => 'DATABASE_URL not found in .env']);
+    echo json_encode(['error' => 'Database credentials missing. Provide DB_HOST, DB_USER, DB_PASS, DB_NAME or DATABASE_URL in .env']);
     exit;
 }
 
