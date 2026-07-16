@@ -551,9 +551,9 @@ function Index() {
                 <p className="text-gray-400 font-medium">{settings?.confGuideTrack2Subtitle || "Deep-dive technical workshops"}</p>
               </div>
               <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack2Date || "Feb 04, 01:15 PM - 03:00 PM"}</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack2EventTitle || "EPC Roundtable 2.0-Invite Only"}</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack2EventDesc || "Attracting Global EPC Leaders to Power Nigeria's Oil & Gas Growth..."}</p>
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack2Date || ""}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack2EventTitle || ""}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack2EventDesc || ""}</p>
               </div>
             </div>
 
