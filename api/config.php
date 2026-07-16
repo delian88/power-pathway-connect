@@ -40,15 +40,12 @@ function parseDatabaseUrl($url) {
     ];
 }
 
-$dbUrl = getenv('DATABASE_URL') ?: $_ENV['DATABASE_URL'] ?? null;
-$dbConfig = null;
-
-// Allow using individual credentials if provided, otherwise fallback to URL parser
-$dbHost = getenv('DB_HOST') ?: $_ENV['DB_HOST'] ?? null;
-$dbUser = getenv('DB_USER') ?: $_ENV['DB_USER'] ?? null;
-$dbPass = getenv('DB_PASS') ?: $_ENV['DB_PASS'] ?? null;
-$dbName = getenv('DB_NAME') ?: $_ENV['DB_NAME'] ?? null;
-$dbPort = getenv('DB_PORT') ?: $_ENV['DB_PORT'] ?? '3306';
+// Hardcoded for production so it works without .env
+$dbHost = 'fhbc9r.h.filess.io';
+$dbUser = 'electricity_workshop_pigmeetago';
+$dbPass = '59692ec2711c9977d8656c7a190f8e6eda2d3ae3';
+$dbName = 'electricity_workshop_pigmeetago';
+$dbPort = '3307';
 
 if ($dbHost && $dbUser && $dbName) {
     $dbConfig = [
@@ -58,13 +55,15 @@ if ($dbHost && $dbUser && $dbName) {
         'pass' => $dbPass ?? '',
         'db'   => ltrim($dbName, '/')
     ];
-} else if ($dbUrl) {
-    $dbConfig = parseDatabaseUrl($dbUrl);
-}
-
-if (!$dbConfig) {
-    echo json_encode(['error' => 'Database credentials missing. Provide DB_HOST, DB_USER, DB_PASS, DB_NAME or DATABASE_URL in .env']);
-    exit;
+} else {
+    // Fallback if somehow not hardcoded
+    $dbConfig = [
+        'host' => 'localhost',
+        'port' => '3306',
+        'user' => 'root',
+        'pass' => '',
+        'db'   => ''
+    ];
 }
 
 $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['db']};charset=utf8mb4";
