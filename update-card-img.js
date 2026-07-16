@@ -7,11 +7,10 @@ async function main() {
     await prisma.siteSettings.update({
       where: { id: currentSettings.id },
       data: {
-        // Using a similar networking/connections image from Unsplash
-        whyAttendCard1ImgUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
+        whyAttendCard1ImgUrl: "/image.png"
       }
     });
-    console.log("Successfully updated whyAttendCard1ImgUrl");
+    console.log("Successfully updated whyAttendCard1ImgUrl to /image.png");
   }
 }
 

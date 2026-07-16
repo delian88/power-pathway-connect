@@ -46,7 +46,7 @@
     "whyAttendSubtitle": "",
     "whyAttendCard1Title": "",
     "whyAttendCard1Desc": "",
-    "whyAttendCard1ImgUrl": null,
+    "whyAttendCard1ImgUrl": "/image.png",
     "whyAttendCard2Title": "",
     "whyAttendCard2Desc": "",
     "whyAttendCard2ImgUrl": null,
@@ -282,7 +282,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T15:50:07.276Z"
+    "updatedAt": "2026-07-16T16:17:57.866Z"
   },
   "events": [
     {
@@ -460,5 +460,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T16:07:49.501Z"
+  "timestamp": "2026-07-16T16:18:06.370Z"
 }
