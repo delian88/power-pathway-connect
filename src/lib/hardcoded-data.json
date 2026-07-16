@@ -65,11 +65,11 @@
     "confGuideTrack1Title": "Plenary Session",
     "confGuideTrack1Subtitle": "Facilitated State implementation workshop",
     "confGuideTrack1Date": "THURSDAY, 8 OCTOBER 2026",
-    "confGuideTrack1EventTitle": "",
-    "confGuideTrack1EventDesc": "",
+    "confGuideTrack1EventTitle": "Theme:",
+    "confGuideTrack1EventDesc": "Developing Practical Roadmaps for State Electricity Market Implementation",
     "confGuideTrack2Title": "Technical Sessions",
     "confGuideTrack2Subtitle": "Sessions I, II, III, IV, V",
-    "confGuideTrack2Date": "Wednesday, 7 October",
+    "confGuideTrack2Date": "",
     "confGuideTrack2EventTitle": "",
     "confGuideTrack2EventDesc": "",
     "confGuideTrack3Title": "",
@@ -190,7 +190,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T14:48:21.987Z"
+    "updatedAt": "2026-07-16T14:58:23.020Z"
   },
   "events": [
     {
@@ -368,5 +368,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T14:48:28.468Z"
+  "timestamp": "2026-07-16T14:58:29.140Z"
 }

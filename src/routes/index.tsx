@@ -523,6 +523,23 @@ function Index() {
 
           <div className="grid md:grid-cols-3 gap-8">
             
+            {/* Track 2: Technical Sessions */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
+              <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
+                <div className="w-16 h-16 rounded-full bg-[#008753] flex items-center justify-center text-white mb-6 shadow-md shadow-[#008753]/30">
+                  {/* Gears Icon */}
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49-.12-.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-[#008753] mb-3">{settings?.confGuideTrack2Title || "Technical Sessions"}</h3>
+                <p className="text-gray-400 font-medium">{settings?.confGuideTrack2Subtitle || "Deep-dive technical workshops"}</p>
+              </div>
+              <div className="p-8 bg-white min-h-[160px]">
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack2Date || ""}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack2EventTitle || ""}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack2EventDesc || ""}</p>
+              </div>
+            </div>
+
             {/* Track 1: Plenary Sessions */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
               <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
@@ -535,25 +552,8 @@ function Index() {
               </div>
               <div className="p-8 bg-white min-h-[160px]">
                 <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack1Date || "THURSDAY, 8 OCTOBER 2026"}</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack1EventTitle || "Panel Session 1 - Local Content for Prosperity"}</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack1EventDesc || "Beyond Policy Control: Empowering African Energy Enterprises for Global Play..."}</p>
-              </div>
-            </div>
-
-            {/* Track 2: Technical Sessions */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full hover:-translate-y-1 transition-transform">
-              <div className="p-10 flex flex-col items-center text-center border-b border-gray-100 flex-1">
-                <div className="w-16 h-16 rounded-full bg-[#008753] flex items-center justify-center text-white mb-6 shadow-md shadow-[#008753]/30">
-                  {/* Gears Icon */}
-                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                </div>
-                <h3 className="text-2xl font-bold text-[#008753] mb-3">{settings?.confGuideTrack2Title || "Technical Sessions"}</h3>
-                <p className="text-gray-400 font-medium">{settings?.confGuideTrack2Subtitle || "Deep-dive technical workshops"}</p>
-              </div>
-              <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack2Date || ""}</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack2EventTitle || ""}</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack2EventDesc || ""}</p>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack1EventTitle || "Theme:"}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack1EventDesc || "Developing Practical Roadmaps for State Electricity Market Implementation"}</p>
               </div>
             </div>
 
