@@ -129,69 +129,7 @@ function SponsorshipPage() {
         </div>
       </section>
 
-      {/* Sponsors & Partners Grid */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0F1A1C] mb-4">{settings?.sponsorshipPartnersTitle || "Our Sponsors & Partners"}</h2>
-            <p className="text-gray-500 font-poppins max-w-2xl mx-auto">{settings?.sponsorshipPartnersDesc || "Leading organizations driving Africa's energy transformation through strategic partnerships."}</p>
-          </div>
-          {partners.length > 0 ? (
-            <div className="space-y-12 mt-12">
-              {Object.entries(
-                partners.reduce((acc: any, p: any) => {
-                  const cat = p.category || 'Partner';
-                  if (!acc[cat]) acc[cat] = [];
-                  acc[cat].push(p);
-                  return acc;
-                }, {})
-              ).map(([category, items]: [string, any]) => (
-                <div key={category} className="mb-10">
-                  <h3 className="text-2xl font-bold text-center text-[#D4AF37] mb-8 uppercase tracking-widest">{category}</h3>
-                  <div className="flex flex-wrap justify-center gap-8">
-                    {items.map((partner: any, idx: number) => (
-                      <div key={idx} className="flex-shrink-0 flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-md transition-all w-56 h-40">
-                        {partner.logo ? (
-                          <img src={partner.logo} alt={partner.name || `Partner ${idx+1}`} className="max-h-20 max-w-full object-contain mb-4" />
-                        ) : (
-                          <div className="h-16 w-16 bg-gray-200 rounded-full mb-4"></div>
-                        )}
-                        <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="w-full overflow-hidden mt-8 relative">
-              {/* Fade gradients for smooth edge transition */}
-              <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
-              
-              <motion.div 
-                className="flex w-max items-center gap-16 pr-16"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ ease: "linear", duration: 25, repeat: Infinity }}
-              >
-                {(() => {
-                  const baseLogos = [
-                    "/sponsor-1.png", "/sponsor-2.png", "/sponsor-3.png", "/sponsor-4.png", "/sponsor-5.png",
-                    "/sponsor-6.png", "/sponsor-7.png", "/sponsor-8.png", "/sponsor-9.png", "/sponsor-10.png",
-                    "/sponsor-11.png", "/sponsor-12.png", "/sponsor-13.png", "/sponsor-14.png"
-                  ];
-                  const duplicatedLogos = [...baseLogos, ...baseLogos];
-                  return duplicatedLogos.map((url, i) => (
-                    <div key={i} className="flex-shrink-0 flex items-center justify-center p-4 h-28 w-48 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer">
-                      <img src={url} alt={`Partner ${i+1}`} className="max-h-20 max-w-full object-contain" />
-                    </div>
-                  ));
-                })()}
-              </motion.div>
-            </div>
-          )}
-        </div>
-      </section>
+
 
       {/* Custom Sponsorship Details */}
       <section className="py-24 bg-white border-y border-gray-100">
@@ -314,6 +252,70 @@ function SponsorshipPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Sponsors & Partners Grid */}
+      <section className="py-20 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F1A1C] mb-4">{settings?.sponsorshipPartnersTitle || "Our Sponsors & Partners"}</h2>
+            <p className="text-gray-500 font-poppins max-w-2xl mx-auto">{settings?.sponsorshipPartnersDesc || "Leading organizations driving Africa's energy transformation through strategic partnerships."}</p>
+          </div>
+          {partners.length > 0 ? (
+            <div className="space-y-12 mt-12">
+              {Object.entries(
+                partners.reduce((acc: any, p: any) => {
+                  const cat = p.category || 'Partner';
+                  if (!acc[cat]) acc[cat] = [];
+                  acc[cat].push(p);
+                  return acc;
+                }, {})
+              ).map(([category, items]: [string, any]) => (
+                <div key={category} className="mb-10">
+                  <h3 className="text-2xl font-bold text-center text-[#D4AF37] mb-8 uppercase tracking-widest">{category}</h3>
+                  <div className="flex flex-wrap justify-center gap-8">
+                    {items.map((partner: any, idx: number) => (
+                      <div key={idx} className="flex-shrink-0 flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-md transition-all w-56 h-40">
+                        {partner.logo ? (
+                          <img src={partner.logo} alt={partner.name || `Partner ${idx+1}`} className="max-h-20 max-w-full object-contain mb-4" />
+                        ) : (
+                          <div className="h-16 w-16 bg-gray-200 rounded-full mb-4"></div>
+                        )}
+                        <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full overflow-hidden mt-8 relative">
+              {/* Fade gradients for smooth edge transition */}
+              <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+              
+              <motion.div 
+                className="flex w-max items-center gap-16 pr-16"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+              >
+                {(() => {
+                  const baseLogos = [
+                    "/sponsor-1.png", "/sponsor-2.png", "/sponsor-3.png", "/sponsor-4.png", "/sponsor-5.png",
+                    "/sponsor-6.png", "/sponsor-7.png", "/sponsor-8.png", "/sponsor-9.png", "/sponsor-10.png",
+                    "/sponsor-11.png", "/sponsor-12.png", "/sponsor-13.png", "/sponsor-14.png"
+                  ];
+                  const duplicatedLogos = [...baseLogos, ...baseLogos];
+                  return duplicatedLogos.map((url, i) => (
+                    <div key={i} className="flex-shrink-0 flex items-center justify-center p-4 h-28 w-48 bg-gray-50 rounded-lg border border-gray-100 hover:border-[#008753] hover:shadow-sm transition-all cursor-pointer">
+                      <img src={url} alt={`Partner ${i+1}`} className="max-h-20 max-w-full object-contain" />
+                    </div>
+                  ));
+                })()}
+              </motion.div>
+            </div>
+          )}
         </div>
       </section>
 
