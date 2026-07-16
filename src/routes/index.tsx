@@ -117,7 +117,7 @@ function Index() {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden pt-16">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-24">
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#0F1A1C]">
           <AnimatePresence>
             {heroMedia.map((media, idx) => (
