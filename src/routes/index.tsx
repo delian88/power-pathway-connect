@@ -569,7 +569,7 @@ function Index() {
               </div>
               <div className="p-8 bg-white min-h-[160px]">
                 <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack3Date || "Feb 02, 06:00 PM - 07:30 PM"}</p>
-                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack3EventTitle || "Ministers & Heads of Delegation Reception"}</h4>
+                <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack3EventTitle || "Ministers, Governors & Heads of Delegation Reception"}</h4>
                 <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack3EventDesc || "Exclusive"}</p>
               </div>
             </div>
