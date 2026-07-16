@@ -7,7 +7,7 @@ async function main() {
     await prisma.siteSettings.update({
       where: { id: currentSettings.id },
       data: {
-        sponsorshipCtaDesc: "Join industry leaders in shaping Nigeria electricity future. Limited sponsorship opportunities available."
+        sponsorshipCtaDesc: "Join industry leaders in shaping Nigeria's electricity future. Limited sponsorship opportunities available."
       }
     });
     console.log("Successfully updated sponsorship CTA text");
