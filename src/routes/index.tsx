@@ -534,7 +534,7 @@ function Index() {
                 <p className="text-gray-400 font-medium">{settings?.confGuideTrack1Subtitle || "High-level strategic discussions"}</p>
               </div>
               <div className="p-8 bg-white min-h-[160px]">
-                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack1Date || "Feb 02, 10:50 AM - 11:00 AM"}</p>
+                <p className="text-[#D4AF37] font-bold text-[13px] mb-2 tracking-wide uppercase">{settings?.confGuideTrack1Date || "THURSDAY, 8 OCTOBER 2026"}</p>
                 <h4 className="text-lg font-bold text-[#0F1A1C] mb-3 leading-tight">{settings?.confGuideTrack1EventTitle || "Panel Session 1 - Local Content for Prosperity"}</h4>
                 <p className="text-gray-400 text-sm leading-relaxed">{settings?.confGuideTrack1EventDesc || "Beyond Policy Control: Empowering African Energy Enterprises for Global Play..."}</p>
               </div>
