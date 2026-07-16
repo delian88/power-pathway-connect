@@ -180,6 +180,26 @@
         "name": "Nigeria Governors' Forum ",
         "logoUrl": "/images (3).jpg",
         "category": "Platinum"
+      },
+      {
+        "logo": "",
+        "name": "Gold Sponsor 1",
+        "category": "GOLD"
+      },
+      {
+        "logo": "",
+        "name": "Gold Sponsor 2",
+        "category": "GOLD"
+      },
+      {
+        "logo": "",
+        "name": "Silver Sponsor 1",
+        "category": "SILVER"
+      },
+      {
+        "logo": "",
+        "name": "Silver Sponsor 2",
+        "category": "SILVER"
       }
     ],
     "sponsorshipPackagesTitle": "",
@@ -212,7 +232,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-07-16T15:06:15.398Z"
+    "updatedAt": "2026-07-16T15:13:50.146Z"
   },
   "events": [
     {
@@ -390,5 +410,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T15:06:20.363Z"
+  "timestamp": "2026-07-16T15:13:54.005Z"
 }
