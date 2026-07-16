@@ -187,7 +187,10 @@ function AgendaPage() {
                           </div>
 
                           {currentItems.map((session: any, sIdx: number) => (
-                            <div key={sIdx} className="flex flex-col border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                            <div key={sIdx} className="flex flex-col md:flex-row border-b border-gray-100 p-8 hover:bg-gray-50 transition-colors group">
+                              <div className="md:w-56 flex-shrink-0 mb-4 md:mb-0">
+                                <span className="text-[#008753] font-bold text-lg tracking-wide whitespace-nowrap">{session.timeRange}</span>
+                              </div>
                               <div className="flex-1">
                                 <h4 className="font-bold text-[19px] text-[#0F1A1C] group-hover:text-[#008753] transition-colors mb-4 leading-snug">
                                   {session.title}
