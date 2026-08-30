@@ -27,13 +27,11 @@ jobs:
           # Copy the PHP API folder into the dist folder so it gets uploaded along with the frontend
           cp -r api dist/api
           
-      - name: 📂 Sync files to cPanel via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: 📂 Sync files to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 21098
-          local_path: './dist/*'
-          remote_path: '/public_html'
-          sftp_only: true
+          local-dir: ./dist/
+          server-dir: /
