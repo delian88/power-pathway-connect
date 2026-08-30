@@ -37,8 +37,27 @@ export const submitRegistrationFn = createServerFn({ method: "POST" })
       throw new Error("You cannot use that email. It has already been registered the maximum number of times.");
     }
 
+    const lastReg = await db.registration.findFirst({
+      where: { id: { startsWith: 'NEW2023-' } },
+      orderBy: { createdAt: 'desc' }
+    });
+    
+    let nextNumber = 1;
+    if (lastReg && lastReg.id) {
+      const parts = lastReg.id.split('-');
+      if (parts.length === 2) {
+        const num = parseInt(parts[1], 10);
+        if (!isNaN(num)) {
+          nextNumber = num + 1;
+        }
+      }
+    }
+    
+    const nextId = `NEW2023-${String(nextNumber).padStart(3, '0')}`;
+
     const reg = await db.registration.create({
       data: {
+        id: nextId,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,

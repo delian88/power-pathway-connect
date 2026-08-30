@@ -9,18 +9,6 @@ if (!$input) {
     exit;
 }
 
-function generate_uuid() {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0x0fff ) | 0x4000,
-        mt_rand( 0, 0x3fff ) | 0x8000,
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-    );
-}
-
-$registrationId = generate_uuid();
-
 try {
     $email = $input['email'];
     $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM Registration WHERE email = :email");
@@ -32,6 +20,20 @@ try {
         echo json_encode(['error' => 'You cannot use that email. It has already been registered the maximum number of times.']);
         exit;
     }
+
+    $idStmt = $pdo->query("SELECT id FROM Registration WHERE id LIKE 'NEW2023-%' ORDER BY createdAt DESC LIMIT 1");
+    $lastId = $idStmt->fetchColumn();
+    $nextNumber = 1;
+    if ($lastId) {
+        $parts = explode('-', $lastId);
+        if (count($parts) === 2) {
+            $num = (int)$parts[1];
+            if ($num > 0) {
+                $nextNumber = $num + 1;
+            }
+        }
+    }
+    $registrationId = "NEW2023-" . str_pad($nextNumber, 3, "0", STR_PAD_LEFT);
     $stmt = $pdo->prepare("
         INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, address, city, country, zipCode, gender, status, createdAt, updatedAt)
         VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, :address, :city, :country, :zipCode, :gender, 'PENDING', NOW(3), NOW(3))
