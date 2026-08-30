@@ -41,11 +41,11 @@ function parseDatabaseUrl($url) {
 }
 
 // Hardcoded for production so it works without .env
-$dbHost = 'fhbc9r.h.filess.io';
-$dbUser = 'electricity_workshop_pigmeetago';
-$dbPass = '59692ec2711c9977d8656c7a190f8e6eda2d3ae3';
-$dbName = 'electricity_workshop_pigmeetago';
-$dbPort = '3307';
+$dbHost = 'localhost';
+$dbUser = 'elecphqx_electricity-user';
+$dbPass = 'electricity-user$1';
+$dbName = 'elecphqx_electricity';
+$dbPort = '3306';
 
 if ($dbHost && $dbUser && $dbName) {
     $dbConfig = [
