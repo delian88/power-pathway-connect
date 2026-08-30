@@ -235,9 +235,9 @@ function Index() {
           >
             {(() => {
               const baseLogos = [
-                "/image copy.png",   // BPE
+                "/BPE.webp",         // BPE
                 "/image copy 3.png", // NISO
-                "/image copy 2.png", // ICRC
+                "/ICRC.webp",        // ICRC
                 "/slider-1.png",     // Power
                 "/slider-2.png",     // Justice
                 "/slider-4.png",     // Governors forum
