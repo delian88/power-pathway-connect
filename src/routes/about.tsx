@@ -228,12 +228,7 @@ function About() {
               </div>
             ))}
           </div>
-          
-          <div className="text-center bg-[#008753]/20 border border-[#008753]/40 p-4 rounded-xl max-w-2xl mx-auto">
-            <p className="text-white font-medium flex items-center justify-center gap-2">
-              <span className="text-[#D4AF37]">⚠️</span> {settings?.aboutVenuesWarningText || "Abuja is a large city, please plan travel between venues accordingly."}
-            </p>
-          </div>
+
         </div>
       </section>
 
