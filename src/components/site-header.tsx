@@ -46,6 +46,7 @@ export function SiteHeader() {
           {/* Left: Logo */}
           <div className="flex items-center justify-start w-[300px] xl:w-[400px]">
             <div className="flex flex-col items-center">
+              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase tracking-wider mb-2">{settings.convenerTitle || "CONVENER"}</span>
               <Link to="/">
                 <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-32 h-32 md:w-36 md:h-36 object-contain" />
               </Link>
@@ -65,6 +66,7 @@ export function SiteHeader() {
           {/* Right: Logos */}
           <div className="flex flex-col items-end justify-center w-[300px] xl:w-[400px]">
             <div className="flex flex-col items-end">
+              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider pl-4">ORGANIZER</span>
               <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-56 h-auto object-contain" />
             </div>
           </div>
