@@ -92,11 +92,11 @@ function AgendaPage() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
           >
-            <Link to="/registration">
-              <Button size="lg" className="bg-[#0F1A1C] hover:bg-[#1A2A2E] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
+            <Button asChild size="lg" className="bg-[#0F1A1C] hover:bg-[#1A2A2E] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
+              <Link to="/registration">
                 Register Now ➔
-              </Button>
-            </Link>
+              </Link>
+            </Button>
             {settings?.agendaBrochureUrl ? (
               <a href={settings.agendaBrochureUrl} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="lg" className="bg-[#D4AF37] border-transparent hover:bg-[#b08d24] text-[#0F1A1C] rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1 shadow-lg">

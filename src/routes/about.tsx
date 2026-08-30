@@ -94,11 +94,11 @@ function About() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link to="/registration">
-              <Button className="bg-[#008753] hover:bg-[#006B42] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
+            <Button asChild className="bg-[#008753] hover:bg-[#006B42] text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold shadow-lg transition-transform hover:-translate-y-1">
+              <Link to="/registration">
                 Register Now
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -246,11 +246,11 @@ function About() {
           <p className="text-white/90 text-lg md:text-xl font-poppins mb-10 leading-relaxed">
             {settings?.aboutCtaSubtitle || "Connect with ministers, global industry leaders, and innovators shaping the future of African energy. Registration for NIES 2027 is now open with limited delegate slots available."}
           </p>
-          <Link to="/registration">
-            <Button size="lg" className="bg-[#D4AF37] hover:bg-[#E8C257] text-[#0F1A1C] hover:text-[#0F1A1C] rounded-none px-12 py-7 font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">
+          <Button asChild size="lg" className="bg-[#D4AF37] hover:bg-[#E8C257] text-[#0F1A1C] hover:text-[#0F1A1C] rounded-none px-12 py-7 font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">
+            <Link to="/registration">
               Register Now
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </section>
 

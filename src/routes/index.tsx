@@ -193,16 +193,16 @@ function Index() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-wrap items-center gap-4"
           >
-            <Link to="/registration">
-              <Button size="lg" className="bg-black hover:bg-black/90 text-white rounded px-8 py-7 text-base font-bold transition-all flex items-center gap-2">
+            <Button asChild size="lg" className="bg-black hover:bg-black/90 text-white rounded px-8 py-7 text-base font-bold transition-all flex items-center gap-2">
+              <Link to="/registration">
                 Register Now <span className="text-xl">➔</span>
-              </Button>
-            </Link>
-            <Link to="/sponsorship">
-              <Button size="lg" variant="outline" className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 rounded px-8 py-7 text-base font-bold transition-all flex items-center gap-2">
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 rounded px-8 py-7 text-base font-bold transition-all flex items-center gap-2">
+              <Link to="/sponsorship">
                 Become a Sponsor <span className="text-xl">🤝</span>
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -735,11 +735,11 @@ function Index() {
           <p className="text-xl text-white/80 mb-10 font-light">
             Contact us today to discover how we can help you achieve your event goals.
           </p>
-          <Link to="/contact">
-            <Button size="lg" className="bg-[#109cde] hover:bg-white hover:text-[#263566] text-white rounded-md px-10 py-7 text-lg font-bold transition-colors shadow-lg">
+          <Button asChild size="lg" className="bg-[#109cde] hover:bg-white hover:text-[#263566] text-white rounded-md px-10 py-7 text-lg font-bold transition-colors shadow-lg">
+            <Link to="/contact">
               Services Inquiry Form
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </section>
 
