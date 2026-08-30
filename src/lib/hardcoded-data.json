@@ -11,8 +11,8 @@
     "heroText": "2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023 (AS AMENDED)",
     "heroSubText": "organised by Allstates Management Partners Solutions Limited ",
     "logoUrl": "/2eda31a4-51e1-46a0-88f7-ddfa0ce8310e.jpg",
-    "contactEmail": "nutech2025@gmail.com",
-    "contactPhone": "+23400554432322",
+    "contactEmail": "contactus@electricitylaw2023workshop.com",
+    "contactPhone": "+234 817 699 9997 or +234 805 466 2747",
     "address": "123 Tech Lane, Innovation City Lagos",
     "eventFee": 0,
     "smtpHost": "",
@@ -24,12 +24,12 @@
     "headerPresidentText": " Vice President of the Federal Republic of Nigeria.",
     "headerLocationText": "PRESIDENTIAL BANQUET HALL - ASO VILLA",
     "headerLocationSubText": "",
-    "headerDateText": "Wednesday, 7 October to Thursday, 8 October 2026 ",
+    "headerDateText": "Wednesday 21 October to Thursday 22 October",
     "heroSliderImages": null,
     "transformationHubTitle": "Empowering the States: Reviewing the Electricity Act 2023",
     "transformationHubDescription": "The Workshop is being organised by Allstates Management Partners Solutions Limited under the auspices of the Office of the Vice President of the Federal Republic of Nigeria, in collaboration with key strategic institutional partners, namely the Federal Ministry of Power, Federal Ministry of Justice, Nigerian Electricity Regulatory Commission (NERC), and the Nigeria Governors' Forum (NGF). This collaboration underscores a shared commitment to supporting the effective implementation of the Electricity Act 2023, strengthening institutional capacity, encouraging public-private collaboration and accelerating the development of competitive, sustainable and investment-ready State electricity markets.",
     "partnerNames": "the Federal Ministry of Power, Federal Ministry of Justice, Nigerian Electricity Regulatory Commission (NERC), and the Nigeria Governors' Forum (NGF)",
-    "infoBarDateText": "Wednesday, 7 October to Thursday, 8 October 2026 ",
+    "infoBarDateText": "Wednesday 21 October to Thursday 22 October",
     "infoBarLocationText": "the State House Banquet Hall, Presidential Villa, Abuja",
     "infoBarThemeText": "Empowering the States: Reviewing the Electricity Act 2023",
     "transformationHubFeature1Title": "",
@@ -55,8 +55,8 @@
     "whyAttendCard3ImgUrl": "/image copy 2.png",
     "scheduleDaysCount": 2,
     "scheduleDates": [
-      "Wednesday, 7 October ",
-      "Thursday, 8 October 2026 ",
+      "Wednesday 21 October",
+      "Thursday 22 October",
       "Feb 4",
       "Feb 5"
     ],
@@ -64,7 +64,7 @@
     "confGuideSubtitle": "",
     "confGuideTrack1Title": "Plenary Session",
     "confGuideTrack1Subtitle": "Facilitated State implementation workshop",
-    "confGuideTrack1Date": "THURSDAY, 8 OCTOBER 2026",
+    "confGuideTrack1Date": "THURSDAY 22 OCTOBER 2026",
     "confGuideTrack1EventTitle": "Theme:",
     "confGuideTrack1EventDesc": "Developing Practical Roadmaps for State Electricity Market Implementation",
     "confGuideTrack2Title": "Technical Sessions",
@@ -74,7 +74,7 @@
     "confGuideTrack2EventDesc": "",
     "confGuideTrack3Title": "",
     "confGuideTrack3Subtitle": "",
-    "confGuideTrack3Date": "Thursday, 8 October 2026 ",
+    "confGuideTrack3Date": "Thursday 22 October",
     "confGuideTrack3EventTitle": "",
     "confGuideTrack3EventDesc": "",
     "featuredSpeakersTitle": "",
@@ -148,10 +148,10 @@
     "agendaDaysCount": 2,
     "agendaDays": [
       {
-        "date": "Wednesday, 7 October"
+        "date": "Wednesday 21 October"
       },
       {
-        "date": "Thursday, 8 October 2026 "
+        "date": "Thursday 22 October"
       }
     ],
     "agendaBrochureUrl": null,
@@ -460,5 +460,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-07-16T21:36:18.979Z"
+  "timestamp": "2026-08-26T17:16:45.751Z"
 }
