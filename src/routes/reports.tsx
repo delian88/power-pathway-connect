@@ -35,7 +35,7 @@ function ReportsPage() {
       <section className="py-24 max-w-7xl mx-auto px-6">
         <div className="bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-12 border border-gray-100 min-h-[400px] flex items-center justify-center">
           <div className="text-center max-w-2xl">
-            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6">Summit Outcomes</h2>
+            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6">Workshop Outcomes</h2>
             <p className="text-gray-500 font-poppins text-lg leading-relaxed">
               Download comprehensive reports detailing the insights, statistics, and major takeaways from our previous editions.
             </p>
