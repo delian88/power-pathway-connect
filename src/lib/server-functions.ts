@@ -130,13 +130,59 @@ export const submitRegistrationFn = createServerFn({ method: "POST" })
         from: '"National Electricity Workshop" <nutech2025@gmail.com>',
         to: 'nutech2025@gmail.com',
         subject: `New Registration: ${data.firstName} ${data.lastName}`,
-        html: `<h2>New Registration Received</h2>
-               <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-               <p><strong>Email:</strong> ${data.email}</p>
-               <p><strong>Phone:</strong> ${data.phone}</p>
-               <p><strong>Organization:</strong> ${data.organization}</p>
-               <p><strong>Job Title:</strong> ${data.jobTitle}</p>
-               <p><strong>Ticket Type:</strong> ${data.ticketType}</p>`
+        html: `
+<div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);'>
+  <div style='background: #008753; color: #fff; padding: 20px; text-align: center;'>
+    <h2 style='margin: 0; font-size: 24px;'>New Registration Alert</h2>
+    <p style='margin: 5px 0 0; color: #D4AF37; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;'>National Electricity Workshop 2023</p>
+  </div>
+  <div style='padding: 30px; background: #fff;'>
+    <p style='font-size: 16px; line-height: 1.5; margin-top: 0;'>A new attendee has just registered. Here are their details:</p>
+    
+    <table style='width: 100%; border-collapse: collapse; margin-top: 20px;'>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; width: 35%; color: #0F1A1C;'>Registration ID</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${nextId}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Name</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.firstName} ${data.lastName}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Email</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'><a href="mailto:${data.email}" style="color: #008753;">${data.email}</a></td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Phone</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.phone}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Organization</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.organization}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Job Title</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.jobTitle}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Ticket Type</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'><span style='background: #e6f3ee; color: #008753; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 13px;'>${data.ticketType}</span></td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Gender</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.gender}</td>
+      </tr>
+      <tr>
+        <td style='padding: 12px 15px; background: #f9f9f9; border-bottom: 1px solid #eee; font-weight: bold; color: #0F1A1C;'>Address</td>
+        <td style='padding: 12px 15px; border-bottom: 1px solid #eee;'>${data.address}<br>${data.city}, ${data.country} ${data.zipCode}</td>
+      </tr>
+    </table>
+    
+    <div style='margin-top: 30px; text-align: center; border-top: 1px solid #f0f0f0; padding-top: 20px;'>
+      <p style='font-size: 13px; color: #888; margin: 0;'>Automated message from NIES 2023 System</p>
+    </div>
+  </div>
+</div>`
       });
     } catch (e) {
       console.error("Failed to send email", e);
