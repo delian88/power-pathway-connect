@@ -1,6 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
+if (process.env.VERCEL || process.env.VERCEL_ENV) {
+  console.log('Vercel environment detected. Skipping manual postbuild.js step.');
+  process.exit(0);
+}
+
 const srcDir = path.resolve('.output/public');
 const destDir = path.resolve('dist');
 
