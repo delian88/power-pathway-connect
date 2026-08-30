@@ -108,20 +108,20 @@ export function SiteHeader() {
           {/* CTAs */}
           <div className="flex items-center gap-3">
             {!session ? (
-              <Link to="/login" className="hidden sm:inline-flex">
-                <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold">
+              <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold">
+                <Link to="/login">
                   Login
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             ) : (
               <div className="hidden sm:flex items-center gap-2">
                 {session?.role === 'admin' && (
-                  <Link to="/admin">
-                    <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold flex items-center gap-1.5">
+                  <Button asChild variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold flex items-center gap-1.5">
+                    <Link to="/admin">
                       <LayoutDashboard className="w-4 h-4" />
                       Admin
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 )}
                 <Button 
                   onClick={handleLogout}
@@ -134,11 +134,11 @@ export function SiteHeader() {
                 </Button>
               </div>
             )}
-            <Link to="/contact">
-              <Button size="sm" className="bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] hover:shadow-lg hover:-translate-y-0.5 transition-all font-bold">
+            <Button asChild size="sm" className="bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] hover:shadow-lg hover:-translate-y-0.5 transition-all font-bold">
+              <Link to="/contact">
                 Inquire Now
-              </Button>
-            </Link>
+              </Link>
+            </Button>
             
             <div className="md:hidden ml-1 flex items-center">
               <Sheet>
@@ -168,17 +168,17 @@ export function SiteHeader() {
                       className="mt-6 flex flex-col gap-4"
                     >
                       {!session ? (
-                        <Link to="/login" className="w-full">
-                          <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90">Login</Button>
-                        </Link>
+                        <Button asChild variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90">
+                          <Link to="/login" className="w-full block">Login</Link>
+                        </Button>
                         ) : (
                           <div className="flex flex-col gap-2">
                             {session?.role === 'admin' && (
-                              <Link to="/admin" className="w-full">
-                                <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90 flex items-center gap-2 justify-center">
-                                  <LayoutDashboard className="w-4 h-4" /> Admin Panel
-                                </Button>
-                              </Link>
+                              <Button asChild variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90 flex items-center gap-2 justify-center">
+                                <Link to="/admin" className="w-full block">
+                                  <LayoutDashboard className="w-4 h-4 inline" /> Admin Panel
+                                </Link>
+                              </Button>
                             )}
                             <Button 
                               onClick={handleLogout}
@@ -189,9 +189,9 @@ export function SiteHeader() {
                             </Button>
                           </div>
                         )}
-                      <Link to="/contact" className="w-full">
-                        <Button className="w-full bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] font-bold">Inquire Now</Button>
-                      </Link>
+                      <Button asChild className="w-full bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] font-bold">
+                        <Link to="/contact" className="w-full block">Inquire Now</Link>
+                      </Button>
                     </motion.div>
                   </nav>
                 </SheetContent>
