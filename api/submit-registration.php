@@ -23,8 +23,8 @@ $registrationId = generate_uuid();
 
 try {
     $stmt = $pdo->prepare("
-        INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, status, createdAt, updatedAt)
-        VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, 'PENDING', NOW(3), NOW(3))
+        INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, address, gender, status, createdAt, updatedAt)
+        VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, :address, :gender, 'PENDING', NOW(3), NOW(3))
     ");
     
     $stmt->execute([
@@ -35,7 +35,9 @@ try {
         ':phone' => $input['phone'] ?? '',
         ':organization' => $input['organization'] ?? null,
         ':jobTitle' => $input['jobTitle'] ?? null,
-        ':ticketType' => $input['ticketType'] ?? 'standard'
+        ':ticketType' => $input['ticketType'] ?? 'standard',
+        ':address' => $input['address'] ?? null,
+        ':gender' => $input['gender'] ?? null
     ]);
     
     // Send Confirmation Emails

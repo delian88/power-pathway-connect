@@ -38,6 +38,8 @@ export const submitRegistrationFn = createServerFn({ method: "POST" })
         organization: data.organization,
         jobTitle: data.jobTitle,
         ticketType: data.ticketType,
+        address: data.address,
+        gender: data.gender,
       }
     });
 

@@ -241,6 +241,8 @@ model Registration {
   organization    String
   jobTitle        String
   ticketType      String   
+  address         String?  @db.Text
+  gender          String?
   status          String   @default("PENDING") 
   createdAt       DateTime @default(now())
 }

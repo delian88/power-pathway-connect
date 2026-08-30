@@ -64,6 +64,8 @@ function RegistrationForm() {
     phone: "",
     organization: "",
     jobTitle: "",
+    address: "",
+    gender: "Male",
     ticketType: "Regular Delegate"
   });
   const [loading, setLoading] = useState(false);
@@ -140,7 +142,7 @@ function RegistrationForm() {
             Print Pass
           </button>
           <button 
-            onClick={() => { setSuccess(null); setFormData({ firstName: "", lastName: "", email: "", phone: "", organization: "", jobTitle: "", ticketType: "Regular Delegate" }); }}
+            onClick={() => { setSuccess(null); setFormData({ firstName: "", lastName: "", email: "", phone: "", organization: "", jobTitle: "", address: "", gender: "Male", ticketType: "Regular Delegate" }); }}
             className="bg-[#008753] hover:bg-[#007045] text-white px-8 py-3 rounded-none font-bold tracking-wide transition-colors"
           >
             Register Another Person
@@ -182,6 +184,21 @@ function RegistrationForm() {
         <div className="space-y-2">
           <label className="text-sm font-bold text-gray-700">Job Title <span className="text-red-500">*</span></label>
           <input required type="text" value={formData.jobTitle} onChange={e => setFormData({...formData, jobTitle: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="Director of Strategy" />
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-gray-700">Address <span className="text-red-500">*</span></label>
+          <input required type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="123 Main St, City" />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-gray-700">Gender <span className="text-red-500">*</span></label>
+          <select required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753] bg-white">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
         </div>
       </div>
 
