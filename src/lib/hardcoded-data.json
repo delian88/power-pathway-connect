@@ -114,19 +114,15 @@
     "aboutMissionCardDesc": "",
     "aboutVisionCardTitle": "",
     "aboutVisionCardDesc": "",
-    "aboutVenuesTitle": "",
-    "aboutVenuesSubtitle": "",
-    "aboutVenuesCount": 2,
+    "aboutVenuesTitle": "Event Venues",
+    "aboutVenuesSubtitle": "Experience the 2-Day National Workshop at this prestigious location",
+    "aboutVenuesCount": 1,
     "aboutVenues": [
       {
-        "desc": "",
-        "title": "",
-        "location": ""
-      },
-      {
-        "desc": "",
-        "title": "",
-        "location": ""
+        "title": "State House Banquet Hall",
+        "location": "Presidential Villa, Abuja, Nigeria",
+        "desc": "The prestigious State House Banquet Hall will host the 2-Day National Workshop on the Electricity Act 2023.",
+        "imgUrl": "/image copy 2.png"
       }
     ],
     "aboutVenuesWarningText": "",
