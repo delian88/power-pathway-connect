@@ -40,6 +40,48 @@ export const submitRegistrationFn = createServerFn({ method: "POST" })
         ticketType: data.ticketType,
       }
     });
+
+    try {
+      const nodemailer = await import('nodemailer');
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'nutech2025@gmail.com',
+          pass: 'owrh saib zyan sluf'
+        }
+      });
+
+      // Email to the user
+      await transporter.sendMail({
+        from: '"National Electricity Workshop" <nutech2025@gmail.com>',
+        to: data.email,
+        subject: 'Registration Confirmation - National Electricity Workshop',
+        html: `<h2>Dear ${data.firstName},</h2>
+               <p>Thank you for registering for the 2-DAY NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023.</p>
+               <p>We have received your details and our team will be in touch with you shortly.</p>
+               <br>
+               <p>Best regards,<br>National Electricity Workshop Team</p>`
+      });
+
+      // Email to the admin
+      await transporter.sendMail({
+        from: '"National Electricity Workshop" <nutech2025@gmail.com>',
+        to: 'nutech2025@gmail.com',
+        subject: `New Registration: ${data.firstName} ${data.lastName}`,
+        html: `<h2>New Registration Received</h2>
+               <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+               <p><strong>Email:</strong> ${data.email}</p>
+               <p><strong>Phone:</strong> ${data.phone}</p>
+               <p><strong>Organization:</strong> ${data.organization}</p>
+               <p><strong>Job Title:</strong> ${data.jobTitle}</p>
+               <p><strong>Ticket Type:</strong> ${data.ticketType}</p>`
+      });
+    } catch (e) {
+      console.error("Failed to send email", e);
+    }
+
     return JSON.parse(JSON.stringify(reg));
   });
 
