@@ -116,17 +116,13 @@
     "aboutVisionCardDesc": "",
     "aboutVenuesTitle": "",
     "aboutVenuesSubtitle": "",
-    "aboutVenuesCount": 2,
+    "aboutVenuesCount": 1,
     "aboutVenues": [
       {
-        "desc": "",
-        "title": "",
-        "location": ""
-      },
-      {
-        "desc": "",
-        "title": "",
-        "location": ""
+        "desc": "The prestigious Presidential Banquet Hall will host the official opening ceremony and keynote sessions.",
+        "title": "Presidential Banquet Hall - Aso Villa",
+        "imgUrl": "https://images.unsplash.com/photo-1577977699317-5e94b29bb804?auto=format&fit=crop&w=800&q=80",
+        "location": "State House Banquet Hall, Presidential Villa, Abuja"
       }
     ],
     "aboutVenuesWarningText": "",
@@ -282,7 +278,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-08-30T17:32:24.699Z"
+    "updatedAt": "2026-08-30T18:22:27.202Z"
   },
   "events": [
     {
@@ -460,5 +456,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-08-30T17:32:28.340Z"
+  "timestamp": "2026-08-30T18:22:30.745Z"
 }
