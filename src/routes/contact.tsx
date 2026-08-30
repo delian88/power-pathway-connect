@@ -42,7 +42,7 @@ function Contact() {
             <div key={i.label} className="p-6 rounded-2xl bg-card border border-border/60 shadow-sm">
               <i.icon className="w-6 h-6 text-primary mb-3" />
               <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">{i.label}</div>
-              <div className="font-medium">{i.value}</div>
+              <div className="font-medium text-sm xl:text-base break-all">{i.value}</div>
             </div>
           ))}
         </div>
