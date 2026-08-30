@@ -22,6 +22,16 @@ function generate_uuid() {
 $registrationId = generate_uuid();
 
 try {
+    $email = $input['email'];
+    $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM Registration WHERE email = :email");
+    $checkStmt->execute([':email' => $email]);
+    $existingCount = $checkStmt->fetchColumn();
+
+    if ($existingCount >= 2) {
+        http_response_code(400);
+        echo json_encode(['error' => 'You cannot use that email. It has already been registered the maximum number of times.']);
+        exit;
+    }
     $stmt = $pdo->prepare("
         INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, address, city, country, zipCode, gender, status, createdAt, updatedAt)
         VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, :address, :city, :country, :zipCode, :gender, 'PENDING', NOW(3), NOW(3))

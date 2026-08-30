@@ -79,10 +79,14 @@ function RegistrationForm() {
     setLoading(true);
     try {
       const res = await api.submitRegistration(formData);
+      if (res && res.error) {
+        throw new Error(res.error);
+      }
       setSuccess(res);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to submit registration", error);
-      alert("Failed to submit registration. Please try again.");
+      const errorMsg = error.message || error.error || "Failed to submit registration. Please try again.";
+      alert(errorMsg);
     } finally {
       setLoading(false);
     }

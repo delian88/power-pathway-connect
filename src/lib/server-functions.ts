@@ -29,6 +29,14 @@ export const getSiteSettingsFn = createServerFn({ method: "GET" }).handler(async
 export const submitRegistrationFn = createServerFn({ method: "POST" })
   .validator((data: any) => data)
   .handler(async ({ data }) => {
+    const existingCount = await db.registration.count({
+      where: { email: data.email }
+    });
+
+    if (existingCount >= 2) {
+      throw new Error("You cannot use that email. It has already been registered the maximum number of times.");
+    }
+
     const reg = await db.registration.create({
       data: {
         firstName: data.firstName,
