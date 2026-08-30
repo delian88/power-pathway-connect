@@ -234,7 +234,7 @@ function Index() {
             transition={{ ease: "linear", duration: 25, repeat: Infinity }}
           >
             {(() => {
-              const baseLogos = ["/slider-1.png", "/slider-2.png", "/slider-3.png", "/slider-4.png"];
+              const baseLogos = ["/slider-1.png", "/slider-2.png", "/slider-3.png", "/slider-4.png", "/image copy 3.png"];
               
               // Duplicate the array to create a seamless loop
               const duplicatedLogos = [...baseLogos, ...baseLogos, ...baseLogos, ...baseLogos];
