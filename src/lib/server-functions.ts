@@ -208,3 +208,51 @@ export const updateRegistrationStatusFn = createServerFn({ method: "POST" })
     });
     return JSON.parse(JSON.stringify(reg));
   });
+
+export const getReportsFn = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const reports = await db.report.findMany({
+      orderBy: { year: 'desc' }
+    });
+    return JSON.parse(JSON.stringify(reports));
+  });
+
+export const createReportFn = createServerFn({ method: "POST" })
+  .validator((data: { year: string, title: string, description: string, size: string, fileUrl: string }) => data)
+  .handler(async ({ data }) => {
+    const report = await db.report.create({
+      data: {
+        year: data.year,
+        title: data.title,
+        description: data.description,
+        size: data.size,
+        fileUrl: data.fileUrl,
+      }
+    });
+    return JSON.parse(JSON.stringify(report));
+  });
+
+export const updateReportFn = createServerFn({ method: "POST" })
+  .validator((data: { id: string, year: string, title: string, description: string, size: string, fileUrl: string }) => data)
+  .handler(async ({ data }) => {
+    const report = await db.report.update({
+      where: { id: data.id },
+      data: {
+        year: data.year,
+        title: data.title,
+        description: data.description,
+        size: data.size,
+        fileUrl: data.fileUrl,
+      }
+    });
+    return JSON.parse(JSON.stringify(report));
+  });
+
+export const deleteReportFn = createServerFn({ method: "POST" })
+  .validator((data: { id: string }) => data)
+  .handler(async ({ data }) => {
+    await db.report.delete({
+      where: { id: data.id }
+    });
+    return { success: true };
+  });

@@ -249,3 +249,14 @@ model Registration {
   status          String   @default("PENDING") 
   createdAt       DateTime @default(now())
 }
+
+model Report {
+  id          String   @id @default(uuid())
+  year        String
+  title       String
+  description String   @db.Text
+  size        String
+  fileUrl     String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
