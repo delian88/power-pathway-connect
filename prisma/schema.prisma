@@ -242,6 +242,9 @@ model Registration {
   jobTitle        String
   ticketType      String   
   address         String?  @db.Text
+  city            String?
+  country         String?
+  zipCode         String?
   gender          String?
   status          String   @default("PENDING") 
   createdAt       DateTime @default(now())

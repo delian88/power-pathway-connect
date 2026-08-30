@@ -65,6 +65,9 @@ function RegistrationForm() {
     organization: "",
     jobTitle: "",
     address: "",
+    city: "",
+    country: "",
+    zipCode: "",
     gender: "Male",
     ticketType: "Regular Delegate"
   });
@@ -142,7 +145,7 @@ function RegistrationForm() {
             Print Pass
           </button>
           <button 
-            onClick={() => { setSuccess(null); setFormData({ firstName: "", lastName: "", email: "", phone: "", organization: "", jobTitle: "", address: "", gender: "Male", ticketType: "Regular Delegate" }); }}
+            onClick={() => { setSuccess(null); setFormData({ firstName: "", lastName: "", email: "", phone: "", organization: "", jobTitle: "", address: "", city: "", country: "", zipCode: "", gender: "Male", ticketType: "Regular Delegate" }); }}
             className="bg-[#008753] hover:bg-[#007045] text-white px-8 py-3 rounded-none font-bold tracking-wide transition-colors"
           >
             Register Another Person
@@ -190,16 +193,32 @@ function RegistrationForm() {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-sm font-bold text-gray-700">Address <span className="text-red-500">*</span></label>
-          <input required type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="123 Main St, City" />
+          <input required type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="123 Main St" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-bold text-gray-700">Gender <span className="text-red-500">*</span></label>
-          <select required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753] bg-white">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-          </select>
+          <label className="text-sm font-bold text-gray-700">City <span className="text-red-500">*</span></label>
+          <input required type="text" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="Lagos" />
         </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-gray-700">Country <span className="text-red-500">*</span></label>
+          <input required type="text" value={formData.country} onChange={e => setFormData({...formData, country: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="Nigeria" />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-gray-700">Zip / Postal Code</label>
+          <input type="text" value={formData.zipCode} onChange={e => setFormData({...formData, zipCode: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753]" placeholder="100001" />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-bold text-gray-700">Gender <span className="text-red-500">*</span></label>
+        <select required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:border-[#008753] bg-white">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Prefer not to say">Prefer not to say</option>
+        </select>
       </div>
 
       <div className="space-y-2">

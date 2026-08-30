@@ -39,6 +39,9 @@ export const submitRegistrationFn = createServerFn({ method: "POST" })
         jobTitle: data.jobTitle,
         ticketType: data.ticketType,
         address: data.address,
+        city: data.city,
+        country: data.country,
+        zipCode: data.zipCode,
         gender: data.gender,
       }
     });

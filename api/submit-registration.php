@@ -23,8 +23,8 @@ $registrationId = generate_uuid();
 
 try {
     $stmt = $pdo->prepare("
-        INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, address, gender, status, createdAt, updatedAt)
-        VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, :address, :gender, 'PENDING', NOW(3), NOW(3))
+        INSERT INTO Registration (id, firstName, lastName, email, phone, organization, jobTitle, ticketType, address, city, country, zipCode, gender, status, createdAt, updatedAt)
+        VALUES (:id, :firstName, :lastName, :email, :phone, :organization, :jobTitle, :ticketType, :address, :city, :country, :zipCode, :gender, 'PENDING', NOW(3), NOW(3))
     ");
     
     $stmt->execute([
@@ -37,6 +37,9 @@ try {
         ':jobTitle' => $input['jobTitle'] ?? null,
         ':ticketType' => $input['ticketType'] ?? 'standard',
         ':address' => $input['address'] ?? null,
+        ':city' => $input['city'] ?? null,
+        ':country' => $input['country'] ?? null,
+        ':zipCode' => $input['zipCode'] ?? null,
         ':gender' => $input['gender'] ?? null
     ]);
     
