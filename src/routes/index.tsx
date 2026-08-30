@@ -117,7 +117,7 @@ function Index() {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-24">
+      <section className="relative h-[65vh] min-h-[450px] flex items-center justify-center overflow-hidden pt-16 pb-8">
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#0F1A1C]">
           <AnimatePresence>
             {heroMedia.map((media, idx) => (
@@ -156,7 +156,7 @@ function Index() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#008753]/90 via-[#008753]/60 to-[#000000]/70 z-10" />
         </div>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 text-white text-left">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-12 text-white text-left">
           <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
