@@ -33,13 +33,46 @@ function ReportsPage() {
 
       {/* Main Content Area */}
       <section className="py-24 max-w-7xl mx-auto px-6">
-        <div className="bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-12 border border-gray-100 min-h-[400px] flex items-center justify-center">
-          <div className="text-center max-w-2xl">
-            <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6">Workshop Outcomes</h2>
-            <p className="text-gray-500 font-poppins text-lg leading-relaxed">
-              Download comprehensive reports detailing the insights, statistics, and major takeaways from our previous editions.
-            </p>
-          </div>
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl font-bold text-[#0F1A1C] mb-6">Workshop Outcomes</h2>
+          <p className="text-gray-500 font-poppins text-lg leading-relaxed">
+            Download comprehensive reports detailing the insights, statistics, and major takeaways from our previous editions.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            { year: "2022", title: "Powering the Future", desc: "Insights on grid modernization and renewable integration.", size: "4.2 MB" },
+            { year: "2021", title: "Resilient Grids", desc: "Strategies for improving infrastructure resilience against climate change.", size: "3.8 MB" },
+            { year: "2020", title: "Smart Metering", desc: "Deployment challenges and success stories across the nation.", size: "5.1 MB" },
+            { year: "2019", title: "Decentralized Energy", desc: "The rise of microgrids and community solar projects.", size: "3.5 MB" },
+            { year: "2018", title: "Policy & Regulation", desc: "Navigating the changing landscape of energy policies.", size: "4.8 MB" },
+            { year: "2017", title: "Energy Storage", desc: "Battery tech advancements and their impact on load balancing.", size: "2.9 MB" },
+          ].map((report, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-gray-100 flex flex-col group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#008753]/5 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-110" />
+              
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-[#D4AF37] font-bold text-xl">{report.year}</span>
+                <span className="text-xs font-medium bg-[#f0f7f4] text-[#008753] px-3 py-1 rounded-full">{report.size}</span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-[#0F1A1C] mb-3 group-hover:text-[#008753] transition-colors">{report.title}</h3>
+              <p className="text-gray-600 mb-8 flex-grow text-sm leading-relaxed">{report.desc}</p>
+              
+              <button className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-[#f8f9fa] hover:bg-[#008753] text-[#0F1A1C] hover:text-white rounded-lg font-medium transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Download PDF
+              </button>
+            </motion.div>
+          ))}
         </div>
       </section>
 
