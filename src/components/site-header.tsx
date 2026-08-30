@@ -115,12 +115,14 @@ export function SiteHeader() {
               </Link>
             ) : (
               <div className="hidden sm:flex items-center gap-2">
-                <Link to="/admin">
-                  <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold flex items-center gap-1.5">
-                    <LayoutDashboard className="w-4 h-4" />
-                    Admin
-                  </Button>
-                </Link>
+                {session?.role === 'admin' && (
+                  <Link to="/admin">
+                    <Button variant="outline" size="sm" className="bg-transparent border-white text-white hover:bg-white hover:text-[#008753] font-semibold flex items-center gap-1.5">
+                      <LayoutDashboard className="w-4 h-4" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
                 <Button 
                   onClick={handleLogout}
                   variant="outline" 
@@ -169,22 +171,24 @@ export function SiteHeader() {
                         <Link to="/login" className="w-full">
                           <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90">Login</Button>
                         </Link>
-                      ) : (
-                        <div className="flex flex-col gap-2">
-                          <Link to="/admin" className="w-full">
-                            <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90 flex items-center gap-2 justify-center">
-                              <LayoutDashboard className="w-4 h-4" /> Admin Panel
+                        ) : (
+                          <div className="flex flex-col gap-2">
+                            {session?.role === 'admin' && (
+                              <Link to="/admin" className="w-full">
+                                <Button variant="outline" className="w-full border-white text-[#008753] hover:bg-white/90 flex items-center gap-2 justify-center">
+                                  <LayoutDashboard className="w-4 h-4" /> Admin Panel
+                                </Button>
+                              </Link>
+                            )}
+                            <Button 
+                              onClick={handleLogout}
+                              variant="outline" 
+                              className="w-full border-transparent text-white hover:bg-red-500 hover:text-white"
+                            >
+                              Logout
                             </Button>
-                          </Link>
-                          <Button 
-                            onClick={handleLogout}
-                            variant="ghost" 
-                            className="w-full text-white/80 hover:bg-red-500/20 hover:text-white"
-                          >
-                            <LogOut className="w-4 h-4 mr-2" /> Logout
-                          </Button>
-                        </div>
-                      )}
+                          </div>
+                        )}
                       <Link to="/contact" className="w-full">
                         <Button className="w-full bg-[#D4AF37] text-[#0F1A1C] hover:bg-[#E8C257] font-bold">Inquire Now</Button>
                       </Link>

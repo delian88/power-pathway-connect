@@ -32,7 +32,7 @@ export const Route = createFileRoute("/admin")({
     if (location.pathname === "/login") return;
 
     const session = await getSessionFn();
-    if (!session) {
+    if (!session || session.role !== 'admin') {
       throw redirect({
         to: "/login",
       });

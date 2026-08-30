@@ -12,6 +12,8 @@ model User {
   email         String   @unique
   passwordHash  String
   role          String   @default("admin")
+  otpCode       String?
+  otpExpiresAt  DateTime?
   events        Event[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
