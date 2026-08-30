@@ -35,8 +35,8 @@ function Contact() {
         </p>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: Mail, label: "Email", value: settings?.contactEmail || "hello@newelectricity.org" },
-            { icon: Phone, label: "Phone", value: settings?.contactPhone || "+1 (800) 555-0198" },
+            { icon: Mail, label: "Email", value: settings?.contactEmail || "contactus@electricitylaw2023workshop.com" },
+            { icon: Phone, label: "Phone", value: settings?.contactPhone || "+234 817 699 9997 or +234 805 466 2747" },
             { icon: MapPin, label: "Office", value: settings?.address || "Washington, DC" },
           ].map((i) => (
             <div key={i.label} className="p-6 rounded-2xl bg-card border border-border/60 shadow-sm">

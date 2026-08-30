@@ -211,7 +211,7 @@ function Index() {
       <div className="w-full bg-[#008753] py-4 text-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-around items-center gap-4 text-sm md:text-base font-semibold tracking-wide">
           <div className="flex items-center gap-2">
-            <span className="text-[#D4AF37] text-lg">📅</span> {settings?.infoBarDateText || "Mar 15-18, 2027"}
+            <span className="text-[#D4AF37] text-lg">📅</span> {settings?.infoBarDateText || "Wednesday 21 October to Thursday 22 October"}
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[#D4AF37] text-lg">📍</span> {settings?.infoBarLocationText || "Abuja, Nigeria"}

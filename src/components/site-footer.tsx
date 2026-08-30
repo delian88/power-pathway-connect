@@ -34,8 +34,8 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold mb-3">Contact</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>hello@newelectricity.org</li>
-            <li>+1 (800) 555-0198</li>
+            <li>contactus@electricitylaw2023workshop.com</li>
+            <li>+234 817 699 9997 or +234 805 466 2747</li>
           </ul>
         </div>
       </div>
