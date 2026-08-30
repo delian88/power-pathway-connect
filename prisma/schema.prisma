@@ -260,3 +260,13 @@ model Report {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model SponsorCode {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  sponsorName String
+  package     String
+  logoUrl     String?  @db.Text
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+}

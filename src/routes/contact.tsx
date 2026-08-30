@@ -37,7 +37,7 @@ function Contact() {
           {[
             { icon: Mail, label: "Email", value: settings?.contactEmail || "contactus@electricitylaw2023workshop.com" },
             { icon: Phone, label: "Phone", value: settings?.contactPhone || "+234 817 699 9997 or +234 805 466 2747" },
-            { icon: MapPin, label: "Office", value: settings?.address || "Washington, DC" },
+            { icon: MapPin, label: "Office", value: settings?.address || "556 Jamieson Court, Mabushi." },
           ].map((i) => (
             <div key={i.label} className="p-6 rounded-2xl bg-card border border-border/60 shadow-sm">
               <i.icon className="w-6 h-6 text-primary mb-3" />

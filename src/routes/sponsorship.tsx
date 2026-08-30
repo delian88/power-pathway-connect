@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 function SponsorshipSkeleton() {
@@ -36,10 +37,38 @@ export const Route = createFileRoute("/sponsorship")({
   component: SponsorshipPage,
 });
 
+import { verifySponsorCodeFn } from "@/lib/server-functions";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { X, CheckCircle, Package, ShieldCheck } from "lucide-react";
+
 function SponsorshipPage() {
   const settings = Route.useLoaderData();
   const partners = Array.isArray(settings?.sponsorshipPartners) ? settings.sponsorshipPartners : [];
   
+  const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
+  const [verifyCode, setVerifyCode] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verifiedData, setVerifiedData] = useState<any>(null);
+  
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!verifyCode.trim()) return;
+    
+    setIsVerifying(true);
+    setVerifiedData(null);
+    try {
+      const data = await verifySponsorCodeFn({ data: { code: verifyCode.trim() } });
+      setVerifiedData(data);
+      toast.success("Sponsorship verified successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Invalid or inactive sponsor code");
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
   // Default packages if none exist
   const defaultPackages = [
     {
@@ -122,7 +151,7 @@ function SponsorshipPage() {
                 Become A Sponsor
               </Button>
             </a>
-            <Button variant="outline" size="lg" className="bg-transparent border-white/30 hover:bg-white/10 text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1">
+            <Button onClick={() => setIsVerifyModalOpen(true)} variant="outline" size="lg" className="bg-transparent border-white/30 hover:bg-white/10 text-white rounded-none px-8 py-6 uppercase tracking-wider text-sm font-bold transition-transform hover:-translate-y-1">
               Enter Sponsors Code
             </Button>
           </motion.div>
@@ -327,6 +356,94 @@ function SponsorshipPage() {
           </a>
         </div>
       </section>
+
+      {isVerifyModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden relative">
+            <button 
+              onClick={() => {
+                setIsVerifyModalOpen(false);
+                setVerifyCode("");
+                setVerifiedData(null);
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-[#008753]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShieldCheck className="w-8 h-8 text-[#008753]" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 font-sans">Sponsor Verification</h2>
+                <p className="text-gray-500 mt-2 text-sm">Enter your sponsor code to verify your sponsorship details.</p>
+              </div>
+
+              {!verifiedData ? (
+                <form onSubmit={handleVerifyCode} className="space-y-4">
+                  <div>
+                    <Input 
+                      placeholder="e.g. PLATINUM-2027" 
+                      value={verifyCode}
+                      onChange={(e) => setVerifyCode(e.target.value)}
+                      className="text-center font-mono text-lg py-6"
+                      disabled={isVerifying}
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-[#008753] hover:bg-[#006B42] text-white py-6"
+                    disabled={isVerifying || !verifyCode.trim()}
+                  >
+                    {isVerifying ? "Verifying..." : "Verify Code"}
+                  </Button>
+                </form>
+              ) : (
+                <div className="text-center space-y-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-2">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">{verifiedData.sponsorName}</h3>
+                    <div className="flex items-center justify-center gap-2 mt-2 text-[#008753] font-medium bg-[#008753]/10 py-1.5 px-4 rounded-full w-max mx-auto">
+                      <Package className="w-4 h-4" />
+                      <span>{verifiedData.package}</span>
+                    </div>
+                  </div>
+
+                  {verifiedData.logoUrl && (
+                    <div className="py-4 border-y border-gray-100">
+                      <img src={verifiedData.logoUrl} alt={verifiedData.sponsorName} className="max-h-24 mx-auto object-contain" />
+                    </div>
+                  )}
+
+                  <div className="pt-2 flex flex-col items-center">
+                    <p className="text-xs text-gray-500 mb-3 uppercase tracking-wider font-semibold">Verification QR Code</p>
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifiedData.code)}`} 
+                      alt="Verification QR" 
+                      className="w-32 h-32 p-2 border border-gray-200 rounded-lg shadow-sm"
+                    />
+                  </div>
+
+                  <Button 
+                    variant="outline" 
+                    className="w-full mt-4"
+                    onClick={() => {
+                      setVerifyCode("");
+                      setVerifiedData(null);
+                    }}
+                  >
+                    Verify Another Code
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <SiteFooter />
     </div>

@@ -107,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient, sess
           rel: "stylesheet",
           href: appCss,
         },
-        { rel: "icon", href: settings.faviconUrl || "/favicon.ico", type: "image/x-icon" },
+        { rel: "icon", href: settings.faviconUrl || "/2eda31a4-51e1-46a0-88f7-ddfa0ce8310e.jpg" },
       ],
     };
   },

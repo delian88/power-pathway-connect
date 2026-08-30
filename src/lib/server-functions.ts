@@ -256,3 +256,65 @@ export const deleteReportFn = createServerFn({ method: "POST" })
     });
     return { success: true };
   });
+
+export const getSponsorCodesFn = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const codes = await db.sponsorCode.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    return JSON.parse(JSON.stringify(codes));
+  });
+
+export const verifySponsorCodeFn = createServerFn({ method: "POST" })
+  .validator((data: { code: string }) => data)
+  .handler(async ({ data }) => {
+    const sponsor = await db.sponsorCode.findUnique({
+      where: { code: data.code }
+    });
+    
+    if (!sponsor || sponsor.status !== 'active') {
+      throw new Error("Invalid or inactive sponsor code");
+    }
+    
+    return JSON.parse(JSON.stringify(sponsor));
+  });
+
+export const createSponsorCodeFn = createServerFn({ method: "POST" })
+  .validator((data: { code: string, sponsorName: string, package: string, logoUrl: string, status: string }) => data)
+  .handler(async ({ data }) => {
+    const sponsor = await db.sponsorCode.create({
+      data: {
+        code: data.code,
+        sponsorName: data.sponsorName,
+        package: data.package,
+        logoUrl: data.logoUrl,
+        status: data.status,
+      }
+    });
+    return JSON.parse(JSON.stringify(sponsor));
+  });
+
+export const updateSponsorCodeFn = createServerFn({ method: "POST" })
+  .validator((data: { id: string, code: string, sponsorName: string, package: string, logoUrl: string, status: string }) => data)
+  .handler(async ({ data }) => {
+    const sponsor = await db.sponsorCode.update({
+      where: { id: data.id },
+      data: {
+        code: data.code,
+        sponsorName: data.sponsorName,
+        package: data.package,
+        logoUrl: data.logoUrl,
+        status: data.status,
+      }
+    });
+    return JSON.parse(JSON.stringify(sponsor));
+  });
+
+export const deleteSponsorCodeFn = createServerFn({ method: "POST" })
+  .validator((data: { id: string }) => data)
+  .handler(async ({ data }) => {
+    await db.sponsorCode.delete({
+      where: { id: data.id }
+    });
+    return { success: true };
+  });

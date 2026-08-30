@@ -13,7 +13,8 @@ import {
   LogOut,
   Search,
   Bell,
-  Menu
+  Menu,
+  ShieldCheck
 } from "lucide-react";
 
 export const getSessionFn = createServerFn({ method: "GET" }).handler(async () => {
@@ -59,6 +60,7 @@ function AdminLayout() {
     { name: "Events", href: "/admin/events", icon: Calendar },
     { name: "Applicants", href: "/admin/applicants", icon: Users },
     { name: "Registrations", href: "/admin/registrations", icon: Users },
+    { name: "Sponsors", href: "/admin/sponsors", icon: ShieldCheck },
     { name: "Notifications", href: "/admin/notifications", icon: Bell },
     { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
     { name: "Reports", href: "/admin/reports", icon: FileText },
