@@ -46,33 +46,25 @@ export function SiteHeader() {
           {/* Left: Logo */}
           <div className="flex items-center justify-start w-[300px] xl:w-[400px]">
             <div className="flex flex-col items-center">
-              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase tracking-wider mb-2">{settings.convenerTitle || "CONVENER"}</span>
               <Link to="/">
-                <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
+                <img src={settings.logoUrl || "/vp-seal.png"} alt="Site Logo" className="w-32 h-32 md:w-36 md:h-36 object-contain" />
               </Link>
             </div>
           </div>
 
           {/* Center: Details */}
           <div className="flex flex-col items-center justify-center text-center flex-1 mx-4">
-            <div className="flex mb-3 text-center gap-2">
-              <span className="text-[#0F1A1C] font-bold text-[17px] xl:text-xl leading-tight tracking-tight uppercase whitespace-nowrap">
-                NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023
-              </span>
-            </div>
-            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPatronageText || "UNDER THE HIGH PATRONAGE OF H.E. PRESIDENT BOLA AHMED TINUBU, GCFR"}</span>
-            <span className="text-[#0F1A1C] font-bold text-sm tracking-wide">{settings.headerPresidentText || "President, Commander in Chief of the Armed Forces, Federal Republic of Nigeria"}</span>
-            <span className="text-[#008753] font-bold mt-1 mb-2 text-[15px]">PRESIDENTIAL BANQUET HALL - ASO VILLA, FCT</span>
-            
-            <div className="bg-[#E6F3EE] text-[#008753] px-6 py-1.5 rounded-full text-sm font-bold tracking-wide">
-              {settings.headerDateText || "15TH – 18TH MARCH 2027"}
-            </div>
+            <span className="text-[#0F1A1C] font-extrabold text-[18px] xl:text-[22px] leading-tight tracking-tight uppercase whitespace-nowrap mb-2">
+              NATIONAL WORKSHOP ON THE ELECTRICITY ACT 2023
+            </span>
+            <span className="text-[#4A4A4A] font-medium text-[16px] xl:text-[18px] tracking-wide">UNDER THE AUSPICES OF</span>
+            <span className="text-[#0F1A1C] font-extrabold text-[20px] xl:text-[24px] tracking-wide mt-1">H.E Senator Kashim Shettima, GCON</span>
+            <span className="text-[#4A4A4A] text-[16px] xl:text-[18px] tracking-wide">Vice President of the federal Republic of Nigeria</span>
           </div>
 
           {/* Right: Logos */}
           <div className="flex flex-col items-end justify-center w-[300px] xl:w-[400px]">
-            <div className="flex flex-col items-start">
-              <span className="text-[#0F1A1C] font-bold text-[13px] uppercase mb-1 tracking-wider pl-4">ORGANIZER</span>
+            <div className="flex flex-col items-end">
               <img src="/ampsl-logo.png" alt="AMPSL Logo" className="w-56 h-auto object-contain" />
             </div>
           </div>
