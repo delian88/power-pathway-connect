@@ -17,7 +17,7 @@ jobs:
       - name: ⚙️ Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           
       - name: 🔨 Build Project
         run: |
@@ -27,11 +27,13 @@ jobs:
           # Copy the PHP API folder into the dist folder so it gets uploaded along with the frontend
           cp -r api dist/api
           
-      - name: 📂 Sync files to cPanel
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 📂 Sync files to cPanel via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /public_html/
+          port: 21098
+          local_path: './dist/*'
+          remote_path: '/public_html'
+          sftp_only: true
