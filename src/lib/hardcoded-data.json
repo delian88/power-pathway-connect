@@ -15,11 +15,11 @@
     "contactPhone": "+234 817 699 9997 or +234 805 466 2747",
     "address": "556 Jamieson Court, Mabushi.",
     "eventFee": 0,
-    "smtpHost": "",
-    "smtpPort": null,
-    "smtpUser": "",
-    "smtpPass": "",
-    "emailEnabled": false,
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 465,
+    "smtpUser": "nutech2025@gmail.com",
+    "smtpPass": "dzae szth wwmr xmba",
+    "emailEnabled": true,
     "headerPatronageText": "UNDER THE HIGH PATRONAGE OF H.E Senator  Kashim Shettima Mustapha , GCON,",
     "headerPresidentText": " Vice President of the Federal Republic of Nigeria.",
     "headerLocationText": "PRESIDENTIAL BANQUET HALL - ASO VILLA",
@@ -278,7 +278,7 @@
     "contactPageTagline": "",
     "contactPageTitle": "",
     "contactPageDesc": "",
-    "updatedAt": "2026-08-30T18:55:42.080Z"
+    "updatedAt": "2026-08-30T19:49:29.768Z"
   },
   "events": [
     {
@@ -456,5 +456,5 @@
       "updatedAt": "2026-07-16T14:37:42.920Z"
     }
   ],
-  "timestamp": "2026-08-30T19:18:26.965Z"
+  "timestamp": "2026-08-31T05:33:27.342Z"
 }

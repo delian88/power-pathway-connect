@@ -1,0 +1,1 @@
+﻿import { PrismaClient } from '@prisma/client'; const prisma = new PrismaClient(); async function main() { await prisma.user.updateMany({ where: { email: 'info.nutech2025@gmail.com' }, data: { email: 'nutech2025@gmail.com' } }); console.log('done'); } main();
